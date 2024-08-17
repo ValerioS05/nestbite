@@ -1,4 +1,0 @@
-16/08
-Initial commit / added django/ updated settings.py
-4 Epics added in github, followed by user sotories(2.6 until now). Need to add rest of U.S.
---------------------------------------------------------------------------------------------
