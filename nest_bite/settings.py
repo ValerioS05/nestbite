@@ -29,9 +29,12 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['8000-valerios05-nestbite-sttxgmzo342.ws.codeinstitute-ide.net','nest_bite.herokuapp.com','.herokuapp.com']
+ALLOWED_HOSTS = ['8000-valerios05-nestbite-sttxgmzo342.ws.codeinstitute-ide.net','.herokuapp.com']
 
-
+CSRF_TRUSTED_ORIGINS = [
+    'https://8000-valerios05-nestbite-sttxgmzo342.ws.codeinstitute-ide.net',
+    'https://nestbite-5dd11ab0ac7f.herokuapp.com/'
+]
 # Application definition
 
 INSTALLED_APPS = [
