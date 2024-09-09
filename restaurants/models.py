@@ -15,3 +15,12 @@ class Restaurant(models.Model):
     owner = models.ForeignKey(
         User, on_delete=models.PROTECT
     )
+
+
+class Table(models.Model):
+    restaurant = models.ForeignKey(
+        Restaurant, on_delete=models.CASCADE, related_name='tables'
+        )
+    table_number = models.CharField(max_length=3)
+    capacity = models.IntegerField()
+

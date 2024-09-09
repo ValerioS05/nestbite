@@ -4,3 +4,4 @@ from .models import Restaurant
 
 
 admin.site.register(Restaurant)
+admin.site.register(Table)
