@@ -1,11 +1,18 @@
-{% for restaurant in restaurants %}
-    <li>
-        <strong>{{ restaurant.name }}</strong><br>
-        Address: {{ restaurant.address }}<br>
-        Phone: {{ restaurant.phone_number }}<br>
-        Capacity: {{ restaurant.capacity }}<br>
-        Opening Hours: {{ restaurant.opening_time }} - {{ restaurant.closing_time }}<br>
-    </li>
-{% empty %}
-    <li>No restaurants available.</li>
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Restaurant List</h1>
+<div class="list-group">
+    {% for restaurant in restaurants %}
+        <a href="#" class="list-group-item list-group-item-action">
+            <h5 class="mb-1">{{ restaurant.name }}</h5>
+            <p class="mb-1">Address: {{ restaurant.address }}</p>
+            <p class="mb-1">Phone: {{ restaurant.phone_number }}</p>
+            <p class="mb-1">Capacity: {{ restaurant.capacity }}</p>
+            <small>Opening Hours: {{ restaurant.opening_time }} - {{ restaurant.closing_time }}</small>
+        </a>
+    {% empty %}
+        <div class="list-group-item">No restaurants available.</div>
+    {% endfor %}
+</div>
+{% endblock %}
