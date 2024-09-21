@@ -1,0 +1,11 @@
+{% for restaurant in restaurants %}
+    <li>
+        <strong>{{ restaurant.name }}</strong><br>
+        Address: {{ restaurant.address }}<br>
+        Phone: {{ restaurant.phone_number }}<br>
+        Capacity: {{ restaurant.capacity }}<br>
+        Opening Hours: {{ restaurant.opening_time }} - {{ restaurant.closing_time }}<br>
+    </li>
+{% empty %}
+    <li>No restaurants available.</li>
+{% endfor %}
