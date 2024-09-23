@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Details{% endblock %}
+
+{% block content %}
+<h1>Booking Details</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p><strong>Customer Name:</strong> {{ booking.customer_name }}</p>
+        <p><strong>Email:</strong> {{ booking.customer_email }}</p>
+        <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+        <p><strong>Start Time:</strong> {{ booking.start_time }}</p>
+        <p><strong>End Time:</strong> {{ booking.end_time }}</p>
+        <p><strong>Message:</strong> {{ booking.message }}</p>
+    </div>
+</div>
+
+<a href="{% url 'booking_list' %}" class="btn btn-secondary">Back to Booking List</a>
+{% endblock %}

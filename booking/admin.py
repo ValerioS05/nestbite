@@ -11,3 +11,6 @@ class BookingAdmin(SummernoteModelAdmin):
     ordering = ('booking_date', 'start_time')
     date_hierarchy = 'booking_date'
     summernote_fields = ('message',)
+
+
+admin.site.register(Booking, BookingAdmin)
