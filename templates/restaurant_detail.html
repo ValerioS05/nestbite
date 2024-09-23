@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ restaurant.name }}</h1>
+    <p><strong>Address:</strong> {{ restaurant.address }}</p>
+    <p><strong>Phone:</strong> {{ restaurant.phone_number }}</p>
+    <p><strong>Capacity:</strong> {{ restaurant.capacity }}</p>
+    <p><strong>Opening Hours:</strong> {{ restaurant.opening_time }} - {{ restaurant.closing_time }}</p>
+
+    <h2>Images</h2>
+    <div class="image-gallery">
+        {% for image in restaurant.images.all %}
+            <div class="image-item">
+                <img src="{{ image.image.url }}" alt="{{ image.description }}" class="img-fluid" />
+                <p>{{ image.description }}</p>
+            </div>
+        {% empty %}
+            <p>No images available for this restaurant.</p>
+        {% endfor %}
+    </div>
+
+    <a href="{% url 'restaurant_list' %}">Back to the restaurant list</a>
+{% endblock %}

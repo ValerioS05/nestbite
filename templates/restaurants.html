@@ -6,7 +6,7 @@
 <h1 class="mb-4">Restaurant List</h1>
 <div class="list-group">
     {% for restaurant in restaurants %}
-        <a href="#" class="list-group-item list-group-item-action">
+        <a href="{% url 'restaurant_detail' restaurant.pk %}" class="list-group-item list-group-item-action">
             <h5 class="mb-1">{{ restaurant.name }}</h5>
             <p class="mb-1">Address: {{ restaurant.address }}</p>
             <p class="mb-1">Phone: {{ restaurant.phone_number }}</p>
