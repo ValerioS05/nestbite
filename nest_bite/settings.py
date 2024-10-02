@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
     'booking',
     'django_summernote',
     'restaurants'
@@ -130,7 +129,18 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+ACCOUNT_AUTHENTICATION_METHOD = "username"  # users should log in with their username
+ACCOUNT_EMAIL_REQUIRED = True  # is a required field
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Users must verify email
+ACCOUNT_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True  
+ACCOUNT_LOGOUT_REDIRECT_URL = '/' 
 
 
 # Internationalization
@@ -155,3 +165,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nestbite@gmail.com' #mail address
+EMAIL_HOST_PASSWORD = 'wmfu tejc sdnm ezti'  #mail app password
+DEFAULT_FROM_EMAIL = 'nestbite@gmail.com'

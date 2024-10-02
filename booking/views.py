@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Booking
+from django.contrib import messages
+
 
 # Create your views here.
 @login_required
@@ -19,7 +21,6 @@ def booking_detail(request, booking_id):
     return render(request, 'booking/booking_detail.html', {'booking': booking})
 
 
-from django.contrib import messages
 
 @login_required
 def create_booking(request):
@@ -33,6 +34,5 @@ def create_booking(request):
             return redirect('booking_list')
     else:
         form = BookingForm()
-    
     
     return render(request, 'booking/booking_form.html', {'form': form})
