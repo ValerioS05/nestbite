@@ -15,7 +15,9 @@ class Booking(models.Model):
     end_time = models.TimeField()
     message = models.TextField(blank=True, null=True)
     booking_reference = models.CharField(max_length=10, unique=True, blank=True, null=True)
-
+    canceled = models.BooleanField(default=False)
+    
+    
     def clean(self):
         # Check if booking is not in the past
         booking_datetime = datetime.combine(self.booking_date, self.start_time)
@@ -53,5 +55,17 @@ class Booking(models.Model):
             self.booking_reference = Booking.generate_booking_reference()
         super().save(*args, **kwargs)
 
+    def cancel(self):
+        """Cancels the booking if it's at least 2 hours before the booking time."""
+        booking_datetime = datetime.combine(self.booking_date, self.start_time)
+        now = timezone.now()
+        
+        # Check if the booking can be canceled (at least 2 hours before)
+        if booking_datetime < now + timedelta(hours=2):
+            raise ValidationError("You can only cancel your booking 2 hours in advance.")
+        
+        self.canceled = True
+        self.save()
+    
     def __str__(self):
         return f"Booking {self.booking_reference} for {self.customer_name} on {self.booking_date}"

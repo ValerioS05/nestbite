@@ -36,3 +36,18 @@ def create_booking(request):
         form = BookingForm()
     
     return render(request, 'booking/booking_form.html', {'form': form})
+
+
+@login_required
+def cancel_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    
+    if request.method == 'POST':
+        try:
+            booking.cancel()
+            messages.success(request, 'Your booking has been canceled successfully!')
+            return redirect('booking_list')
+        except ValidationError as e:
+            messages.error(request, str(e))
+    
+    return render(request, 'booking/cancel_booking.html', {'booking': booking})
