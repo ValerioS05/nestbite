@@ -22,8 +22,9 @@
 
 
     {% if user.is_authenticated %}
-        <a href="{% url 'create_booking' %}?restaurant_id={{ restaurant.id }}" class="btn btn-primary">Make a Reservation</a>
+    <a href="{% url 'create_booking' restaurant.id %}" class="btn btn-primary">Make a Reservation</a>
     {% endif %}
+
 
     <a href="{% url 'restaurant_list' %}" class="btn btn-secondary">Back to the restaurants</a>
 {% endblock %}

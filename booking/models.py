@@ -2,11 +2,13 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.contrib.auth.models import User 
 from restaurants.models import Table
 import random
 import string
 
 class Booking(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bookings')  # Connect Booking to User
     tables = models.ManyToManyField(Table, related_name='bookings')
     customer_name = models.CharField(max_length=100)
     customer_email = models.EmailField()
@@ -18,15 +20,12 @@ class Booking(models.Model):
     canceled = models.BooleanField(default=False)
 
     def clean(self):
-        # Combine booking date and start time into a timezone-aware datetime
         booking_datetime = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
-        now = timezone.now()  # This will be timezone-aware if USE_TZ is True
+        now = timezone.now()
 
-        # Check if booking is not in the past
         if booking_datetime < now:
             raise ValidationError("Cannot book in the past.")
 
-        # Check if booking is at least 2 hours in the future
         if booking_datetime < now + timedelta(hours=2):
             raise ValidationError("Bookings must be made at least 2 hours in advance.")
 
@@ -41,7 +40,6 @@ class Booking(models.Model):
 
     def cancel(self):
         """Cancels the booking if it's at least 2 hours before the booking time."""
-        # Combine booking date and start time into a timezone-aware datetime
         booking_datetime = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
         now = timezone.now()
 

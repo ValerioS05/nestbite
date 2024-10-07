@@ -1,17 +1,25 @@
-{% extends "base.html" %}
-
-{% block title %}Create Booking{% endblock %}
-
-{% block content %}
-<h1>Create a New Booking</h1>
-
-<form method="post">
+<form method="POST" id="bookingForm">
     {% csrf_token %}
-    <div class="mb-3">
-        {{ form.as_p }}  <!-- Renders the form fields -->
-    </div>
-    <button type="submit" class="btn btn-success">Submit</button>
-</form>
+    
+    <p><strong>Restaurant:</strong> {{ restaurant.name }}</p>
 
-<a href="{% url 'booking_list' %}" class="btn btn-secondary mt-3">Back to Booking List</a>
-{% endblock %}
+    {{ form.tables.label }}
+    {{ form.tables }}
+
+    {{ form.customer_name.label }}
+    {{ form.customer_name }}
+
+    {{ form.booking_date.label }}
+    {{ form.booking_date }}
+
+    {{ form.start_time.label }}
+    {{ form.start_time }}
+
+    {{ form.end_time.label }}
+    {{ form.end_time }}
+
+    {{ form.message.label }}
+    {{ form.message }}
+
+    <button type="submit">Book Now</button>
+</form>

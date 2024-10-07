@@ -4,7 +4,6 @@
 
 {% block content %}
 <h1>Your Bookings</h1>
-<a href="{% url 'create_booking' %}" class="btn btn-primary mb-3">Make a New Reservation</a>
 
 <ul class="list-group">
     {% for booking in bookings %}
