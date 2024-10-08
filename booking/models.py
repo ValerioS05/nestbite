@@ -23,11 +23,9 @@ class Booking(models.Model):
         booking_datetime_start = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
         now = timezone.now()
 
-        # Check if the booking is in the past
         if booking_datetime_start < now:
             raise ValidationError("Cannot book in the past.")
 
-        # Check if the booking is at least 2 hours in advance
         if booking_datetime_start < now + timedelta(hours=2):
             raise ValidationError("Bookings must be made at least 2 hours in advance.")
 

@@ -3,6 +3,8 @@ from .models import Booking
 from restaurants.models import Table
 
 class BookingForm(forms.ModelForm):
+    tables = forms.ModelMultipleChoiceField(queryset=Table.objects.none(), required=True)  # Allow selection of multiple tables
+
     class Meta:
         model = Booking
         fields = ['tables', 'customer_name', 'booking_date', 'start_time', 'end_time', 'message']
@@ -14,5 +16,3 @@ class BookingForm(forms.ModelForm):
         # Filter tables based on the selected restaurant
         if restaurant_id:
             self.fields['tables'].queryset = Table.objects.filter(restaurant_id=restaurant_id)
-        else:
-            self.fields['tables'].queryset = Table.objects.none()
