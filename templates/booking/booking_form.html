@@ -1,25 +1,53 @@
-<form method="POST" id="bookingForm">
-    {% csrf_token %}
-    
-    <p><strong>Restaurant:</strong> {{ restaurant.name }}</p>
+{% extends "base.html" %}
 
-    {{ form.tables.label }}
-    {{ form.tables }}
+{% block content %}
+{% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="container mt-5">
+    <h2>Book a Table</h2>
+    <form method="POST" id="bookingForm">
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <p><strong>Restaurant:</strong> {{ restaurant.name }}</p>
+        </div>
 
-    {{ form.customer_name.label }}
-    {{ form.customer_name }}
+        <div class="mb-3">
+            <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
+            {{ form.tables }}
+        </div>
 
-    {{ form.booking_date.label }}
-    {{ form.booking_date }}
+        <div class="mb-3">
+            <label for="{{ form.customer_name.id_for_label }}">{{ form.customer_name.label }}</label>
+            {{ form.customer_name }}
+        </div>
 
-    {{ form.start_time.label }}
-    {{ form.start_time }}
+        <div class="mb-3">
+            <label for="{{ form.booking_date.id_for_label }}">{{ form.booking_date.label }}</label>
+            {{ form.booking_date }}
+        </div>
 
-    {{ form.end_time.label }}
-    {{ form.end_time }}
+        <div class="mb-3">
+            <label for="{{ form.start_time.id_for_label }}">{{ form.start_time.label }}</label>
+            {{ form.start_time }}
+        </div>
 
-    {{ form.message.label }}
-    {{ form.message }}
+        <div class="mb-3">
+            <label for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label>
+            {{ form.end_time }}
+        </div>
 
-    <button type="submit">Book Now</button>
-</form>
+        <div class="mb-3">
+            <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+            {{ form.message }}
+        </div>
+
+        <button type="submit">Book Now</button>
+    </form>
+</div>
+{% endblock %}

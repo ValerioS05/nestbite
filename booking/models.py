@@ -2,7 +2,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime, timedelta
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 from restaurants.models import Table
 import random
 import string
@@ -20,13 +20,15 @@ class Booking(models.Model):
     canceled = models.BooleanField(default=False)
 
     def clean(self):
-        booking_datetime = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
+        booking_datetime_start = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
         now = timezone.now()
 
-        if booking_datetime < now:
+        # Check if the booking is in the past
+        if booking_datetime_start < now:
             raise ValidationError("Cannot book in the past.")
 
-        if booking_datetime < now + timedelta(hours=2):
+        # Check if the booking is at least 2 hours in advance
+        if booking_datetime_start < now + timedelta(hours=2):
             raise ValidationError("Bookings must be made at least 2 hours in advance.")
 
     @staticmethod
