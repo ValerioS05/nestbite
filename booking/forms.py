@@ -4,7 +4,11 @@ from restaurants.models import Table, Restaurant  # Import the Table and Restaur
 
 # Define form based on the Booking model
 class BookingForm(forms.ModelForm):
-    tables = forms.ModelMultipleChoiceField(queryset=Table.objects.none(), required=True)
+    tables = forms.ModelMultipleChoiceField(
+        queryset=Table.objects.none(),
+        required=True,
+        widget=forms.CheckboxSelectMultiple()
+    )
 
     class Meta:
         model = Booking  # specify which model
@@ -18,11 +22,10 @@ class BookingForm(forms.ModelForm):
         if restaurant_id: # Check if an id was provided
             self.fields['tables'].queryset = Table.objects.filter(restaurant_id=restaurant_id) # Filter tables of specified id
 
-            table_choices = [
-                (table.id, f"{table} - £{table.price:.2f}")  # Display the table and price
+            self.fields['tables'].choices = [
+                (table.id, f"Table {table.table_number} (Max: {table.capacity}) - £{table.price:.2f}")  # Display the table and price
                 for table in self.fields['tables'].queryset
             ]
-            self.fields['tables'].choices = table_choices
 
             # Fetch the restaurant to get opening and closing hours
             restaurant = Restaurant.objects.get(id=restaurant_id)
