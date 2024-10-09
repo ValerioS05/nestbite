@@ -20,6 +20,10 @@ class Booking(models.Model):
     canceled = models.BooleanField(default=False)
 
     def clean(self):
+        if self.start_time is None:
+            raise ValidationError("Start time cannot be None.")
+        if self.end_time is None:
+            raise ValidationError("End time cannot be None.")
         booking_datetime_start = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
         now = timezone.now()
         # Calculate twelve months from now
