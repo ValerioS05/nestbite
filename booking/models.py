@@ -15,7 +15,7 @@ class Booking(models.Model):
     booking_date = models.DateField()
     start_time = models.TimeField()
     end_time = models.TimeField()
-    message = models.TextField(blank=True, null=True)
+    message = models.CharField(max_length=200,blank=True, null=True)
     booking_reference = models.CharField(max_length=10, unique=True, blank=True, null=True)
     canceled = models.BooleanField(default=False)
 
