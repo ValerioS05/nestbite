@@ -42,7 +42,7 @@ def check_timings(booking, restaurant, form):
 
 
 # Check for overlapping bookings for the selected tables
-def overlapping_bookings(booking, form):
+def overlapping_bookings(booking, form, current_booking=None):
     overlapping_bookings = Booking.objects.filter(
         tables__in=form.cleaned_data['tables'],
         canceled=False,
@@ -51,10 +51,112 @@ def overlapping_bookings(booking, form):
         end_time__gt=booking.start_time
     )
 
+    # If updating, exclude the current booking from the overlap check
+    if current_booking:
+        overlapping_bookings = overlapping_bookings.exclude(id=current_booking.id)
+
     if overlapping_bookings.exists():
         form.add_error(None, "The selected tables are already booked during the specified time.")
         return True
     return False
+
+
+#  Handle booking form
+def handle_booking_form(request, form, restaurant, booking=None):
+    if form.is_valid():
+        # Create or update a Booking instance but do not save it to the database yet
+        booking_instance = form.save(commit=False)
+        
+        # If updating copy over existing values
+        if booking:
+            booking_instance.id = booking.id
+            booking_instance.customer_email = booking.customer_email
+            booking_instance.user = booking.user
+        else:
+            # For new bookings, assign the user
+            booking_instance.customer_email = request.user.email
+            booking_instance.user = request.user
+
+        # Set the booking_date from the existing booking if updating
+        if booking:
+            booking_instance.booking_date = booking.booking_date  
+
+        # Check time constraints using the existing logic
+        if not check_timings(booking_instance, restaurant, form):
+            return False, form
+
+        # Pass the current booking to the overlapping check
+        if overlapping_bookings(booking_instance, form, current_booking=booking):
+            return False, form
+
+        # Save the booking
+        if booking:
+            booking.start_time = booking_instance.start_time
+            booking.end_time = booking_instance.end_time
+            booking.tables.set(form.cleaned_data['tables'])  # Update the many-to-many relationship using cleaned data
+            booking.message = booking_instance.message  # Update message if any
+            booking.save()  # Save the updated booking
+        else:
+            booking_instance.save()  # Save the new booking
+            form.save_m2m()  # Save the many-to-many relationship for tables
+
+        return True, booking_instance
+    return False, form
+
+
+
+@login_required
+def create_booking(request, restaurant_id):
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Get the restaurant instance
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, restaurant_id=restaurant_id)  # Pass restaurant_id to the form
+        success, booking = handle_booking_form(request, form, restaurant)
+
+        if success:
+            # Prepare the table names for the success message
+            table_names = ', '.join(str(table) for table in booking.tables.all())
+            messages.success(request, f'Your booking for the following table(s) has been created successfully: {table_names}.')
+            return redirect('booking_list')  # Redirect to the booking list after successful booking
+    else:
+        form = BookingForm(restaurant_id=restaurant.id)  # Create form instance for GET request
+
+    return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
+
+
+@login_required
+def update_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+
+    # Check right to modify
+    if not (request.user.is_staff or booking.customer_email == request.user.email):
+        messages.error(request, "You are not allowed to modify this booking.")
+        return redirect('booking_list')
+
+    restaurant = booking.tables.first().restaurant
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, restaurant_id=restaurant.id)
+
+        success, booking_instance = handle_booking_form(request, form, restaurant, booking)
+
+        if success:
+            # Prepare the table names for the success message
+            table_names = ', '.join(str(table) for table in booking_instance.tables.all())
+            messages.success(request, f'Your booking has been updated successfully: {table_names}.')
+            return redirect('booking_list')  # Redirect to the booking list after successful update
+    else:
+        form = BookingForm(initial={
+            'tables': booking.tables.all(),
+            'customer_name': booking.customer_name,
+            'booking_date': booking.booking_date,
+            'start_time': booking.start_time,
+            'end_time': booking.end_time,
+            'message': booking.message,
+        }, restaurant_id=restaurant.id)
+
+    return render(request, 'booking/update_booking_form.html', {'form': form, 'restaurant': restaurant})
+
 
 @login_required
 def booking_list(request):
@@ -72,41 +174,6 @@ def booking_detail(request, booking_id):
         return redirect('booking_list')
     return render(request, 'booking/booking_detail.html', {'booking': booking})
 
-@login_required
-def create_booking(request, restaurant_id):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Get the restaurant instance
-
-    if request.method == 'POST':
-        form = BookingForm(request.POST, restaurant_id=restaurant_id)  # Pass restaurant_id to the form
-        if form.is_valid():
-            # Create a Booking instance but do not save it to the database yet
-            booking = form.save(commit=False)
-
-            booking.customer_email = request.user.email
-            booking.user = request.user  # Assign the logged-in user
-
-            # Check time constraints
-            if not check_timings(booking, restaurant, form):
-                return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
-
-            if overlapping_bookings(booking, form):
-                return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
-
-            # Save the booking
-            booking.save()
-            # Save the many-to-many relationship for tables
-            form.save_m2m()
-
-            # Prepare the table names for the success message
-            table_names = ', '.join(str(table) for table in booking.tables.all())
-            messages.success(request, f'Your booking for the following table(s) has been created successfully: {table_names}.')
-            
-            return redirect('booking_list')  # Redirect to the booking list after successful booking
-
-    else:
-        form = BookingForm(restaurant_id=restaurant.id)  # Create form instance for GET request
-
-    return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
 
 @login_required
 def cancel_booking(request, booking_id):
