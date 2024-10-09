@@ -8,7 +8,11 @@
 <ul class="list-group">
     {% for booking in bookings %}
         <li class="list-group-item">
-            <a href="{% url 'booking_detail' booking.id %}">{{ booking.customer_name }} on {{ booking.booking_date }}</a>
+            <strong>{{ booking.customer_name }}</strong> - 
+            {{ booking.booking_date }} at {{ booking.start_time }}<br>
+            Restaurant: {{ booking.tables.first.restaurant.name }}
+            <br>
+            <a href="{% url 'booking_detail' booking.id %}" class="btn btn-info btn-sm">View Details</a>
             <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end" onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel Booking</a>
         </li>
     {% empty %}
