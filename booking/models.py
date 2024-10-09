@@ -22,12 +22,18 @@ class Booking(models.Model):
     def clean(self):
         booking_datetime_start = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))
         now = timezone.now()
-
+        # Calculate twelve months from now
+        twelve_months_later = now + timedelta(days=365)
+        
+        # Check if the booking is in the past
         if booking_datetime_start < now:
             raise ValidationError("Cannot book in the past.")
-
+        # Check if the booking is at least 2 hours in advance
         if booking_datetime_start < now + timedelta(hours=2):
             raise ValidationError("Bookings must be made at least 2 hours in advance.")
+        # Check if the booking date is within the next 12 months
+        if booking_datetime_start > twelve_months_later:
+            raise ValidationError("Bookings can only be made for up to 12 months in advance.")
 
     @staticmethod
     def generate_booking_reference():

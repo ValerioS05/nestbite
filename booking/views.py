@@ -11,9 +11,9 @@ from restaurants.models import Restaurant
 @login_required
 def booking_list(request):
     if request.user.is_staff:
-        bookings = Booking.objects.all()
+        bookings = Booking.objects.all()  # Retrieve all bookings for staff
     else:
-        bookings = Booking.objects.filter(customer_email=request.user.email)
+        bookings = Booking.objects.filter(customer_email=request.user.email)  # Filter by the user's email
 
     return render(request, 'booking/booking_list.html', {'bookings': bookings})
 
@@ -26,16 +26,18 @@ def booking_detail(request, booking_id):
 
 @login_required
 def create_booking(request, restaurant_id):
-    restaurant = get_object_or_404(Restaurant, id=restaurant_id)
+    restaurant = get_object_or_404(Restaurant, id=restaurant_id)  # Get the restaurant instance
 
     if request.method == 'POST':
         form = BookingForm(request.POST, restaurant_id=restaurant_id)  # Pass restaurant_id to the form
         if form.is_valid():
+            # Create a Booking instance but do not save it to the database yet
             booking = form.save(commit=False)
 
             booking.customer_email = request.user.email
-            booking.user = request.user
+            booking.user = request.user  # Assign the logged-in user
 
+            # Extract the start and end times for overlap checking
             start_time = booking.start_time
             end_time = booking.end_time
 
@@ -69,7 +71,7 @@ def create_booking(request, restaurant_id):
 
             # Check for overlapping bookings for the selected tables
             overlapping_bookings = Booking.objects.filter(
-                tables__in=form.cleaned_data['tables'],  # This expects an iterable
+                tables__in=form.cleaned_data['tables'],  # Get tables from cleaned data
                 canceled=False,  # Only consider active bookings
                 booking_date=booking.booking_date,
                 start_time__lt=end_time,  # New booking starts before existing booking ends
@@ -79,6 +81,7 @@ def create_booking(request, restaurant_id):
             if overlapping_bookings.exists():
                 # If there are overlapping bookings, show an error and re-render the form
                 form.add_error(None, "The selected tables are already booked during the specified time.")
+                # Render the form again with the error message
                 return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
 
             # Save the booking now that we know there are no overlaps
