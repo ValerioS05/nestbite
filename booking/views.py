@@ -8,6 +8,54 @@ from .models import Booking
 from restaurants.models import Restaurant
 
 
+# Check if the booking is within restaurant hours and constraints
+def check_timings(booking, restaurant, form):
+    start_time = booking.start_time
+    end_time = booking.end_time
+    opening_time = restaurant.opening_time
+    closing_time = restaurant.closing_time
+
+    # Ensure booking is within the restaurant's hours
+    if start_time < opening_time or end_time > closing_time:
+        form.add_error(None, "Your booking must be within the restaurant's working hours.")
+        return False
+
+    # Ensure the booking starts at least 1 hour before closing time
+    one_hour_before_closing = (datetime.combine(booking.booking_date, closing_time) - timedelta(hours=1)).time()
+    if start_time > one_hour_before_closing:
+        form.add_error(None, f"Bookings must start at least one hour before closing time ({one_hour_before_closing}).")
+        return False
+
+    # Calculate duration and check minimum and maximum stay duration
+    duration = (datetime.combine(booking.booking_date, end_time) - 
+                datetime.combine(booking.booking_date, start_time)).total_seconds() / 3600  # Convert to hours
+
+    if duration < 1:
+        form.add_error(None, "The minimum stay for a booking is 1 hour.")
+        return False
+
+    if duration > 3:
+        form.add_error(None, "The maximum stay for a booking is 3 hours.")
+        return False
+
+    return True
+
+
+# Check for overlapping bookings for the selected tables
+def overlapping_bookings(booking, form):
+    overlapping_bookings = Booking.objects.filter(
+        tables__in=form.cleaned_data['tables'],
+        canceled=False,
+        booking_date=booking.booking_date,
+        start_time__lt=booking.end_time,
+        end_time__gt=booking.start_time
+    )
+
+    if overlapping_bookings.exists():
+        form.add_error(None, "The selected tables are already booked during the specified time.")
+        return True
+    return False
+
 @login_required
 def booking_list(request):
     if request.user.is_staff:
@@ -37,56 +85,15 @@ def create_booking(request, restaurant_id):
             booking.customer_email = request.user.email
             booking.user = request.user  # Assign the logged-in user
 
-            # Extract the start and end times for overlap checking
-            start_time = booking.start_time
-            end_time = booking.end_time
-
-            # Check restaurant's opening hours
-            opening_time = restaurant.opening_time
-            closing_time = restaurant.closing_time
-
-            # Ensure booking is within the restaurant's hours
-            if start_time < opening_time or end_time > closing_time:
-                form.add_error(None, "Your booking must be within the restaurant's working hours.")
+            # Check time constraints
+            if not check_timings(booking, restaurant, form):
                 return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
 
-            # Ensure the booking starts at least 1 hour before closing time
-            one_hour_before_closing = (datetime.combine(booking.booking_date, closing_time) - timedelta(hours=1)).time()
-            if start_time > one_hour_before_closing:
-                form.add_error(None, f"Bookings must start at least one hour before closing time ({one_hour_before_closing}).")
+            if overlapping_bookings(booking, form):
                 return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
 
-            # Calculate the duration of the booking
-            duration = (datetime.combine(booking.booking_date, end_time) - 
-                        datetime.combine(booking.booking_date, start_time)).total_seconds() / 3600  # Convert to hours
-
-            # Check for minimum and maximum stay duration
-            if duration < 1:  # Minimum stay of 1 hour
-                form.add_error(None, "The minimum stay for a booking is 1 hour.")
-                return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
-
-            if duration > 3:  # Maximum stay of 3 hours
-                form.add_error(None, "The maximum stay for a booking is 3 hours.")
-                return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
-
-            # Check for overlapping bookings for the selected tables
-            overlapping_bookings = Booking.objects.filter(
-                tables__in=form.cleaned_data['tables'],  # Get tables from cleaned data
-                canceled=False,  # Only consider active bookings
-                booking_date=booking.booking_date,
-                start_time__lt=end_time,  # New booking starts before existing booking ends
-                end_time__gt=start_time     # New booking ends after existing booking starts
-            )
-
-            if overlapping_bookings.exists():
-                # If there are overlapping bookings, show an error and re-render the form
-                form.add_error(None, "The selected tables are already booked during the specified time.")
-                # Render the form again with the error message
-                return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
-
-            # Save the booking now that we know there are no overlaps
-            booking.save()  # Now save the booking to the database
-            
+            # Save the booking
+            booking.save()
             # Save the many-to-many relationship for tables
             form.save_m2m()
 
@@ -101,10 +108,6 @@ def create_booking(request, restaurant_id):
 
     return render(request, 'booking/booking_form.html', {'form': form, 'restaurant': restaurant})
 
-
-
-
-
 @login_required
 def cancel_booking(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
@@ -114,7 +117,7 @@ def cancel_booking(request, booking_id):
         messages.error(request, "You are not allowed to cancel this booking.")
         return redirect('booking_list')
 
-    
+
     if request.method == 'POST':
         booking_datetime = timezone.make_aware(datetime.combine(booking.booking_date, booking.start_time))
         now = timezone.now()
