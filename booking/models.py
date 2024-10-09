@@ -44,6 +44,13 @@ class Booking(models.Model):
             self.booking_reference = Booking.generate_booking_reference()
         super().save(*args, **kwargs)
 
+
+    # Calculate the total price of the booking based on the tables booked
+    @property
+    def total_price(self):
+        return sum(table.price for table in self.tables.all())
+
+
     def cancel(self):
         """Cancels the booking if it's at least 2 hours before the booking time."""
         booking_datetime = timezone.make_aware(datetime.combine(self.booking_date, self.start_time))

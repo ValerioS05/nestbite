@@ -17,3 +17,9 @@ class BookingForm(forms.ModelForm):
         # Filter tables based on the selected restaurant
         if restaurant_id: # Check if an id was provided
             self.fields['tables'].queryset = Table.objects.filter(restaurant_id=restaurant_id) # Filter tables of specified id
+
+            table_choices = [
+                (table.id, f"{table} - £{table.price:.2f}")  # Display the table and price
+                for table in self.fields['tables'].queryset
+            ]
+            self.fields['tables'].choices = table_choices
