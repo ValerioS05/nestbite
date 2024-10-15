@@ -5,6 +5,15 @@
 {% block content %}
 <h1>Your Bookings</h1>
 
+<!-- Filter Form -->
+<form method="GET" class="mb-4">
+    <div class="input-group">
+        <input type="date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
+        <button type="submit" class="btn btn-primary">Filter by Date</button>
+        <a href="{% url 'booking_list' %}" class="btn btn-secondary">Clear Filter</a>
+    </div>
+</form>
+
 <ul class="list-group">
     {% for booking in bookings %}
         <li class="list-group-item">
@@ -20,6 +29,7 @@
         <li class="list-group-item">No bookings found.</li>
     {% endfor %}
 </ul>
+
 {% if messages %}
   <div class="container mt-3">
     {% for message in messages %}

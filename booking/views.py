@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from django.utils.dateparse import parse_date
 from datetime import datetime, timedelta
 from .forms import BookingForm
 from .models import Booking
@@ -160,12 +161,23 @@ def update_booking(request, booking_id):
 
 @login_required
 def booking_list(request):
-    if request.user.is_staff:
-        bookings = Booking.objects.all()  # Retrieve all bookings for staff
-    else:
-        bookings = Booking.objects.filter(customer_email=request.user.email)  # Filter by the user's email
+    user = request.user
+    filter_date_str = request.GET.get('filter_date', None)
+    filter_date = None
 
-    return render(request, 'booking/booking_list.html', {'bookings': bookings})
+    if filter_date_str:
+        filter_date = parse_date(filter_date_str)
+
+    if user.is_staff:
+        bookings = Booking.objects.all()
+    else:
+        bookings = Booking.objects.filter(customer_email=user.email)
+
+    if filter_date:
+        bookings = bookings.filter(booking_date=filter_date)
+
+    return render(request, 'booking/booking_list.html', {'bookings': bookings, 'filter_date': filter_date_str})
+
 
 @login_required
 def booking_detail(request, booking_id):
@@ -198,3 +210,14 @@ def cancel_booking(request, booking_id):
         return redirect('booking_list')
 
     return render(request, 'booking/cancel_booking.html', {'booking': booking})
+
+
+def delete_finished_booking(booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)
+    booking_datetime = timezone.make_aware(datetime.combine(booking.booking_date, booking.end_time))
+    delete_time = booking_datetime + timedelta(hours=2)
+    now = timezone.now()
+    if now >= delete_time:
+        booking.delete()
+        return True
+    return False
