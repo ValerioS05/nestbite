@@ -191,6 +191,9 @@ def booking_list(request):
     if filter_date:
         bookings = bookings.filter(booking_date=filter_date)
 
+    for booking in bookings:
+        delete_finished_booking(booking.id)
+
     return render(request, 'booking/booking_list.html', {'bookings': bookings, 'filter_date': filter_date_str})
 
 
@@ -211,7 +214,6 @@ def cancel_booking(request, booking_id):
         messages.error(request, "You are not allowed to cancel this booking.")
         return redirect('booking_list')
 
-
     if request.method == 'POST':
         booking_datetime = timezone.make_aware(datetime.combine(booking.booking_date, booking.start_time))
         now = timezone.now()
@@ -224,7 +226,9 @@ def cancel_booking(request, booking_id):
         messages.success(request, "Your booking has been canceled successfully.")
         return redirect('booking_list')
 
+    # Render the cancel confirmation page for GET request
     return render(request, 'booking/cancel_booking.html', {'booking': booking})
+
 
 
 def delete_finished_booking(booking_id):
