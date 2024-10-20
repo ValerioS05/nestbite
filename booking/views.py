@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from datetime import datetime, timedelta
+from decimal import Decimal
 from .forms import BookingForm
 from .models import Booking
-from restaurants.models import Restaurant
+from restaurants.models import Restaurant, Table
 
 
 # Check if the booking is within restaurant hours and constraints
@@ -44,8 +45,12 @@ def check_timings(booking, restaurant, form):
 
 # Check for overlapping bookings for the selected tables
 def overlapping_bookings(booking, form, current_booking=None):
+    if not booking.id:
+        selected_tables = form.cleaned_data['tables']
+    else:
+        selected_tables = booking.tables.all()
     overlapping_bookings = Booking.objects.filter(
-        tables__in=form.cleaned_data['tables'],
+        tables__in=selected_tables,
         canceled=False,
         booking_date=booking.booking_date,
         start_time__lt=booking.end_time,
@@ -58,6 +63,20 @@ def overlapping_bookings(booking, form, current_booking=None):
 
     if overlapping_bookings.exists():
         form.add_error(None, "The selected tables are already booked during the specified time.")
+        unavailable_tables = overlapping_bookings.values_list('tables', flat=True)
+        selected_table_prices = selected_tables.values_list('price', flat=True)
+        selected_table_prices = [Decimal(price) for price in selected_table_prices]
+        price_min = min(selected_table_prices) * Decimal('0.9')
+        price_max = max(selected_table_prices) * Decimal('1.1')
+        suggested_tables = Table.objects.exclude(id__in=unavailable_tables).filter(
+            price__gte=price_min,
+            price__lte=price_max
+        )[:4]  # Limit to max of 4 suggestions
+        if suggested_tables.exists():
+            suggestion_list = ', '.join(
+                f"{table} (Max: {table.capacity})" for table in suggested_tables
+            )
+            form.add_error(None, f"Consider booking one of these available tables: {suggestion_list}.")
         return True
     return False
 
@@ -77,10 +96,6 @@ def handle_booking_form(request, form, restaurant, booking=None):
             # For new bookings, assign the user
             booking_instance.customer_email = request.user.email
             booking_instance.user = request.user
-
-        # Set the booking_date from the existing booking if updating
-        if booking:
-            booking_instance.booking_date = booking.booking_date  
 
         # Check time constraints using the existing logic
         if not check_timings(booking_instance, restaurant, form):
