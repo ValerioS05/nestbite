@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ContactForm
 from .forms import ProfileForm
 from django.contrib.auth.models import User
 
@@ -29,3 +32,32 @@ def profile_edit(request):
         form = ProfileForm(instance=request.user)
 
     return render(request, 'profile/update_profile.html', {'form': form})
+
+
+@login_required
+def contact_us(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            message = form.cleaned_data['message']
+            username = request.user.username
+            email = request.user.email
+            email_subject = f'Contact Us Form Submission from {username}'
+            email_body = f"Username: {username}\nEmail: {email}\nMessage:\n{message}"
+
+            try:
+                send_mail(
+                    email_subject,
+                    email_body,
+                    settings.DEFAULT_FROM_EMAIL,
+                    ['nestbite@gmail.com'],
+                    fail_silently=False,
+                )
+                messages.success(request, 'Your message has been sent successfully!')
+                return redirect('contact_us')
+            except Exception as e:
+                messages.error(request, 'There was an error sending the message. Please try again.')
+    else:
+        form = ContactForm()
+
+    return render(request, 'profile/contact_us.html', {'form': form})
