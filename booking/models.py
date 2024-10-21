@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
-from restaurants.models import Table
+from restaurants.models import Table, Restaurant
 import random
 import string
 
@@ -69,3 +69,13 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking {self.booking_reference} for {self.customer_name} on {self.booking_date}"
+    
+class Review(models.Model):
+    booking = models.ForeignKey('Booking', on_delete=models.SET_NULL, null=True, related_name='reviews')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='reviews')  # Link to Restaurant
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=1)
+    message = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.rating} Stars for Booking {self.booking.booking_reference if self.booking else 'N/A'}"

@@ -6,7 +6,8 @@ from django.utils.dateparse import parse_date
 from datetime import datetime, timedelta
 from decimal import Decimal
 from .forms import BookingForm
-from .models import Booking
+from .forms import ReviewForm
+from .models import Booking, Review
 from restaurants.models import Restaurant, Table
 
 
@@ -202,7 +203,33 @@ def booking_detail(request, booking_id):
     booking = get_object_or_404(Booking, id=booking_id)
     if not (request.user.is_staff or booking.customer_email == request.user.email):
         return redirect('booking_list')
-    return render(request, 'booking/booking_detail.html', {'booking': booking})
+    existing_review = booking.reviews.filter(user=request.user).first()
+    if request.method == 'POST':
+        if existing_review:
+            messages.info(request, "You have already submitted feedback for this booking.")
+            return redirect('booking_detail', booking_id=booking.id)
+        review_form = ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.booking = booking
+            review.restaurant = booking.tables.first().restaurant
+            review.user = request.user
+            review.save()
+            if review.rating >= 4:
+                feedback_message = "Thanks for your feedback! It's great to make you happy!"
+            else:
+                feedback_message = "We appreciate your feedback and will work to improve!"
+
+            return redirect('booking_detail', booking_id=booking.id)
+    else:
+        review_form = ReviewForm() if not existing_review else None
+
+    return render(request, 'booking/booking_detail.html', {
+        'booking': booking,
+        'review_form': review_form,
+        'existing_review': existing_review,
+        'feedback_message': None,
+    })
 
 
 @login_required

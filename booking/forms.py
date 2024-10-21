@@ -1,5 +1,5 @@
 from django import forms # Import the forms module from Django
-from .models import Booking # Import the Booking model from the current app
+from .models import Booking, Review # Import the Booking model from the current app
 from restaurants.models import Table, Restaurant  # Import the Table and Restaurant models from the restaurants app
 
 # Define form based on the Booking model
@@ -38,3 +38,19 @@ class BookingForm(forms.ModelForm):
             # Set initial value and attributes for start_time
             self.fields['start_time'].widget = forms.TimeInput(attrs={'type': 'time', 'min': opening_time, 'max': (closing_time.hour - 1)})
             self.fields['end_time'].widget = forms.TimeInput(attrs={'type': 'time', 'min': f"{(opening_time.hour + 1)}:00", 'max': closing_time})
+
+# Define form based on the Review model
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['rating', 'message']
+        widgets = {
+            'rating': forms.RadioSelect(choices=[
+                (1, '1 Star'),
+                (2, '2 Stars'),
+                (3, '3 Stars'),
+                (4, '4 Stars'),
+                (5, '5 Stars')
+            ]),
+            'message': forms.Textarea(attrs={'placeholder': 'Leave a message (optional)', 'rows': 4}),
+        }
