@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'booking',
     'django_summernote',
     'restaurants',
+    'myprofile',
 ]
 
 

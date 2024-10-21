@@ -18,7 +18,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -56,6 +56,13 @@
                         </li>
                         {% endif %}
                     </ul>
+                    {% if user.is_authenticated %}
+                    <div class="ms-3">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-primary rounded-circle" style="width: 50px; height: 50px;">
+                            <i class="fas fa-user" style="font-size: 24px;"></i>
+                        </a>                        
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </nav>
