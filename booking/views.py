@@ -87,7 +87,7 @@ def handle_booking_form(request, form, restaurant, booking=None):
     if form.is_valid():
         # Create or update a Booking instance but do not save it to the database yet
         booking_instance = form.save(commit=False)
-        
+
         # If updating copy over existing values
         if booking:
             booking_instance.id = booking.id
@@ -97,6 +97,9 @@ def handle_booking_form(request, form, restaurant, booking=None):
             # For new bookings, assign the user
             booking_instance.customer_email = request.user.email
             booking_instance.user = request.user
+
+        booking_instance.customer_name = form.cleaned_data['customer_name']
+        booking_instance.booking_date = form.cleaned_data['booking_date']
 
         # Check time constraints using the existing logic
         if not check_timings(booking_instance, restaurant, form):
@@ -112,6 +115,8 @@ def handle_booking_form(request, form, restaurant, booking=None):
             booking.end_time = booking_instance.end_time
             booking.tables.set(form.cleaned_data['tables'])  # Update the many-to-many relationship using cleaned data
             booking.message = booking_instance.message  # Update message if any
+            booking.customer_name = booking_instance.customer_name  # Update customer name
+            booking.booking_date = booking_instance.booking_date  # Update booking date
             booking.save()  # Save the updated booking
         else:
             booking_instance.save()  # Save the new booking
