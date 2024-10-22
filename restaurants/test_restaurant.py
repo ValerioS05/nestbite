@@ -13,9 +13,9 @@ class RestaurantViewTests(TestCase):
 
     def test_restaurant_list_view(self):
         """
-        Set up test restaurant
-        Test logged in user
-        Test Filter by capacity (75)
+        Set up test restaurant.
+        Test logged in user.
+        Test response status is 200 and restaurant if present.
         """
         Restaurant.objects.create(
             name='Restaurant One',
@@ -35,6 +35,9 @@ class RestaurantViewTests(TestCase):
         self.assertContains(response, 'Restaurant One')
 
     def test_filter_restaurant_by_capacity(self):
+        """
+        Test the filtering by capacity(75)
+        """
         Restaurant.objects.create(
             name='Restaurant One',
             address='123',

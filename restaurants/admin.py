@@ -3,7 +3,6 @@ from .models import Restaurant, Table
 from django_summernote.admin import SummernoteModelAdmin
 
 
-# Register your models here.
 @admin.register(Restaurant)
 class RestaurantAdmin(SummernoteModelAdmin):
     list_display = ('name', 'capacity', 'opening_time', 'closing_time')

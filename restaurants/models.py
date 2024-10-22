@@ -34,6 +34,17 @@ class Table(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def clean(self):
+        """
+        Validating the table data before saving.
+
+        Ensures:
+            The table capacity is a positive integer.
+            Adding the table does not exceed the restaurant's total capacity.
+            The table number is unique within the restaurant.
+        
+        Raises:
+            ValidationError if any of the above conditions arent met.
+        """
         current_total_capacity = sum(
             table.capacity for table in self.restaurant.tables.all()
             )
@@ -53,6 +64,7 @@ class Table(models.Model):
             )
 
     def save(self, *args, **kwargs):
+        """ Overriding save() to include custom logic before saving."""
         self.clean()
         super().save(*args, **kwargs)
 
@@ -61,6 +73,10 @@ class Table(models.Model):
         (Max: {self.capacity}) at {self.restaurant}"""
 
     class Meta:
+        """
+        Orders the Table objects by table_number and restaurant.
+        Add a unique constraint so that table numbers are unique within the restaurant.
+        """
         ordering = ['table_number', 'restaurant']
         constraints = [
             UniqueConstraint(fields=[

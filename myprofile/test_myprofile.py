@@ -8,7 +8,7 @@ from .forms import ProfileForm, ContactForm
 class ProfileViewTests(TestCase):
 
     def setUp(self):
-        """ Set up test user"""
+        """ Set up test user."""
         self.user = User.objects.create_user(
             username='testuser', password='test123'
             )

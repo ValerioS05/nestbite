@@ -34,7 +34,7 @@ class BookingTests(TestCase):
         )
 
     def test_create_booking(self):
-        """Test booking creation table/user/time constraints"""
+        """Test booking creation table/user/time constraints."""
         self.client.login(username='testuser', password='testpass')
 
         start_time = (timezone.now() + timedelta(hours=2, minutes=1)).time()
