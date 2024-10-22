@@ -9,11 +9,24 @@ from django.contrib.auth.models import User
 
 @login_required
 def profile_view(request):
+    """ Render the profile view for the logged user. """
     return render(request, 'profile/profile.html', {'user': request.user})
 
 
 @login_required
 def profile_edit(request):
+    """
+    Allow the logged user to edit their profile information (username/email).
+    Validateing the uniqueness of the username/email.
+
+    Args:
+        request (HttpRequest): The HTTP request. If POST attempts to 
+        update the profile. Otherwise, renders the form with the current user details.
+
+    Returns:
+        HttpResponse: Redirects to the profile page if successful, or renders 
+        the form with validation errors if any.
+    """
     if request.method == 'POST':
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -42,6 +55,20 @@ def profile_edit(request):
 
 @login_required
 def contact_us(request):
+    """
+    Handle the form submission for logged users.
+    Sends an email to the site admin containing the user's message.
+
+    Args:
+        request (HttpRequest): The HTTP request. If POST, processes 
+        the form submission and sends the message. otherwise, renders 
+        an empty form.
+
+    Returns:
+        HttpResponse: Redirects to the Contact Us page if the message 
+        was successfully sent or re-renders the form with an error message 
+        in case of any.
+    """
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
