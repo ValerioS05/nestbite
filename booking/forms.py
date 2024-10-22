@@ -1,13 +1,21 @@
 from django import forms
-# Import the forms module from Django
 from .models import Booking, Review
-# Import the Booking model from the current app
 from restaurants.models import Table, Restaurant
-# Import the Table and Restaurant models from the restaurants app
 
 
-# Define form based on the Booking model
 class BookingForm(forms.ModelForm):
+    """
+    A form for creating and managing restaurant table bookings.
+
+    The form is based on the Booking model and allows users to select tables,
+    provide customer details, and specify booking date and times.
+    The tables are filtered based on the selected restaurant, and the form automatically
+    sets the time input fields according to the restaurant opening and closing.
+
+    Attributes:
+        tables (ModelMultipleChoiceField): A checkbox field that allows multiple table
+        selection, filtered by the specified restaurant.
+    """
     tables = forms.ModelMultipleChoiceField(
         queryset=Table.objects.none(),
         required=True,
@@ -15,40 +23,39 @@ class BookingForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Booking  # specify which model
+        """ Specifies the model and the fields to be included in the form. """
+        model = Booking
         fields = ['tables', 'customer_name', 'booking_date',
                   'start_time', 'end_time', 'message']
 
     def __init__(self, *args, **kwargs):
+        """
+        Initializes the BookingForm and filters the available tables based on the restaurant.
+        Sets date and time picker for booking date and times.
+        """
         restaurant_id = kwargs.pop('restaurant_id', None)
-        # Get the restaurant id from keywords
         super().__init__(*args, **kwargs)
 
-        # Filter tables based on the selected restaurant
-        if restaurant_id:  # Check if an id was provided
+        if restaurant_id:
             self.fields['tables'].queryset = Table.objects.filter(
                 restaurant_id=restaurant_id
-            )  # Filter tables of specified id
+            )
 
             self.fields['tables'].choices = [
                 (table.id, f"""
                     Table {table.table_number} (Max: {table.capacity})
                     - £{table.price:.2f}""")
-                # Display the table and price
                 for table in self.fields['tables'].queryset
             ]
 
-            # Fetch the restaurant to get opening and closing hours
             restaurant = Restaurant.objects.get(id=restaurant_id)
             opening_time = restaurant.opening_time
             closing_time = restaurant.closing_time
 
-            # Set widgets for date
             self.fields['booking_date'].widget = forms.DateInput(
                 attrs={'type': 'date'}
-            )  # Date picker
+            )
 
-            # Set initial value and attributes for start_time
             self.fields['start_time'].widget = forms.TimeInput(
                 attrs={
                     'type': 'time',
@@ -66,9 +73,13 @@ class BookingForm(forms.ModelForm):
             )
 
 
-# Define form based on the Review model
 class ReviewForm(forms.ModelForm):
+    """
+    This form is based on the Review model and allows users to provide a rating (1 to 5)
+    and leave an optional message.
+    """
     class Meta:
+        """ custom widgets for the rating and message fields. """
         model = Review
         fields = ['rating', 'message']
         widgets = {

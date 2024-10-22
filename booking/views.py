@@ -10,7 +10,6 @@ from .models import Booking, Review
 from restaurants.models import Restaurant, Table
 
 
-
 def check_timings(booking, restaurant, form):
     """
     Checks that the booking timings are within the restaurant's operating hours

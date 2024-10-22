@@ -28,7 +28,6 @@ class RestaurantViewTests(TestCase):
             owner=self.user,
         )
 
-        # Log in the user to access the view
         self.client.login(username='testuser', password='test123')
 
         response = self.client.get(reverse('restaurant_list'))
@@ -36,7 +35,6 @@ class RestaurantViewTests(TestCase):
         self.assertContains(response, 'Restaurant One')
 
     def test_filter_restaurant_by_capacity(self):
-        # Create a Restaurant object
         Restaurant.objects.create(
             name='Restaurant One',
             address='123',
@@ -48,7 +46,6 @@ class RestaurantViewTests(TestCase):
             owner=self.user,
         )
 
-        # Log in the user to access the view
         self.client.login(username='testuser', password='test123')
 
         response = self.client.get(reverse('restaurant_list') + '?capacity=75')
