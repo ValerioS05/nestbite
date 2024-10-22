@@ -10,14 +10,25 @@ from .models import Booking, Review
 from restaurants.models import Restaurant, Table
 
 
-# Check if the booking is within restaurant hours and constraints
+
 def check_timings(booking, restaurant, form):
+    """
+    Checks that the booking timings are within the restaurant's operating hours
+    and also checks the minimum and maximum stay duration.
+
+    Args:
+        booking (Booking): The booking instance being validated.
+        restaurant (Restaurant): The restaurant instance for checking working hours.
+        form (BookingForm): The form containing the booking details.
+
+    Return:
+        bool: True if the checks are valid, False otherwise.
+    """
     start_time = booking.start_time
     end_time = booking.end_time
     opening_time = restaurant.opening_time
     closing_time = restaurant.closing_time
 
-    # Ensure booking is within the restaurant's hours
     if start_time < opening_time or end_time > closing_time:
         form.add_error(
             None,
@@ -25,7 +36,6 @@ def check_timings(booking, restaurant, form):
         )
         return False
 
-    # Ensure the booking starts at least 1 hour before closing time
     one_hour_before_closing = (
         datetime.combine(booking.booking_date, closing_time)
         - timedelta(hours=1)
@@ -39,11 +49,10 @@ def check_timings(booking, restaurant, form):
         )
         return False
 
-    # Calculate duration and check minimum and maximum stay duration
     duration = (
         datetime.combine(booking.booking_date, end_time)
         - datetime.combine(booking.booking_date, start_time)
-    ).total_seconds() / 3600  # Convert to hours
+    ).total_seconds() / 3600
 
     if duration < 1:
         form.add_error(None, "The minimum stay for a booking is 1 hour.")
@@ -56,8 +65,26 @@ def check_timings(booking, restaurant, form):
     return True
 
 
-# Check for overlapping bookings for the selected tables
 def overlapping_bookings(booking, form, current_booking=None):
+    """
+    Check for overlapping bookings for the selected tables during the specified
+    time window (start_time to end_time).
+    Considering the possibility that the 
+    current booking is an update to an existing booking (in this
+    case, it excludes that booking from the overlap check).
+
+    Args:
+        booking (Booking): The booking instance being checked.
+        form (BookingForm): The form containing the booking details.
+        current_booking (Booking, optional): The current booking instance being
+        updated. Defaults to None.
+
+    Returns:
+        bool: True if there are overlapping bookings for the selected tables 
+        during the specified time, False otherwise. If an overlap is 
+        found, the function suggests alternative available tables 
+        within a similar price range and capacity.
+    """
     if not booking.id:
         selected_tables = form.cleaned_data['tables']
     else:
@@ -71,7 +98,6 @@ def overlapping_bookings(booking, form, current_booking=None):
         end_time__gt=booking.start_time
     )
 
-    # If updating, exclude the current booking from the overlap check
     if current_booking:
         overlapping_bookings = overlapping_bookings.exclude(
             id=current_booking.id)
@@ -94,7 +120,7 @@ def overlapping_bookings(booking, form, current_booking=None):
         suggested_tables = Table.objects.exclude(
             id__in=unavailable_tables).filter(
             price__gte=price_min, price__lte=price_max
-        )[:4]  # Limit to max of 4 suggestions
+        )[:4]
 
         if suggested_tables.exists():
             suggestion_list = ', '.join(
@@ -109,34 +135,49 @@ def overlapping_bookings(booking, form, current_booking=None):
     return False
 
 
-# Handle booking form submission and validation
 def handle_booking_form(request, form, restaurant, booking=None):
+    """
+    Handle form submission/validation for creating/updating a booking.
+    The function checks the validity of the form data, ensures that the booking
+    is within restaurant hours and that there are no overlapping bookings
+    for the selected table(s). If the booking is valid, it saves the data to the
+    database.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+        form (BookingForm): The form containing the booking details.
+        restaurant (Restaurant): The restaurant connected to the booking.
+        booking (Booking, optional): The existing booking being updated.
+        Defaults to None.
+
+    Returns:
+        tuple: A tuple containing a boolean indicating success, and either the
+        booking instance or the form with errors. This depends on the result 
+        of the form submission, if the form is valid the function redirect
+        to the right view. If unsuccesfull renders the form with errors.
+    """
     if form.is_valid():
         booking_instance = form.save(commit=False)
 
-        # If updating copy over existing values
         if booking:
             booking_instance.id = booking.id
             booking_instance.customer_email = booking.customer_email
             booking_instance.user = booking.user
         else:
-            # For new bookings, assign the user
+
             booking_instance.customer_email = request.user.email
             booking_instance.user = request.user
 
         booking_instance.customer_name = form.cleaned_data['customer_name']
         booking_instance.booking_date = form.cleaned_data['booking_date']
 
-        # Check time constraints using the existing logic
         if not check_timings(booking_instance, restaurant, form):
             return False, form
 
-        # Pass the current booking to the overlapping check
         if overlapping_bookings(
                 booking_instance, form, current_booking=booking):
             return False, form
 
-        # Save the booking
         if booking:
             booking.start_time = booking_instance.start_time
             booking.end_time = booking_instance.end_time
@@ -155,6 +196,17 @@ def handle_booking_form(request, form, restaurant, booking=None):
 
 @login_required
 def create_booking(request, restaurant_id):
+    """
+    Create a new booking for a specific restaurant
+    by processing the form.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+        restaurant_id (int): The ID of the restaurant.
+
+    Returns:
+        HttpResponse: The rendered booking form or a redirect on success.
+    """
     restaurant = get_object_or_404(Restaurant, id=restaurant_id)
 
     if request.method == 'POST':
@@ -181,9 +233,18 @@ def create_booking(request, restaurant_id):
 
 @login_required
 def update_booking(request, booking_id):
+    """
+    Update an existing booking.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+        booking_id (int): The ID of the booking to be updated.
+
+    Returns:
+        HttpResponse: The rendered update form or a redirect on success.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # Check right to modify
     if not (
             request.user.is_staff or
             booking.customer_email == request.user.email):
@@ -227,6 +288,16 @@ def update_booking(request, booking_id):
 
 @login_required
 def booking_list(request):
+    """
+    Display the list of bookings for the current user.
+    Admin can see all bookings.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+
+    Returns:
+        HttpResponse: The rendered booking list.
+    """
     user = request.user
     filter_date_str = request.GET.get('filter_date', None)
     filter_date = None
@@ -242,7 +313,6 @@ def booking_list(request):
     if filter_date:
         bookings = bookings.filter(booking_date=filter_date)
 
-    # Delete finished bookings
     for booking in bookings:
         delete_finished_booking(booking.id)
 
@@ -254,9 +324,18 @@ def booking_list(request):
 
 @login_required
 def booking_detail(request, booking_id):
+    """
+    Display the details of a specific booking and handle review.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+        booking_id (int): The ID of the booking.
+
+    Returns:
+        HttpResponse: The rendered booking details and review form.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # Check right to access booking details
     if not (request.user.is_staff
             or booking.customer_email == request.user.email):
         return redirect('booking_list')
@@ -264,7 +343,6 @@ def booking_detail(request, booking_id):
     existing_review = booking.reviews.filter(user=request.user).first()
 
     if request.method == 'POST':
-        # Prevent submitting multiple reviews
         if existing_review:
             messages.info(
                 request, "You have submitted a review for this booking."
@@ -301,24 +379,42 @@ def booking_detail(request, booking_id):
 
 
 @login_required
+
 def cancel_booking(request, booking_id):
+    """
+    Cancel an existing booking.
+
+    Args:
+        request (HttpRequest): The current HTTP request.
+        booking_id (int): The ID of the booking to be canceled.
+
+    Returns:
+        HttpResponse: Redirects to the booking list on success.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
 
-    # Check right to cancel
     if not (request.user.is_staff
             or booking.customer_email == request.user.email):
         messages.error(request, "You are not allowed to cancel this booking.")
         return redirect('booking_list')
 
-    # Set booking as canceled
     booking.canceled = True
     booking.save()
     messages.success(request, "Your booking has been successfully canceled.")
     return redirect('booking_list')
 
 
-# Remove finished bookings from the database
 def delete_finished_booking(booking_id):
+    """
+    Delete a booking if it's finished and two hours passed since
+    the booking end time.
+
+    Args:
+        booking_id (int): The ID of the booking to be checked and possibly deleted.
+
+    Returns:
+        bool: True if the booking was deleted, False otherwise.
+    """
     booking = get_object_or_404(Booking, id=booking_id)
     booking_datetime = timezone.make_aware(
         datetime.combine(booking.booking_date, booking.end_time)
