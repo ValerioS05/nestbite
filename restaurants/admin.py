@@ -11,6 +11,7 @@ class RestaurantAdmin(SummernoteModelAdmin):
     list_filter = ('name',)
     summernote_fields = ('description',)
 
+
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
     list_display = ('table_number', 'capacity', 'price', 'restaurant')
