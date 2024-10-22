@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-# Create your models here.
+from django.db.models import UniqueConstraint
+
 
 
 class Restaurant(models.Model):
@@ -58,4 +59,6 @@ class Table(models.Model):
 
     class Meta:
         ordering = ['table_number', 'restaurant']
-        unique_together = ('restaurant', 'table_number')
+        constraints = [
+            UniqueConstraint(fields=['restaurant', 'table_number'], name='unique_table_number_per_restaurant'),
+        ]

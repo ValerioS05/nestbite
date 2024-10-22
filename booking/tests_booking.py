@@ -6,7 +6,9 @@ from .models import Booking, Table
 from django.contrib.auth.models import User
 from restaurants.models import Restaurant
 
+
 class BookingTests(TestCase):
+    """Set up test user/restaurant/table"""
     def setUp(self):
         self.user = User.objects.create_user(
             username='testuser',
@@ -32,6 +34,7 @@ class BookingTests(TestCase):
         )
 
     def test_create_booking(self):
+        """Test booking creation table/user/time constraints"""
         self.client.login(username='testuser', password='testpass')
 
         start_time = (timezone.now() + timedelta(hours=2, minutes=1)).time()
