@@ -11,7 +11,7 @@ import string
 class Booking(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='bookings'
-    )  # Connect Booking to User
+    )
     tables = models.ManyToManyField(Table, related_name='bookings')
     customer_name = models.CharField(max_length=100)
     customer_email = models.EmailField()
@@ -25,6 +25,14 @@ class Booking(models.Model):
     canceled = models.BooleanField(default=False)
 
     def clean(self):
+        """
+        Validate booking details before saving the instance.
+
+        Raises:
+            ValidationError: If the booking time is in the past,
+            less than two hours in advance, or more than twelve
+            months in the future.
+        """
         if self.start_time is None:
             raise ValidationError("Start time cannot be None.")
         if self.end_time is None:
@@ -33,18 +41,14 @@ class Booking(models.Model):
             datetime.combine(self.booking_date, self.start_time)
         )
         now = timezone.now()
-        # Calculate twelve months from now
         twelve_months_later = now + timedelta(days=365)
 
-        # Check if the booking is in the past
         if booking_datetime_start < now:
             raise ValidationError("Cannot book in the past.")
-        # Check if the booking is at least 2 hours in advance
         if booking_datetime_start < now + timedelta(hours=2):
             raise ValidationError(
                 "Bookings must be made at least 2 hours in advance."
             )
-        # Check if the booking date is within the next 12 months
         if booking_datetime_start > twelve_months_later:
             raise ValidationError(
                 "Bookings can only be made for up to 12 months in advance."
@@ -52,28 +56,43 @@ class Booking(models.Model):
 
     @staticmethod
     def generate_booking_reference():
+        """
+        Generate a unique booking reference consisting of uppercase letters
+        and numbers.
+
+        Returns:
+            str:Randomly generated booking reference of 10 characters.
+        """
         return ''.join(
             random.choices(string.ascii_uppercase + string.digits, k=10)
         )
 
     def save(self, *args, **kwargs):
+        """
+        Save the booking instance, generating a booking reference if it
+        doesn't already exist.
+        """
         if not self.booking_reference:
             self.booking_reference = Booking.generate_booking_reference()
         super().save(*args, **kwargs)
 
-    # Calculate the total price of the booking based on the tables booked
     @property
     def total_price(self):
         return sum(table.price for table in self.tables.all())
 
     def cancel(self):
-        """Cancels the booking if at least 2 hours before the booking time."""
+        """
+        Cancel the booking if it is at least 2 hours before the booking time.
+
+        Raises:
+            ValidationError:When attempting to cancel in less than 2 hours
+            of the booking time.
+        """
         booking_datetime = timezone.make_aware(
             datetime.combine(self.booking_date, self.start_time)
         )
         now = timezone.now()
 
-        # Check if the booking can be canceled (at least 2 hours before)
         if booking_datetime < now + timedelta(hours=2):
             raise ValidationError(
                 "You can only cancel your booking 2 hours in advance."
@@ -95,7 +114,7 @@ class Review(models.Model):
     )
     restaurant = models.ForeignKey(
         Restaurant, on_delete=models.CASCADE, related_name='reviews'
-    )  # Link to Restaurant
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=1)
     message = models.TextField(blank=True, null=True)
