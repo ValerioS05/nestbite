@@ -22,7 +22,7 @@
 </form>
 
 <div class="list-group">
-    {% for restaurant in restaurants %}
+    {% for restaurant in page_obj %}
         <a href="{% url 'restaurant_detail' restaurant.pk %}" class="list-group-item list-group-item-action">
             <h5 class="mb-1">{{ restaurant.name }}</h5>
             <p class="mb-1">Address: {{ restaurant.address }}</p>
@@ -34,6 +34,22 @@
         <div class="list-group-item">No restaurants available.</div>
     {% endfor %}
 </div>
+
+<!-- Pagination Controls -->
+<ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a href="?page={{ page_obj.previous_page_number }}&capacity={{ request.GET.capacity }}&opening_time={{ request.GET.opening_time }}"
+          class="page-link">&laquo; PREV</a>
+    </li>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a href="?page={{ page_obj.next_page_number }}&capacity={{ request.GET.capacity }}&opening_time={{ request.GET.opening_time }}"
+          class="page-link">NEXT &raquo;</a>
+    </li>
+    {% endif %}
+</ul>
 
 <script src="{% static 'js/restaurant_filter.js' %}"></script>
 {% endblock %}
