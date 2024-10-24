@@ -29,18 +29,20 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '8000-valerios05-nestbite-x0yb3k3gjuz.ws.codeinstitute-ide.net',
-    '.herokuapp.com'
+    '.herokuapp.com',
+    'localhost',
+    'https://nestbite-5dd11ab0ac7f.herokuapp.com/',
     ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://8000-valerios05-nestbite-sttxgmzo342.ws.codeinstitute-ide.net',
-    'https://nestbite-5dd11ab0ac7f.herokuapp.com/',
-    'https://*.codeinstitute-ide.net/',
-    'https://*.herokuapp.com'
+    'https://nestbite-5dd11ab0ac7f.herokuapp.com',
+    'https://*.codeinstitute-ide.net',
+    'https://*.herokuapp.com',
 ]
 # Application definition
 
