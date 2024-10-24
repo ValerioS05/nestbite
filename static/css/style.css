@@ -55,6 +55,11 @@ html, body {
     font-size: 20px;
 }
 
+/* Restaurant list (restaurants.html)*/
+
+.restaurant-item-wrapper {
+    margin-bottom: 40px;
+}
 
 /* Footer style */
 .footer {
