@@ -1,0 +1,16 @@
+/* Account forms */
+/* Headings */
+h1, h2 {
+    color: black;
+    text-align: center;
+}
+
+/* Buttons */
+button {
+    color: #007bff;
+    width: auto;
+    padding: 10px;
+    border: 2px double black;
+    border-radius: 40px;
+    cursor: pointer;
+}
