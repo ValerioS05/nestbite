@@ -382,7 +382,6 @@ def booking_detail(request, booking_id):
     )
 
 
-
 @login_required
 
 def cancel_booking(request, booking_id):

@@ -1,16 +1,37 @@
 
 /* Headings */
-h1, h2 {
-    color: black;
+h1, h2, h3, h4, h5, h6 {
+    text-align: center;
+}
+
+.content-wrapper {
     text-align: center;
 }
 
 /* Buttons */
-button {
-    color: black;
+button ,input{
     width: auto;
     padding: 10px;
-    border: 2px double black;
-    border-radius: 40px;
+    border: 2px solid black;
+    border-radius: 20px;
     cursor: pointer;
+    margin-top: 20px;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
 }
+
+button:hover {
+    color: white;
+    background-color: black;
+    box-shadow: 0 10px 10px black;
+}
+
+ul {
+    list-style: none;
+}
+
+label {
+    font-weight: 600;
+}
+
+
+

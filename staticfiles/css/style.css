@@ -5,15 +5,43 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
 }
 
+/*General font for headings*/
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Italianno', cursive;
+    font-size: 3rem;
+    color: black;
+}
+footer h5 {
+    color: white;
+    font-size: 25px;
+}
 .content-wrapper {
     flex: 1;
-    text-align: center;
 }
 
+label {
+    margin: 15px;
+}
 
+/* Profile button in navbar */
+.prof-ico {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-color: black;
+    color: black;
+}
 
+.prof-ico:hover {
+    box-shadow: 0 5px 5px black;
+}
 /*Logo and feature section (index.html)*/
 .logo {
     height: auto;
@@ -45,17 +73,10 @@ html, body {
     font-size: 18px;
     margin-top: 20px;
 }
-
-.rest-btn-container a {
-    color:black;
-    background-color: whitesmoke;
-    border: 5px double grey;
-    border-radius: 10px;
-    width: 150px;
-    text-align: center;
-    font-size: 20px;
+.rating-form {
+    display: flex;
+    flex-direction: row;
 }
-
 /* Restaurant list (restaurants.html)*/
 
 .restaurant-item-wrapper {
@@ -63,17 +84,101 @@ html, body {
     box-shadow: 0 10px 10px grey;
     border-radius: 20px;
     text-align: center;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
 }
 
-.page-item {
+.restaurant-item-wrapper:hover {
+    box-shadow: 0 18px 10px black;
+}
+
+
+/* Buttons */
+
+.mod-btn {
     border-radius: 10px;
     border: 4px double black;
-}
-.page-link {
     color: black;
-    padding: auto;
-    border-radius: 20px;
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 50px;
+    text-decoration: none;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
 }
+
+.mod-btn:hover {
+    color: white;
+    box-shadow: 0 5px 5px black;
+    background-color: black;
+}
+
+/*Button (index.html) */
+.mod-btn-index {
+    border-radius: 10px;
+    border: 4px double white;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    margin-top: 50px;
+    text-decoration: none;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
+}
+
+.mod-btn-index:hover {
+    color: black;
+    box-shadow: 0 5px 5px white;
+    background-color: white;
+}
+/*Clear buttons mod (restaurants.html)*/
+.clear-btn {
+    border-radius: 10px;
+    border: 4px double black;
+    color: black;
+    text-align: center;
+    padding: 0.3rem;
+    text-decoration: none;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
+}
+
+.clear-btn:hover {
+    color: white;
+    box-shadow: 0 5px 5px black;
+    background-color: black;
+}
+
+/* Contact us textare */
+textarea{
+    max-width: 100%;
+}
+
+/* Bookings template */
+.boo-btn {
+    color: black;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
+    border: 4px double black;
+}
+
+.boo-btn:hover {
+    color: white;
+    box-shadow: 0 5px 5px black;
+    background-color: black;
+}
+
+.boo-det {
+    border: 2px solid black;
+    margin:0.5em;
+    padding: 8px;
+    list-style-type: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px black;
+}
+
+
+
+.tab-selec div {
+    border: 1px solid black;
+}
+
+
 /* Footer style */
 .footer {
     flex-shrink: 0;
@@ -113,17 +218,6 @@ html, body {
     text-align: center;
 }
 
-/* Profile button in navbar */
-.user-profile-btn a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border-color: black;
-    color: black;
-}
 
 @media screen and (min-width: 700px) {
 
