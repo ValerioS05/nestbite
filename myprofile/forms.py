@@ -11,6 +11,9 @@ class ProfileForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
 
+        help_texts = {
+            'username': '',
+        }
 
 class ContactForm(forms.Form):
     """ Simple CharField as widget(textarea) for the user to insert their message. """
