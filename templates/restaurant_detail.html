@@ -9,7 +9,7 @@
 
     <div class="image-gallery">
         <div class="image-container">
-            {% if "placeholder" in post.featured_image.url %}
+            {% if "placeholder" in restaurant.featured_image.url %}
             <img class="card-img-top" src="{% static 'images/default.jpg' %}"
                 alt="placeholder image">
             {% else %}
