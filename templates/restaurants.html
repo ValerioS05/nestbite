@@ -10,20 +10,20 @@
             <label for="capacity" class="form-label text-center">Capacity</label>
             <input type="number" name="capacity" id="capacity" class="form-control form-control-lg" value="{{ request.GET.capacity }}" onchange="submitForm()">
             <div class="text-center mt-2">
-                <button type="button" class="btn btn-outline-secondary" onclick="clearField('capacity')">Clear</button>
+                <button type="button" class="clear-btn" onclick="clearField('capacity')">Clear</button>
             </div>
         </div>
         <div class="col">
             <label for="opening_time" class="form-label text-center">Opening Time</label>
             <input type="time" name="opening_time" id="opening_time" class="form-control form-control-lg" value="{{ request.GET.opening_time }}" onchange="submitForm()">
             <div class="text-center mt-2">
-                <button type="button" class="btn btn-outline-secondary" onclick="clearField('opening_time')">Clear</button>
+                <button type="button" class="clear-btn" onclick="clearField('opening_time')">Clear</button>
             </div>
         </div>
     </div>
     <div class="row mb-3">
         <div class="col text-center">
-            <button type="submit" class="btn btn-outline-secondary btn-lg w-50">Filter</button>
+            <button type="submit" class="clear-btn btn-lg w-50">Filter</button>
         </div>
     </div>
 </form>
@@ -49,13 +49,13 @@
     {% if page_obj.has_previous %}
     <li class="page-item">
         <a href="?page={{ page_obj.previous_page_number }}&capacity={{ request.GET.capacity }}&opening_time={{ request.GET.opening_time }}"
-          class="page-link">&laquo; PREV</a>
+          class="mod-btn">&laquo; PREV</a>
     </li>
     {% endif %}
     {% if page_obj.has_next %}
     <li class="page-item">
         <a href="?page={{ page_obj.next_page_number }}&capacity={{ request.GET.capacity }}&opening_time={{ request.GET.opening_time }}"
-          class="page-link">NEXT &raquo;</a>
+          class="mod-btn">NEXT &raquo;</a>
     </li>
     {% endif %}
 </ul>

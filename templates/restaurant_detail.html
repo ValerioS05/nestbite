@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
     <h1>{{ restaurant.name }}</h1>
     <p><strong>Address:</strong> {{ restaurant.address }}</p>
@@ -10,10 +11,9 @@
     <div class="image-gallery">
         <div class="image-container">
             {% if "placeholder" in restaurant.featured_image.url %}
-            <img class="card-img-top" src="{% static 'images/default.jpg' %}"
-                alt="placeholder image">
+            <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
             {% else %}
-            <img class="card-img-top" src=" {{ restaurant.featured_image.url }}" alt="{{ post.name }}">
+            <img class="card-img-top" src="{{ restaurant.featured_image.url }}" alt="{{ restaurant.name }}">
             {% endif %}
             <div class="image-flash">
                 <p class="owner">Owner: {{ restaurant.owner }}</p>
@@ -21,11 +21,17 @@
         </div>
     </div>
 
-
     {% if user.is_authenticated %}
-    <a href="{% url 'create_booking' restaurant.id %}" class="btn btn-primary">Make a Reservation</a>
+        <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
+    {% else %}
+        <div class="alert alert-danger mt-3 text-center">
+            <strong class="">
+                To make a reservation: please
+                <a href="{% url 'account_signup' %}" class="btn btn-link">Sign Up</a> or 
+                <a href="{% url 'account_login' %}" class="btn btn-link">Login</a>
+            </strong>
+        </div>
     {% endif %}
 
-
-    <a href="{% url 'restaurant_list' %}" class="btn btn-secondary">Back to the restaurants</a>
+    <a href="{% url 'restaurant_list' %}" class="mod-btn">Back to the restaurants</a>
 {% endblock %}
