@@ -7,7 +7,7 @@
 <form method="get" class="mb-4" id="filterForm" style="display: block;">
     <div class="row mb-3">
         <div class="col">
-            <label for="capacity" class="form-label text-center">Minimum Capacity</label>
+            <label for="capacity" class="form-label text-center">Capacity</label>
             <input type="number" name="capacity" id="capacity" class="form-control form-control-lg" value="{{ request.GET.capacity }}" onchange="submitForm()">
             <div class="text-center mt-2">
                 <button type="button" class="btn btn-outline-secondary" onclick="clearField('capacity')">Clear</button>
