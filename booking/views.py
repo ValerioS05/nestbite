@@ -339,9 +339,9 @@ def booking_detail(request, booking_id):
         HttpResponse: The rendered booking details and review form.
     """
     booking = get_object_or_404(Booking, id=booking_id)
+    is_owner = booking.customer_email == request.user.email
 
-    if not (request.user.is_staff
-            or booking.customer_email == request.user.email):
+    if not (request.user.is_staff or is_owner):
         return redirect('booking_list')
 
     existing_review = booking.reviews.filter(user=request.user).first()
@@ -369,7 +369,7 @@ def booking_detail(request, booking_id):
 
             return redirect('booking_detail', booking_id=booking.id)
     else:
-        review_form = ReviewForm() if not existing_review else None
+        review_form = ReviewForm() if is_owner and not existing_review else None
 
     return render(
         request, 'booking/booking_detail.html',
@@ -380,6 +380,7 @@ def booking_detail(request, booking_id):
             'feedback_message': None,
         }
     )
+
 
 
 @login_required

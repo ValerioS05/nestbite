@@ -4,40 +4,41 @@
 
 {% block content %}
 <h1 class="text-center">Your Bookings</h1>
-
-<!-- Filter Form -->
-<form method="GET" class="mb-4">
-    <div class="input-group">
-        <input type="date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
-        <button type="submit" class="btn boo-btn">Filter by Date</button>
-        <a href="{% url 'booking_list' %}" class="btn boo-btn">Clear Filter</a>
-    </div>
-</form>
-
-<ul class="list-group ">
-    {% for booking in bookings %}
-        <li class="mt-4 boo-det">
-            <h4>{{ booking.customer_name }}</h2> - 
-            {{ booking.booking_date }} at {{ booking.start_time }}<br>
-            Restaurant: {{ booking.tables.first.restaurant.name }}
-            <br>
-            <a href="{% url 'booking_detail' booking.id %}" class="btn btn-sm boo-btn">View Details</a>
-            <a href="{% url 'update_booking' booking.id %}" class="btn btn-warning btn-sm float-end mx-2">Update</a>
-            <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm float-end" onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel Booking</a>
-        </li>
-    {% empty %}
-        <li class="list-group-item">No bookings found.</li>
-    {% endfor %}
-</ul>
-
 {% if messages %}
-  <div class="container mt-3">
-    {% for message in messages %}
-      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    {% endfor %}
+<div class="container mt-3">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
-{% endif %}
+  {% endfor %}
+
+  {% endif %}
+  <!-- Filter Form -->
+  <form method="GET" class="mb-4">
+    <div class="input-group">
+      <input type="date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
+      <button type="submit" class="btn boo-btn">Filter by Date</button>
+      <a href="{% url 'booking_list' %}" class="btn boo-btn">Clear Filter</a>
+    </div>
+  </form>
+
+  <ul class="list-group ">
+    {% for booking in bookings %}
+    <li class="mt-4 boo-det">
+      <h4>{{ booking.customer_name }}</h2> -
+        {{ booking.booking_date }} at {{ booking.start_time }}<br>
+        Restaurant: {{ booking.tables.first.restaurant.name }}
+        <br>
+        <a href="{% url 'booking_detail' booking.id %}" class="btn btn-sm boo-btn">View Details</a>
+        <a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning btn-sm float-end mx-2">Update</a>
+        <a href="{% url 'cancel_booking' booking.id %}" class="boo-btn btn btn-danger btn-sm float-end"
+          onclick="return confirm('Are you sure you want to cancel this booking?');">Cancel Booking</a>
+    </li>
+    {% empty %}
+    <li class="list-group-item">No bookings found.</li>
+    {% endfor %}
+  </ul>
+
+</div>
 {% endblock %}
