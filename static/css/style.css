@@ -28,7 +28,7 @@ label {
 }
 
 /* Profile button in navbar */
-.user-profile-btn a {
+.prof-ico {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,6 +37,10 @@ label {
     border-radius: 50%;
     border-color: black;
     color: black;
+}
+
+.prof-ico:hover {
+    box-shadow: 0 5px 5px black;
 }
 /*Logo and feature section (index.html)*/
 .logo {

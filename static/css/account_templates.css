@@ -16,7 +16,13 @@ button ,input{
     border-radius: 20px;
     cursor: pointer;
     margin-top: 20px;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
+}
 
+button:hover {
+    color: white;
+    background-color: black;
+    box-shadow: 0 10px 10px black;
 }
 
 ul {
