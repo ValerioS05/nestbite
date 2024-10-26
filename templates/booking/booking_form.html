@@ -8,7 +8,7 @@
         {% endfor %}
     </div>
 {% endif %}
-<div class="container mt-5">
+<div class="container mt-5 text-center">
     <h2>Book a Table</h2>
     <form method="POST" id="bookingForm">
         {% csrf_token %}
@@ -37,17 +37,18 @@
             {{ form.end_time }}
         </div>
 
-        <div class="mb-3">
-            <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
-            {{ form.tables }}
+        <div class="row mb-3 tab-selec">
+            <div class="col-md-6">
+                <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
+                {{ form.tables }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+                {{ form.message }}
+            </div>
         </div>
 
-        <div class="mb-3">
-            <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
-            {{ form.message }}
-        </div>
-
-        <button type="submit" class="btn btn-primary">Book Now</button>
+        <button type="submit" class="mod-btn">Book Now</button>
     </form>
 </div>
 

@@ -8,13 +8,13 @@
     <div class="row mb-3">
         <div class="col">
             <label for="capacity" class="form-label text-center">Capacity</label>
-            <input type="number" name="capacity" id="capacity" class="form-control form-control-lg" value="{{ request.GET.capacity }}" onchange="submitForm()">
+            <input type="number" name="capacity" id="capacity" class="form-control form-control-lg" value="{{ request.GET.capacity }}" min="0" onchange="submitForm()">
             <div class="text-center mt-2">
                 <button type="button" class="clear-btn" onclick="clearField('capacity')">Clear</button>
             </div>
         </div>
         <div class="col">
-            <label for="opening_time" class="form-label text-center">Opening Time</label>
+            <label for="opening_time" class="form-label text-center">Time</label>
             <input type="time" name="opening_time" id="opening_time" class="form-control form-control-lg" value="{{ request.GET.opening_time }}" onchange="submitForm()">
             <div class="text-center mt-2">
                 <button type="button" class="clear-btn" onclick="clearField('opening_time')">Clear</button>

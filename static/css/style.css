@@ -27,6 +27,17 @@ label {
     margin: 15px;
 }
 
+/* Profile button in navbar */
+.user-profile-btn a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border-color: black;
+    color: black;
+}
 /*Logo and feature section (index.html)*/
 .logo {
     height: auto;
@@ -127,10 +138,40 @@ label {
     background-color: black;
 }
 
-
+/* Contact us textare */
 textarea{
     max-width: 100%;
 }
+
+/* Bookings template */
+.boo-btn {
+    color: black;
+    transition: color .40s ease-in-out, background-color .40s ease-in-out, border-color .40s ease-in-out, box-shadow .40s ease-in-out;
+    border: 4px double black;
+}
+
+.boo-btn:hover {
+    color: white;
+    box-shadow: 0 5px 5px black;
+    background-color: black;
+}
+
+.boo-det {
+    border: 2px solid black;
+    margin:0.5em;
+    padding: 8px;
+    list-style-type: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px black;
+}
+
+
+
+.tab-selec div {
+    border: 1px solid black;
+}
+
+
 /* Footer style */
 .footer {
     flex-shrink: 0;
@@ -170,17 +211,6 @@ textarea{
     text-align: center;
 }
 
-/* Profile button in navbar */
-.user-profile-btn a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border-color: black;
-    color: black;
-}
 
 @media screen and (min-width: 700px) {
 

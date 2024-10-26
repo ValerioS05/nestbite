@@ -27,6 +27,15 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = ['tables', 'customer_name', 'booking_date',
                   'start_time', 'end_time', 'message']
+        widgets = {
+            'message': forms.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    'rows': 4,
+                    'placeholder': 'Leave a message (optional)',
+                }
+            ),
+        }        
 
     def __init__(self, *args, **kwargs):
         """
