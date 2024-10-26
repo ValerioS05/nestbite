@@ -3,7 +3,6 @@ from django.views import generic
 from datetime import datetime
 from .models import Restaurant
 
-
 def index(request):
     """ Renders the homepage view (index). """
     return render(request, 'index.html')

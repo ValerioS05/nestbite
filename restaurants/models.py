@@ -3,11 +3,12 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.db.models import UniqueConstraint
-
+from cloudinary.models import CloudinaryField
 
 class Restaurant(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=150)
+    featured_image = CloudinaryField('image', default='placeholder')
     description = models.TextField()
     phone_number = models.CharField(max_length=25)
     created = models.DateTimeField(auto_now_add=True)
