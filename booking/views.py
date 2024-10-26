@@ -301,19 +301,24 @@ def booking_list(request):
     filter_date_str = request.GET.get('filter_date', None)
     filter_date = None
 
-    if filter_date_str:
-        filter_date = parse_date(filter_date_str)
+    if user.is_staff:
+        bookings = Booking.objects.all()
+    else:
+        bookings = Booking.objects.filter(customer_email=user.email)
+
+    for booking in bookings:
+        delete_finished_booking(booking.id)
 
     if user.is_staff:
         bookings = Booking.objects.all()
     else:
         bookings = Booking.objects.filter(customer_email=user.email)
 
+    if filter_date_str:
+        filter_date = parse_date(filter_date_str)
+
     if filter_date:
         bookings = bookings.filter(booking_date=filter_date)
-
-    for booking in bookings:
-        delete_finished_booking(booking.id)
 
     return render(
         request, 'booking/booking_list.html',
