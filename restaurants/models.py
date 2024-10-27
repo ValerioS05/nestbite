@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -22,6 +23,9 @@ class Restaurant(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def average_rating(self):
+        return self.reviews.aggregate(average=Avg('rating'))['average'] or None
+    
     class Meta:
         ordering = ['name']
 

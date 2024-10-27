@@ -3,40 +3,41 @@
 
 <!-- Index block content-->
 {% block content %}
-    <!-- Hero section -->
-    <section class="text-center">
-            <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
-    </section>
+<!-- Hero section -->
+<section class="text-center">
+    <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+</section>
 
 
-    <!-- Features section -->
-    <section class="container my-5">
-        <div class="row">
-            <!-- Cozy -->
-            <div class="col-md-4 text-center">
-                <img src="{% static 'images/cozy.jpg' %}" class="rounded-circle mb-3 feature-image" alt="Cozy ambiance">
-                <h3>Cozy Ambiance</h3>
-                <p>Enjoy a cozy atmosphere at our hand-picked restaurants for every occasion.</p>
-            </div>
-            <!-- Delicious -->
-            <div class="col-md-4 text-center">
-                <img src="{% static 'images/delicious.jpg' %}" class="rounded-circle mb-3 feature-image" alt="Delicious dishes">
-                <h3>Delicious!!</h3>
-                <p>A wide variety of delicious dishes made with fresh ingredients by our talented chefs.</p>
-            </div>
-            <!-- Booking -->
-            <div class="col-md-4 text-center">
-                <img src="{% static 'images/booking.jpg' %}" class="rounded-circle mb-3 feature-image" alt="Easy booking">
-                <h3>Easy Booking</h3>
-                <p>With NestBite, you can easily book a table at any of our restaurants in just a few clicks!</p>
-            </div>
+<!-- Features section -->
+<section class="container my-5">
+    <div class="row">
+        <!-- Cozy -->
+        <div class="col-md-4 text-center">
+            <img src="{% static 'images/cozy.jpg' %}" class="rounded-circle mb-3 feature-image" alt="Cozy ambiance">
+            <h3>Cozy Ambiance</h3>
+            <p>Enjoy a cozy atmosphere at our hand-picked restaurants for every occasion.</p>
         </div>
-    </section>
+        <!-- Delicious -->
+        <div class="col-md-4 text-center">
+            <img src="{% static 'images/delicious.jpg' %}" class="rounded-circle mb-3 feature-image"
+                alt="Delicious dishes">
+            <h3>Delicious!!</h3>
+            <p>A wide variety of delicious dishes made with fresh ingredients by our talented chefs.</p>
+        </div>
+        <!-- Booking -->
+        <div class="col-md-4 text-center">
+            <img src="{% static 'images/booking.jpg' %}" class="rounded-circle mb-3 feature-image" alt="Easy booking">
+            <h3>Easy Booking</h3>
+            <p>With NestBite, you can easily book a table at any of our restaurants in just a few clicks!</p>
+        </div>
+    </div>
+</section>
 
-    <!-- Restaurant redirection container -->
-    <section class="rest-btn-container text-center bg-dark  py-5">
-        <h2 class="text-white">Ready to Book Your Table?</h2>
-        <p class="text-white">Make a reservation at one of our restaurants today!</p>
-        <a href="{% url 'restaurant_list' %}" class="mod-btn-index">Browse Restaurants</a>
-    </section>
+<!-- Restaurant redirection container -->
+<section class="rest-btn-container text-center bg-dark  py-5">
+    <h2 class="text-white">Ready to Book Your Table?</h2>
+    <p class="text-white">Make a reservation at one of our restaurants today!</p>
+    <a href="{% url 'restaurant_list' %}" class="mod-btn-index">Browse Restaurants</a>
+</section>
 {% endblock %}
