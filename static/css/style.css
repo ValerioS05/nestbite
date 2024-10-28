@@ -31,6 +31,9 @@ header {
     background-color: rgb(33, 37, 41);
 }
 
+ul {
+    list-style: none;
+}
 
 .nav-link, .navbar-brand, .social-link, .fa-bars{
     color: white;
@@ -198,7 +201,10 @@ textarea{
 .tab-selec div {
     border: 1px solid black;
 }
-
+/* contact us form */
+label[for="id_message"] {
+    display: none;
+}
 
 /* Footer style */
 .footer {
