@@ -27,6 +27,20 @@ label {
     margin: 15px;
 }
 
+header {
+    background-color: rgb(33, 37, 41);
+}
+
+.nav-link, .navbar-brand, .social-link, .fa-bars{
+    color: white;
+    transition: text-shadow 0.3s ease;
+}
+
+.nav-link:hover, .navbar-brand:hover, .social-link:hover, .fa-bars:hover {
+    text-shadow: 0px 0px 10px white;
+    color: white;
+}
+
 /* Profile button in navbar */
 .prof-ico {
     display: flex;
@@ -35,12 +49,13 @@ label {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border-color: black;
-    color: black;
+    border-color: white;
+    color: white;
 }
 
-.prof-ico:hover {
-    box-shadow: 0 5px 5px black;
+ .prof-ico:hover {
+    box-shadow: 0 0 10px white;
+    color:white;
 }
 /*Logo and feature section (index.html)*/
 .logo {
@@ -62,7 +77,7 @@ label {
 }
 
 
-/*book now section*/
+/*book now section (index.html)*/
 .rest-btn-container {
     border-radius: 40px;
     overflow: hidden;
@@ -92,7 +107,7 @@ label {
 }
 
 
-/* Buttons */
+/* Buttons (general)*/
 
 .mod-btn {
     border-radius: 10px;
@@ -159,7 +174,6 @@ textarea{
 
 .boo-btn:hover {
     color: white;
-    box-shadow: 0 5px 5px black;
     background-color: black;
 }
 
