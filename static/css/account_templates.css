@@ -25,6 +25,11 @@ button:hover {
     box-shadow: 0 10px 10px black;
 }
 
+.nav-button:hover {
+    background-color: transparent;
+    box-shadow: none;
+}
+
 ul {
     list-style: none;
 }
