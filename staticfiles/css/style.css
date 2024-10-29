@@ -195,8 +195,8 @@ form input {
 }
 
 #id_message {
-    border: none;
-    
+    border: 1px solid black;
+    height: 100%;
 }
 
 /* Bookings template */
@@ -222,7 +222,7 @@ form input {
 
 
 
-.tab-selec div {
+.tab-selec label {
     border-bottom: 1px solid black;
     margin-bottom:4px;
 }
