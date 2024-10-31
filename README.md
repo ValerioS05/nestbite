@@ -90,11 +90,13 @@ The process of creating more specific user stories was to take one Epic and divi
         also using the default User model I implemented a form where the User can update their details if needed.
         The registration is completed in two steps:
             - First complete the form handed to you in NestBite.  
-        <img src="static/images/readme_images/registerlogin.png" alt="register/login buttons"/>  
-
-
-        <img src="static/images/readme_images/signin.png" width="400" alt="sign in button"/>
-        <img src="static/images/readme_images/signup.png" width="400" alt="sign up button"/>  
+                |Description|Image|
+                |--|--|
+                |Register/Login Buttons|<img src="static/images/readme_images/registerlogin.png" alt="register/login buttons"/>|  
+                |Sign In Button|<img src="static/images/readme_images/signin.png"  alt="sign in form"/>|
+                |Sign Up Form|<img src="static/images/readme_images/signup.png"  alt="sign up button"/>  |
+        
+        
 
 
         - Second you will receive an Email for confirmation.
@@ -126,7 +128,7 @@ The process of creating more specific user stories was to take one Epic and divi
             As a owner, I want to set available time slots and table so I can control the flow of people (no overbooking , no booking for same table)
         
             - U.S. 2.6
-            As a owner , I want to be able to access reservations so I can view, modify or cancel.
+            As a owner , I want to be able to access reservations so I can view, modify or cancel.  
         - Making a reservation/booking is one of the most crucial NestBite's features.
         Many things needs to be accounted for, as the user stories specify.
             - Date and time for the booking, simple at first look in the webpage, quite intricated at the back.
@@ -147,14 +149,15 @@ The process of creating more specific user stories was to take one Epic and divi
                 - Once the table(s) is booked the user will be able to see the booking saved in `Your Bookings` page.
                 From there the user is able to delete/view/update the booking, obviously following the same restrictions as for the booking.
 
-                |||
+                |Description|Image|
                 |--|--|
-                |<img src="static/images/readme_images/success.png" ||alt="succesfull booking">  
-                |<img src="static/images/readme_images/no1.png" ||alt="restriction feedback 1">  
-                |<img src="static/images/readme_images/no2.png"| |alt="restriction feedback 2">  
-                |<img src="static/images/readme_images/no3.png" ||alt="restriction feedback 3">  
-                |<img src="static/images/readme_images/no4.png" ||alt="restriction feedback 4">
-                |<img src="static/images/readme_images/booking.png" ||alt="booking reserved 4">
+                |Successful Booking|![Successful Booking](static/images/readme_images/success.png)|
+                |Restriction Feedback 1|![Restriction Feedback 1](/static/images/readme_images/no1.png)|
+                |Restriction Feedback 2| ![Restriction Feedback 2](/static/images/readme_images/no2.png)|
+                |Restriction Feedback 3|![Restriction Feedback 3](/static/images/readme_images/no3.png)|
+                | Restriction Feedback 4| ![Restriction Feedback 4](/static/images/readme_images/no4.png)|
+                | Booking Reserved| ![Booking Reserved](/static/images/readme_images/booking.png)|
+                | Booking Detail| ![Booking detail](/static/images/readme_images/bookdet.png)|
    
     - Epic 3 : Admin Panel
         - This Epic covers stories related to managing the admin panel(accounts ,approvals, settings..).
@@ -166,7 +169,73 @@ The process of creating more specific user stories was to take one Epic and divi
                 As an Admin, I want to be able to see and manage my restaurants so I can ensure is up to date and best quality.
 
             - U.S 3.3
-                As an admin, I want to be able to see the site settings so I can modify them if needed.
+                As an admin, I want to be able to see the site settings so I can modify them if needed.  
+        - The admin panel is also very important for whoever will manage the overall.
+        From the admin panel we have access to:
+            - Accounts
+                - Email Addresses:
+                    - From here we can see verified or non email adresses and username.
+                    - The verification is connected directly to the Users panel/model
+                    - Is also possible to delete.
+
+                    |Description|Image|
+                    |--|--|
+                    |Email Addresses in Accounts|![Email addresses panel](/static/images/readme_images/address.PNG)
+                    
+            - Authentication and Authorization 
+                - Users  
+                    - From this part of the admin panel we have access to:
+                    - Username and Email Address
+                    - First Name and Last Name
+                    - Staff Status
+                    - We can also delete Users.
+                        - When deleting users, their booking will be canceled and anything related except for their reviews.
+                    
+                    |Description|Image|
+                    |--|--|
+                    |Users in Authentication and Authorization|![Users admin panel](/static/images/readme_images/users.png)|
+            - Booking
+                - Bookings
+                    - In the booking we got a bit more infos:
+                    - We have a line of text to start where is specified reference number, name on booking, and date
+                    - Username
+                    - Tables booked
+                    - Customer name
+                    - Email
+                    - Date
+                    - Start and End time
+                    - Message
+                    - Reference Number
+                    - Canceled
+
+                    |Description|Image|
+                    |--|--|
+                    |Bookings List|![bookings list](/static/images/readme_images/bookingsadmin.png)|
+                    |Bookings panel 1|![Bookings admin panel](/static/images/readme_images/bookadmin1.png)|
+                    |Bookings panel 2|![Bookings admin panel](/static/images/readme_images/bookadmin2.png)|                   
+            - Restaurants
+                - Restaurants
+                    - In here we have:
+                    - Name
+                    - Capacity
+                    - Opening and Closing time
+
+                    |Description|Image|
+                    |--|--|
+                    |Restaurants in Restaurants|![Restaurant admin panel](/static/images/readme_images/rest.png)|
+                    |Restaurant Detail|![Restaurant Detail](/static/images/readme_images/restdet.png)|                 
+                - Tables
+                    - Tables panel contains:
+                    - Table Number
+                    - Capacity
+                    - Price
+                    - Restaurant (property of)
+
+                    |Description|Image|
+                    |--|--|
+                    |Tables List|![Tables list](/static/images/readme_images/tables.png)|
+                    |Tables Details|![Tables details](/static/images/readme_images/tabdet.png)|    
+      
     - Epic 4 : UX/UI
         - This Epic covers stories related to UX and UI.
         - User Stories:
