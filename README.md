@@ -18,8 +18,8 @@
 [NestBite Homepage](https://nestbite-5dd11ab0ac7f.herokuapp.com/)
 
 ## Readme content
-1. About NestBite
-2. User Stories / Agile workflow
+1. [About NestBite](#about-nestbite)
+2. [User Stories / Agile workflow](#user-stories)
 3. UI/UX Design
 4. Features
 5. Project structure
@@ -46,6 +46,7 @@ With the introduction of Agile Workflow and many different aspects to integrate 
 made the development of this project a great challenge and also a great achivement for my personal growth.
 
 ## User Stories
+### Agile Workflow
 - As mentioned before the introduction of Agile made my routine differ from the past.  
 I researched in advance what a person using this kind of application would like to be able to do, what they would look for in this enviroment.  
 The kind of people that I question where from different backgrounds 
@@ -69,8 +70,8 @@ The process of creating more specific user stories was to take one Epic and divi
     - Check my [Github](https://github.com/users/ValerioS05/projects/2) User stories to understant better!
 
     ### In depth Epics and User Stories
-    - Epic 1 : User Account Management
-        - This Epic covers stories related to user registration, login, profile management.
+    #### Epic 1 : User Account Management
+    - This Epic covers stories related to user registration, login, profile management.
         - User Stories:
             - U.S. 1.1
             As a user, I want to create an account so that I can make reservations.
@@ -105,12 +106,15 @@ The process of creating more specific user stories was to take one Epic and divi
             - Settings using backend mail and Heroku keys/values(previously only in the env.py file).  
             - The actual code for the settings was provided/learned from :Diploma in Full Stack Software Development learning path.  
             - Once you are registered/logged in you can see the logout and profile buttons.  
+
             <img src="static/images/readme_images/buttonsregistered.png" alt="registered user buttons"/>  
-            - Nestbite Email  
+            
+            - NestBite Email.  
+            
             <img alt="NestBite Email" src="static/images/readme_images/nestbiteemail.png" width="600">
 
-    - Epic 2 : Reservation System
-        - This Epic covers stories related to reservation-related features (guest/owners/admin).
+    #### Epic 2 : Reservation System
+    - This Epic covers stories related to reservation-related features (guest/owners/admin).
         - User Stories:
             - U.S. 2.1
             As a user, I want to search for available tables by date and time so I can choose a suitable one for me.
@@ -148,6 +152,7 @@ The process of creating more specific user stories was to take one Epic and divi
                     - I decided to also add a feedback to let the user know that there are tables available with similar prices / timing making easier the reselection.
                 - Once the table(s) is booked the user will be able to see the booking saved in `Your Bookings` page.
                 From there the user is able to delete/view/update the booking, obviously following the same restrictions as for the booking.
+                #### Feedbacks
 
                 |Description|Image|
                 |--|--|
@@ -159,8 +164,8 @@ The process of creating more specific user stories was to take one Epic and divi
                 | Booking Reserved| ![Booking Reserved](/static/images/readme_images/booking.png)|
                 | Booking Detail| ![Booking detail](/static/images/readme_images/bookdet.png)|
    
-    - Epic 3 : Admin Panel
-        - This Epic covers stories related to managing the admin panel(accounts ,approvals, settings..).
+    #### Epic 3 : Admin Panel
+    - This Epic covers stories related to managing the admin panel(accounts ,approvals, settings..).
         - User Stories:
             - U.S. 3.1
                 As an Admin, I want to be able to see and mofify registrations, so I can manage my users.
@@ -236,8 +241,8 @@ The process of creating more specific user stories was to take one Epic and divi
                     |Tables List|![Tables list](/static/images/readme_images/tables.png)|
                     |Tables Details|![Tables details](/static/images/readme_images/tabdet.png)|    
       
-    - Epic 4 : UX/UI
-        - This Epic covers stories related to UX and UI.
+    #### Epic 4 : UX/UI
+    - This Epic covers stories related to UX and UI.
         - User Stories:
 
             - U.S. 4.1
@@ -257,6 +262,47 @@ The process of creating more specific user stories was to take one Epic and divi
 
             - U.S 4.6
             As a user, I want a contact page/button so that i can reach for support.
+        - Last aspect of my epics was the User Interface and the User Experience.  
+        Last for the only reason that first this project needed a skeleton to work on,  
+        before style and other aspects needed to be implemented later in case I would change the structure overtime.
+        - NestBite offers a mobile friendly interface, as well as other devices and screen sizes.
+            - See [Mockups](#devices-mockups)
+        
+        - Pages in general are quick to load thanks to the small load of datas that every page has.  
+        Only the Restaurant_detail template takes slightly longer to load,  
+        due to the high definition images.
+        - As per the User Experience we can see that filters were added for the restaurants, and all is just 1 click away to the preferred choice.
+        - NestBite offers in general a good amount of feedbacks (missing inputs, error and constrictions) so the User is never left hanging around not knowing what is going on. 
+            - See [Feedbacks](#feedbacks) images to get a better idea how the site helps the User. To help out also the User can't input anything that would make the form fail or give errors that are not accepted as a "positive" data.  
+
+## UI/UX
+### User Interface
+- The UI for this project came from a minimalist idea.  
+    Every person that I questioned about what they would like in a booking system told me that,  
+    everytime they use an app on their mobiles or website they get overwelmed of informations, most of the time not relevant to what they want to achieve.  
+    So the plan for NestBite was to make it look nice and easy even trying to not over fill the user. 
+    - The palette is a simple grey scale, loads of breathing space and good contrast between sections.
+    Giving vibes of classy and not to heavy for the eyes of any user.
+    - The index/home page appears more colorfull due to small feature images added in the main section.
+    - Some more color were added to action buttons (update and delete bookings(yellow and red respectively)) giving a color feedback and meaning to that buttons.
+    - Throughout all the pages NestBite is consistent.  
+    We can always see our footer and navigation bar and a main section that always follow the same color patterns, dark > light > dark. 
+    Good contrast with dark font on light background and reverse.
+    - For the fonts I opted for `Italianno` on attention cathing text(Headings, brand ,..) and `Playfair Display` for the rest of the text.
+    - Same goes for the logo used as first impact image, grey scale of colors, the font is light on dark background that surround the text over an low light image.
+    The logo and most of the items in the pages are surrounded by a quite dark box-shadow giving a feeling of depth.
+
+    - I would like to say that under the UI aspect NestBite is quite balanced, with the help of a base template followed that smaller templates made the development much easier.  
+    Also the use of Bootstrap was a great help on pagination,sizes and general structure. In this case it made possible that the css would be quite a small amount adding only few touches to colors and effects and some smaller details.
+    - A `different CSS` file was created for the templates obtained at the setup of `Allauth (Accounts templates)`, the base was kept the same so the new templates would follow the same patterns.
+    - I opted for the use of Icons instead of plain text to keep the user out of too much reading, the icons that I used for the project are:
+        - Stars for ratings.
+        - Clocks for time.
+        - Phone for Phone numbers.
+        - User Icon for the profile.
+        - Burger Icon for the collapsed navigation bar.
+        - To mention that I `didn't use` the icons for `Social medias`(Facebook and Instagram in this case), even if it would be a great addition to have them, I thought that the actual text gave more feelings than the usual icons that we always see.  
+    - Most of the clickable items have effects when interacted with, can be more brightness or a change of colors/font all to give the user more visual feedbacks.
 
 
 
@@ -267,3 +313,6 @@ The process of creating more specific user stories was to take one Epic and divi
 
 
 
+
+
+    
