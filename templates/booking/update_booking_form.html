@@ -13,7 +13,7 @@
     </div>
 {% endif %}
 
-<div class="container mt-5">
+<div class="container mt-5 text-center">
     <form method="POST" id="updateBookingForm">
         {% csrf_token %}
 
@@ -41,19 +41,22 @@
             {{ form.end_time }}
         </div>
 
-        <div class="mb-3">
-            <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
-            {{ form.tables }}
+        <div class="row mb-3 tab-selec">
+            <div class="col-md-6">
+                <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
+                {{ form.tables }}
+            </div>
+            <div class="col-md-6">
+                <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
+                {{ form.message }}
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
-            {{ form.message }}
+        <div class="text-center mt-4 btn-container-det">
+            <button type="submit" class="mod-btn">Update Booking</button>
+            <a href="{% url 'booking_list' %}" class="mod-btn">Back to Booking List</a>
         </div>
-
-        <button type="submit" class="btn btn-primary">Update Booking</button>
     </form>
 </div>
 
-<a href="{% url 'booking_list' %}" class="btn btn-secondary">Back to Booking List</a>
+
 {% endblock %}
