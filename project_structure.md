@@ -4,7 +4,7 @@
 Created mostly before starting the project, and some were created after ideas came through.
 - An important thing to mention is that NestBite follows same pattern regarding the main structure and this will not change in any template.  
 **Header** > **Main section** > **Footer** 
-    |Description|Image|Final result|
+    |Description|Wireframe|Final result|
     |--|--|--|
     |Home page (index): The home page as you can see is structured with a navigation bar as header, followed below by the NestBite logo. Under the logo we have the feature section and below it a action button. At the end of the page we have the footer containing brand name , copyright and social media links|![Home page wire frame](/static/images/nest_structure_images/wirehome.png)|The final result doesn't differ much from the wireframe, we still have the navigation bar and the footer as was designed from the start. In the main section we have the feature section that offers small images pertinent to the paragraph underneath it. The main difference from the original wireframe is the bottom side of the main section. The button is surrounded by a dark container containing some text to give directions to the user|
     |Restaurants page (restaurants): In here we have a "list" of the restaurants that are inserted in the database, as usual with navbar and footer, the main section starts with a heading relative to the actual page. Underneath the heading we can see a list of restaurant. Every restaurant contained in a box. The restaurants are paginated 3 by 3. We miss the action button in this page but is replaced that the actual containers in the list that acts as redirection element.|![Restaurants page wire frame](/static/images/nest_structure_images/wirerestlist.png)| The main difference here is the addition of filters, the more detailed restaurant element. The filters were added to provide an easier navigation for the user and a way to sort out in base of their needs. The restaurant elements contains the main details of the relative restaurant(name,address,phone,capacity,working hours).|
@@ -20,3 +20,83 @@ Created mostly before starting the project, and some were created after ideas ca
     |Base structure (base):As you probably noticed and as said before, the base structure follows always the same structure, Header > Main section > Footer|![base wire frame](/static/images/nest_structure_images/wirebase.png)|Consistency!! |
 - Across all templates, the structure is aligned with mobile responsiveness and different screen sizes. The structure may differ on some elements but not their relative position. For example the feature image instead of beeing displayed vertically in mobile view, in bigger screens they will be displayed horizontally.
 This Skeleton structure was essential in ensuring that the site was visually consistent,user friendly and appealing.
+
+## Models
+ - For the NestBite project I used 4 custom models and the Django Default User models
+ - As follow I will showcase my models and their descriptions.
+    |Description| ERD Model |
+    |--|--|
+    |Restaurant model: This model represent a restaurant. Stores it's details as represented in the image. I tried to take the main points of a real life restaurant to better represent it.|![restaurant model diagram](/static/images/nest_structure_images/modrest.png)|
+    |Table Model: The model represents individual tables within a restaurant, tracking table details like capacity, its price and unique table number.|![Table model diagram](/static/images/nest_structure_images/modtable.png)|
+    |Booking Model: The booking models represents a booking reservetion, This model is associated with many datas, User,Tables,various details about time ,date and customer details.|![Table model diagram](/static/images/nest_structure_images/modbook.png)|
+    |Review Model: Allows the user to review a restaurant based on their booking experience. Each review is linked to a specific booking and the restaurant itself.|![Review model diagram](/static/images/nest_structure_images/modreview.png)|
+    |Default User Model|[Documentation to Django User Model](https://docs.djangoproject.com/en/5.1/ref/contrib/auth/)|
+### Models details and connections
+#### The restaurant model
+- The Restaurant model is the main entity in this system, each restaurant is essential for informations and organization.
+- Location: nestbite/restaurants/models.py
+- Restaurant relationships:
+    - One-to-many with User model - Owner.
+    - One-to-many with Table model - A restaurant can have multiple Tables.
+    - One-to-many with Review - Each restaurant can have multiple Reviews.
+    - Related to Booking via Tables.
+- Methods used:
+    - average_rating(): Used to calculate average of rating field from the Review model.
+    - __str__(): Returning a readable string.
+- Meta:
+    - ordering by name, created and capacity.
+#### The Table model
+- The table model follows directly the Restaurant model representing individual tables within a restaurant.
+- Location: nestbite/restaurants/models.py
+- Table relationships:
+    - ForeignKey to Restaurant
+    - Many-to-many with Booking - A single table can belong to multiple bookings and reverse.
+- Methods used:
+    - clean():
+        - Added validation to it:
+            - Table capacity is positive.
+            - Total restaurant capacity is not exceeded when adding a table.
+            - Table_number is unique within each restaurant
+    - save():
+        - Used to override the save method applying the clean() above.
+    __str__(): Returning a representation of each table.
+
+#### The Booking model
+- The Booking model handles many aspects:
+    - Reservation data.
+    - User bookings.
+    - Timings.
+    - Additional infos like message and booking_reference
+- Location: nestbite/booking/models.py
+- Booking relationships:
+    - ForeignKey to User
+    - Many-to-many with Table - Each booking can reserve multiple tables.
+    - One-to-many with Review - A booking can have multiple reviews.
+- Methods used:
+    - clean(): as the previous explanation in the Table model this add validation to the instance.
+        - Booking in the past
+        - Ensures booking are scheduled at least 2 hours in advance.
+        - Limiting booking to a year max in the future (No point booking for the 3024!)
+    - generate_booking_reference():
+        - Generates 10 alphanumeric characters
+    - save():
+        - add check on reference number if already provided it will not be regenerated.
+    - total_price():
+        - Calculates the total price for the booking , if 2 or more tables it will summ the prices of each table to retrieve the total.
+    - cancel():
+        - Gives the user the right to cancel the booking only if 2 hours in advance (We don't like surprises!)
+    - __str_ _():
+        - Represents booking showing details as a string.
+#### The Review model
+- The Review model allows the User to reate their experience with a restaurant based on a specific booking(reviews are accessible only through bookings).
+The review is linked with a restaurant,a booking and the User.
+- Review relationships:
+    - ForeignKey to booking (set to Null if the booking is no longer available).
+    - ForeignKey to restaurant.
+    - ForeignKey to user.
+ 
+
+
+
+
+    

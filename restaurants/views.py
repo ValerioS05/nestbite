@@ -12,7 +12,7 @@ class RestaurantList(generic.ListView):
     template_name = "restaurants.html"
     context_object_name = "restaurants"
     paginate_by = 3
-    
+
     def get_queryset(self):
         return restaurant_filter(self.request)
 

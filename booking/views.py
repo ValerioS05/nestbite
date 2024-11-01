@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from datetime import datetime, timedelta
@@ -348,9 +349,6 @@ def booking_detail(request, booking_id):
 
     if request.method == 'POST':
         if existing_review:
-            messages.info(
-                request, "You have submitted a review for this booking."
-            )
             return redirect('booking_detail', booking_id=booking.id)
 
         review_form = ReviewForm(request.POST)
@@ -361,13 +359,28 @@ def booking_detail(request, booking_id):
             review.user = request.user
             review.save()
 
+            booking_reference = booking.booking_reference
+            send_mail(
+                subject=f'New review for Booking: {booking_reference}',
+                message=(
+                    f'Restaurant: {review.restaurant.name}\n'
+                    f'User: {review.user.username}\n'
+                    f'Rating: {review.rating}\n'
+                    f'Message: {review.message}'
+                ),
+                from_email='nestbite@gmail.com',
+                recipient_list=['nestbite@gmail.com'],
+                fail_silently=False,
+            )
+
             feedback_message = (
                 "Thanks for your feedback! It's great to make you happy!"
                 if review.rating >= 4
                 else "We appreciate your feedback and will work to improve!"
             )
 
-            return redirect('booking_detail', booking_id=booking.id)
+            messages.success(request, feedback_message)
+            return redirect('booking_list')
     else:
         review_form = ReviewForm() if is_owner and not existing_review else None
 
@@ -383,7 +396,6 @@ def booking_detail(request, booking_id):
 
 
 @login_required
-
 def cancel_booking(request, booking_id):
     """
     Cancel an existing booking.

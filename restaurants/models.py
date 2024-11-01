@@ -27,7 +27,7 @@ class Restaurant(models.Model):
         return self.reviews.aggregate(average=Avg('rating'))['average'] or None
     
     class Meta:
-        ordering = ['name']
+        ordering = ['name','created','capacity']
 
 
 class Table(models.Model):
