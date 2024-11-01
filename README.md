@@ -20,9 +20,10 @@
 ## Readme content
 1. [About NestBite](#about-nestbite)
 2. [User Stories / Agile workflow](#user-stories)
-3. UI/UX Design
-4. Features
-5. Project structure
+3. [Features](#features)
+4. [UI/UX Design](#uiux)
+5. [Project structure](./project_structure.md)
+  - Wire frames / Skeleton
   - Models
   - Views
   - Forms
@@ -274,7 +275,22 @@ The process of creating more specific user stories was to take one Epic and divi
         - As per the User Experience we can see that filters were added for the restaurants, and all is just 1 click away to the preferred choice.
         - NestBite offers in general a good amount of feedbacks (missing inputs, error and constrictions) so the User is never left hanging around not knowing what is going on. 
             - See [Feedbacks](#feedbacks) images to get a better idea how the site helps the User. To help out also the User can't input anything that would make the form fail or give errors that are not accepted as a "positive" data.  
-
+## Features
+### General Features
+- Responsive Design
+    - **NestBite** is fully responsive and optimized for various devices and sizes of screens. Provides a smooth and accessible experience on you favourite device.
+    - **Fast loading times**: Efficiently designed to quickly load pages facilitating smooth navigation through the site.
+    - **Intuitive** navigation: Minimalist design and clear navigation options.
+    The layout allows the User to easy find the section they need most, as making reservations, view bookings and contacting support.
+    - **Interactive Visual Feedbacks**: Buttons and other elements provide clear clues making the UI more engaging.
+    - **Efficient booking system**: User can quickly reserve tables, filter restaurants and receive immediate feedbacks.
+    - **User friendly forms**: Forms provide real time feedbacks, preventing errors with the help of clear labels.
+    - **Personalized experience**: Logged in users have access to `Your Bookings` page showing only personal bookings.
+    - **Clear, Info messages**: The system provides messages for most of the interaction with the site (Login,Sign out, bookings, errors) acting as a real time guide.
+    - **Security and privacy**: Personal data remain private.
+    - **Role based access**: the site layout differ depending on the status of the users.
+    - **Pagination and sorting**: For large lists the site/admin site is organized with paginations and sortings optimizing the overall.
+- See below for more details!
 ## UI/UX
 ### User Interface
 - The UI for this project came from a minimalist idea.  
@@ -345,24 +361,38 @@ The site can be navigated with a keyboard giving different possibilities to the 
 - What makes NestBite stand out is the fact that the user is never left hanging clueless.
 The design is straight forward:
     - Good naming on redirections buttons/links
+        ![Naming on navbar](/static/images/readme_images/naming.png)
     - Naming on url paths consistent with the actual page.
     - Headings consistent with the active page.
     - Feedbacks when errors or successfull interactions.
     - Validation and authorization
     - Uniqueness and personal for example:
         - Reviews and ratings
-        - Reference Number
+            ![Ratings and message in booking form](/static/images/readme_images/ratingrev.png)
+        - Reference Number  
+            ![Reference Number](/static/images/readme_images/bookref.png)
         - Private:
             - No one can have access to your profile (except for admin(s)).
             - Reviews are personal.
             - Confirmation when registering.
     - The User can navigate easy thanks to the navbar and the many redirection anchors throughout the page, it is quite impossible to get stuck even for first time Users.
+
     - In NestBite the UX is taken care of giving also the chance to leave a message with the Contact Us form / Message in the Booking Form. If a person got any issue or any queries is always possible to contact administration with these forms.
+        |Description| Image|
+        |--|--|
+        |Contact Us page| ![Contact Us form with message](/static/images/readme_images/contact.png)|
+        |Message in Booking Form|![Message in the booking form](/static/images/readme_images/message.png)|
     - If the User is not registered Can still browse the site in the Home page or browse the Restaurants pages, to have an insight of what is NestBite.
-    If you are not registered Nestbite give you feedbacks about it, letting you know that certain actions require registration and validation.
+    If you are not registered Nestbite give you feedbacks about it, letting you know that certain actions require registration and validation.  
+        ![Non registered feedback](/static/images/readme_images/registerfeed.png)
     - The Booking system:
         - When the user is making a reservation, the system is always aware of what is going on. 
         - User can filter restaurants and bookings with the help of widgets.
+            |Description|Image|
+            |--|--|
+            |Filtering restaurants by maximum `capacity` or working `hours`.|![Filter for restaurants](/static/images/readme_images/filter1.png)|
+            |Filter Bookings by date|![Filter for bookings](/static/images/readme_images/filter2.png)|
+            - Every filter has a `clear` button to reduce time consuming deleting/updating filters.
         - If the booking fails, there's nothing to worry about, NestBite gives many feedbacks helping you out to complete the forms.
         - Table already booked? I provide the User with feedbacks and different but similar options for different Tables.
         - Succesfull bookings are saved in Your Bookings page:
@@ -372,11 +402,20 @@ The design is straight forward:
             Nothing to worry about bacause you can filter the bookings reducing the amount of displayed items.
     - For Administration only:
         - The Admin panel also gives all you need to create, delete and update any of the data available from the models. We also have some restrictions here for example on capacities and uniqueness. The panel is not overwelmed in general. The only side that could be a bit "too much" to get through is the Restaurant panel.
-            - The amount of tables and Restaurants can get as bigger as you can imagine.
+            - The amount of `Tables` and `Restaurants` can get as bigger as you can imagine.
             Fortunately you can sort both of these items giving you more specif data to work on.
         - From the admin panel you can give access to actual staff member and sort them out as you need, and this goes for any of the model. All of them got a sort options that can go from names to dates or status, making the admin life quite easier.
         - One of the jobs needed to be completed manually is the setup of Restaurants and Tables. Beeing a risky factor only the people that have access to this panels can work on this datas, keeping the layout and datas safe and well processed to pass to the actual site.
         - Only administration can give staff status as it should be in most of the enviroments.
+            |Description|Image|
+            |--|--|
+            |Table sort|![Sorting Tables by restaurant](/static/images/readme_images/tabfilt.png)|
+            |Restaurant sort|![Sorting restaurant by name](/static/images/readme_images/restfilt.png)|
+            |Booking sort|![Sorting booking by date](/static/images/readme_images/bookfilt.png)|
+            |Email sort|![Sorting email by verification](/static/images/readme_images/emailfilt.png)|
+            |User sort|![Sorting users by status](/static/images/readme_images/userfilt.png)|
+
+
 
 
 
