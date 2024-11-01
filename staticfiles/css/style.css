@@ -226,6 +226,37 @@ form input {
     border-bottom: 1px solid black;
     margin-bottom:4px;
 }
+/* Ratings style */
+#id_rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#id_rating > div {
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+}
+
+#id_rating > div label {
+    padding: 5px;
+}
+
+#id_rating label[for="id_rating_0"]:before { content: "★"; }
+#id_rating label[for="id_rating_1"]:before { content: "★"; }
+#id_rating label[for="id_rating_2"]:before { content: "★"; }
+#id_rating label[for="id_rating_3"]:before { content: "★"; }
+#id_rating label[for="id_rating_4"]:before { content: "★"; }
+
+#id_rating label:hover,
+#id_rating label:hover ~ label,
+#id_rating input[type="radio"]:checked ~ label {
+    color: gold;
+    box-shadow: 0 0 4px black;
+    border-radius: 10px;
+}
+
 /* contact us form */
 label[for="id_message"] {
     display: none;

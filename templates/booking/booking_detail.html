@@ -3,40 +3,42 @@
 {% block title %}Booking Details{% endblock %}
 
 {% block content %}
-<h1>Booking Details</h1>
+<div class="text-center">
+    <h1>Booking Details</h1>
 
-<div class="card mb-3">
-    <div class="card-body">
-        <p><strong>Booking Reference:</strong> {{ booking.booking_reference }}</p>
-        <p><strong>Customer Name:</strong> {{ booking.customer_name }}</p>
-        <p><strong>Email:</strong> {{ booking.customer_email }}</p>
-        <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
-        <p><strong>Start Time:</strong> {{ booking.start_time }}</p>
-        <p><strong>End Time:</strong> {{ booking.end_time }}</p>
-        <p><strong>Message:</strong> {{ booking.message }}</p>
-        <p><strong>Tables:</strong> {{ booking.tables.all|join:", " }}</p>
-        <p><strong>Total Price:</strong> £{{ booking.total_price }}</p>
-        <p><strong>Policy:</strong> You can cancel your booking 2 hours in advance.</p>
+    <div class="card mb-3 text-center">
+        <div class="card-body">
+            <p><strong>Booking Reference:</strong> {{ booking.booking_reference }}</p>
+            <p><strong>Customer Name:</strong> {{ booking.customer_name }}</p>
+            <p><strong>Email:</strong> {{ booking.customer_email }}</p>
+            <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+            <p><strong>Start Time:</strong> {{ booking.start_time }}</p>
+            <p><strong>End Time:</strong> {{ booking.end_time }}</p>
+            <p><strong>Message:</strong> {{ booking.message }}</p>
+            <p><strong>Tables:</strong> {{ booking.tables.all|join:", " }}</p>
+            <p><strong>Total Price:</strong> £{{ booking.total_price }}</p>
+            <p><strong>Policy:</strong> You can cancel your booking 2 hours in advance.</p>
+        </div>
     </div>
-</div>
 
-{% if feedback_message %}
+    {% if feedback_message %}
     <div class="alert alert-info">{{ feedback_message }}</div>
-{% else %}
-    {% if existing_review %}
-        <p>You have already submitted feedback for this booking. Thank you!</p>
     {% else %}
-        {% if review_form %}
-            <h2>Leave a Review</h2>
-            <form method="POST">
-                {% csrf_token %}
-                {{ review_form.as_p }}
-                <button type="submit" class="btn btn-primary">Submit Review</button>
-            </form>
-        {% endif %}
+    {% if existing_review %}
+    <p>You have already submitted feedback for this booking. Thank you!</p>
+    {% else %}
+    {% if review_form %}
+    <h2>Leave a Review</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <button type="submit" class="mod-btn btn mb-3">Submit Review</button>
+    </form>
     {% endif %}
-{% endif %}
+    {% endif %}
+    {% endif %}
 
-<a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning">Update Booking</a>
-<a href="{% url 'booking_list' %}" class="boo-btn btn">Back to Booking List</a>
+    <a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning">Update Booking</a>
+    <a href="{% url 'booking_list' %}" class="boo-btn btn">Back to Booking List</a>
+</div>
 {% endblock %}

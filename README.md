@@ -339,8 +339,9 @@ The process of creating more specific user stories was to take one Epic and divi
         |Effects on clickable item 6: Same as previous item|![Effects on clickable item 6](/static/images/readme_images/interactbut5.png)|
         |Effects on clickable item 7: When interacted with it stays mainly the same, I added some shadow on the item.|![Effects on clickable item 7](/static/images/readme_images/restdeteff.png)|
 ### User Experience
-- In terms of UX the general idea as for the Interface was to make the User don't feel overwelmed.
--  NestBite offer a desgin that makes the User interact and reach the desired point with only few clicks. The site can be navigated with a keyboard giving different possibilities to the User.
+- In terms of UX the general idea like the Interface was to make the User don't feel overwelmed.
+-  NestBite offer a desgin that makes the User interact and reach the desired point with only few clicks.  
+The site can be navigated with a keyboard giving different possibilities to the User.
 - What makes NestBite stand out is the fact that the user is never left hanging clueless.
 The design is straight forward:
     - Good naming on redirections buttons/links
@@ -363,13 +364,20 @@ The design is straight forward:
         - When the user is making a reservation, the system is always aware of what is going on. 
         - User can filter restaurants and bookings with the help of widgets.
         - If the booking fails, there's nothing to worry about, NestBite gives many feedbacks helping you out to complete the forms.
-        - Table already booked? I provide the User different but similar options for different Tables.
+        - Table already booked? I provide the User with feedbacks and different but similar options for different Tables.
         - Succesfull bookings are saved in Your Bookings page:
             - For Users : 
             Users can see all `their` bookings but not others. So the page in not overpopulated with useless informations.
-            - For administration/staff. The Your Bookings acts as a database, displaying every booking made. This could cause trouble if we have too many bookings. 
+            - For administration/staff. The `Your Bookings` acts as a database, displaying every booking made. This could cause trouble if we have too many bookings. 
             Nothing to worry about bacause you can filter the bookings reducing the amount of displayed items.
-            
+    - For Administration only:
+        - The Admin panel also gives all you need to create, delete and update any of the data available from the models. We also have some restrictions here for example on capacities and uniqueness. The panel is not overwelmed in general. The only side that could be a bit "too much" to get through is the Restaurant panel.
+            - The amount of tables and Restaurants can get as bigger as you can imagine.
+            Fortunately you can sort both of these items giving you more specif data to work on.
+        - From the admin panel you can give access to actual staff member and sort them out as you need, and this goes for any of the model. All of them got a sort options that can go from names to dates or status, making the admin life quite easier.
+        - One of the jobs needed to be completed manually is the setup of Restaurants and Tables. Beeing a risky factor only the people that have access to this panels can work on this datas, keeping the layout and datas safe and well processed to pass to the actual site.
+        - Only administration can give staff status as it should be in most of the enviroments.
+
 
 
 
