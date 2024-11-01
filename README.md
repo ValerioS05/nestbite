@@ -283,26 +283,94 @@ The process of creating more specific user stories was to take one Epic and divi
     So the plan for NestBite was to make it look nice and easy even trying to not over fill the user. 
     - The palette is a simple grey scale, loads of breathing space and good contrast between sections.
     Giving vibes of classy and not to heavy for the eyes of any user.
+    
+        |Description|Image|
+        |--|--|
+        |Main Colors 1| ![First Color Used](/static/images/readme_images/pale1.png)|
+        |Main Colors 2| ![Second Color Used](/static/images/readme_images/pale2.png)|
+        |Main Colors 3| ![Third Color Used](/static/images/readme_images/pale3.png)|
+ 
     - The index/home page appears more colorfull due to small feature images added in the main section.
+    ![Feature images](/static/images/readme_images/featimg.png)  
     - Some more color were added to action buttons (update and delete bookings(yellow and red respectively)) giving a color feedback and meaning to that buttons.
+
+        |Description|Image|
+        |--|--|
+        |Visual feedbacks on buttons| ![Visual feedback on buttons](/static/images/readme_images/colorfeed.png)|
     - Throughout all the pages NestBite is consistent.  
     We can always see our footer and navigation bar and a main section that always follow the same color patterns, dark > light > dark. 
     Good contrast with dark font on light background and reverse.
+        |Description|Image|
+        |--|--|
+        |Navigation Bar | ![Navigation Bar](/static/images/readme_images/navbar.png)|
+        |Main Section| ![Main Sectin](/static/images/readme_images/mainsec.png)|
+        |Footer| ![Footer](/static/images/readme_images/footer.png)|
     - For the fonts I opted for `Italianno` on attention cathing text(Headings, brand ,..) and `Playfair Display` for the rest of the text.
+        |Description|Image|
+        |--|--|
+        |Main Font| ![Main font](/static/images/readme_images/font2.png)|
+        |Second Font| ![Second font](/static/images/readme_images/font1.png)|
     - Same goes for the logo used as first impact image, grey scale of colors, the font is light on dark background that surround the text over an low light image.
     The logo and most of the items in the pages are surrounded by a quite dark box-shadow giving a feeling of depth.
-
+        ![Logo](/static/images/readme_images/logordme.png)
     - I would like to say that under the UI aspect NestBite is quite balanced, with the help of a base template followed that smaller templates made the development much easier.  
     Also the use of Bootstrap was a great help on pagination,sizes and general structure. In this case it made possible that the css would be quite a small amount adding only few touches to colors and effects and some smaller details.
     - A `different CSS` file was created for the templates obtained at the setup of `Allauth (Accounts templates)`, the base was kept the same so the new templates would follow the same patterns.
+        ![Different template and stylesheet](/static/images/readme_images/difftemp.png)
     - I opted for the use of Icons instead of plain text to keep the user out of too much reading, the icons that I used for the project are:
-        - Stars for ratings.
-        - Clocks for time.
-        - Phone for Phone numbers.
-        - User Icon for the profile.
-        - Burger Icon for the collapsed navigation bar.
-        - To mention that I `didn't use` the icons for `Social medias`(Facebook and Instagram in this case), even if it would be a great addition to have them, I thought that the actual text gave more feelings than the usual icons that we always see.  
+        |Description|Image|
+        |--|--|
+        | Stars for ratings|![Star icon](/static/images/readme_images/star.png)|
+        |Clock for time 1|![Clock Item 1](/static/images/readme_images/clock.png)|
+        |Clock for time 2 (Widget)|![Clock Item 2](/static/images/readme_images/widclock.png)|
+        | Phone for Phone numbers|![Phone icon](/static/images/readme_images/phone.png)|
+        | User Icon for the profile|![User icon](/static/images/readme_images/prof.png)|
+        | Burger Icon for the collapsed navigation bar|![Collapsed Navbar icon](/static/images/readme_images/burg.png)|
+    - To mention that I `didn't use` icons for `Social medias`(Facebook and Instagram in this case), even if it would be a great addition to have them, I thought that the actual text gave more feelings than the usual icons that we always see.  
+    ![Social Media](/static/images/readme_images/social.png)
     - Most of the clickable items have effects when interacted with, can be more brightness or a change of colors/font all to give the user more visual feedbacks.
+        |Description|Image|
+        |--|--|
+        |Effects on clickable item 1: Addeed some brightnees when interaction happens.|![Effects on clickable item 1](/static/images/readme_images/interact3.png)|
+        |Effects on clickable item 2: Reversed palette when interacted with.|![Effects on clickable item 2](/static/images/readme_images/interactbut.png)|
+        |Effects on clickable item 3: As previous item with different palette.|![Effects on clickable item 3 (after)](/static/images/readme_images/interactbut1.png)![Effect on same item (before)](/static/images/readme_images/interactbut2.png)|
+        |Effects on clickable item 4: Same as item 1.|![Effects on clickable item 4](/static/images/readme_images/interactbut3.png)|
+        |Effects on clickable item 5: When interacted with, the button reverses it's palette but keeps the feeback color on border to keep consistency.|![Effects on clickable item 5](/static/images/readme_images/interactbut4.png)|
+        |Effects on clickable item 6: Same as previous item|![Effects on clickable item 6](/static/images/readme_images/interactbut5.png)|
+        |Effects on clickable item 7: When interacted with it stays mainly the same, I added some shadow on the item.|![Effects on clickable item 7](/static/images/readme_images/restdeteff.png)|
+### User Experience
+- In terms of UX the general idea as for the Interface was to make the User don't feel overwelmed.
+-  NestBite offer a desgin that makes the User interact and reach the desired point with only few clicks. The site can be navigated with a keyboard giving different possibilities to the User.
+- What makes NestBite stand out is the fact that the user is never left hanging clueless.
+The design is straight forward:
+    - Good naming on redirections buttons/links
+    - Naming on url paths consistent with the actual page.
+    - Headings consistent with the active page.
+    - Feedbacks when errors or successfull interactions.
+    - Validation and authorization
+    - Uniqueness and personal for example:
+        - Reviews and ratings
+        - Reference Number
+        - Private:
+            - No one can have access to your profile (except for admin(s)).
+            - Reviews are personal.
+            - Confirmation when registering.
+    - The User can navigate easy thanks to the navbar and the many redirection anchors throughout the page, it is quite impossible to get stuck even for first time Users.
+    - In NestBite the UX is taken care of giving also the chance to leave a message with the Contact Us form / Message in the Booking Form. If a person got any issue or any queries is always possible to contact administration with these forms.
+    - If the User is not registered Can still browse the site in the Home page or browse the Restaurants pages, to have an insight of what is NestBite.
+    If you are not registered Nestbite give you feedbacks about it, letting you know that certain actions require registration and validation.
+    - The Booking system:
+        - When the user is making a reservation, the system is always aware of what is going on. 
+        - User can filter restaurants and bookings with the help of widgets.
+        - If the booking fails, there's nothing to worry about, NestBite gives many feedbacks helping you out to complete the forms.
+        - Table already booked? I provide the User different but similar options for different Tables.
+        - Succesfull bookings are saved in Your Bookings page:
+            - For Users : 
+            Users can see all `their` bookings but not others. So the page in not overpopulated with useless informations.
+            - For administration/staff. The Your Bookings acts as a database, displaying every booking made. This could cause trouble if we have too many bookings. 
+            Nothing to worry about bacause you can filter the bookings reducing the amount of displayed items.
+            
+
 
 
 
