@@ -303,23 +303,14 @@ def booking_list(request):
     filter_date = None
 
     if user.is_staff:
-        bookings = Booking.objects.all()
+        bookings = Booking.objects.filter(canceled=False)
     else:
-        bookings = Booking.objects.filter(customer_email=user.email)
-
-    for booking in bookings:
-        delete_finished_booking(booking.id)
-
-    if user.is_staff:
-        bookings = Booking.objects.all()
-    else:
-        bookings = Booking.objects.filter(customer_email=user.email)
+        bookings = Booking.objects.filter(customer_email=user.email, canceled=False)
 
     if filter_date_str:
         filter_date = parse_date(filter_date_str)
-
-    if filter_date:
-        bookings = bookings.filter(booking_date=filter_date)
+        if filter_date:
+            bookings = bookings.filter(booking_date=filter_date)
 
     return render(
         request, 'booking/booking_list.html',
@@ -409,16 +400,15 @@ def cancel_booking(request, booking_id):
     """
     booking = get_object_or_404(Booking, id=booking_id)
 
-    if not (request.user.is_staff
-            or booking.customer_email == request.user.email):
+    if not (request.user.is_staff or booking.customer_email == request.user.email):
         messages.error(request, "You are not allowed to cancel this booking.")
         return redirect('booking_list')
+    if request.method == 'POST':
+        booking.delete()
+        messages.success(request, "Your booking has been successfully canceled.")
+        return redirect('booking_list')
 
-    booking.canceled = True
-    booking.save()
-    messages.success(request, "Your booking has been successfully canceled.")
-    return redirect('booking_list')
-
+    return render(request, 'booking/cancel_booking.html', {'booking': booking})
 
 def delete_finished_booking(booking_id):
     """

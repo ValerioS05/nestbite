@@ -222,9 +222,13 @@ The review is linked with a restaurant,a booking and the User.
 
 - The booking folder contains temlates meant to structure the display of reservation related content. 
     - booking_detail.
+        - Contains the structure used to display the details of the specifi booking
     - booking_form.
+        - Meant to contain the actual form giving the user access to it.
     - booking_list.
+        - Contains the structure to contain the list of bookings created
     - cancel_booking
+        - 
     - update_booking_form.
 - The profile folder as for the booking one, contains templates devoted to user interaction structures.
     - contact_us.

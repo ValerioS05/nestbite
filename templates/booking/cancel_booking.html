@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}Cancel Booking{% endblock %}
+{% block title %}Confirm Cancellation{% endblock %}
 
 {% block content %}
-<h1>Cancel Booking</h1>
-<p>Are you sure you want to cancel the booking for {{ booking.customer_name }} on {{ booking.booking_date }}?</p>
+<div class="text-center">
+    <h1>Cancel Booking</h1>
+    <p>Are you sure you want to delete the booking for <strong>{{ booking.customer_name }}</strong> on {{ booking.booking_date }}?</p>
 
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Confirm Cancellation</button>
-    <a href="{% url 'booking_list' %}" class="btn btn-secondary">Go Back</a>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="mod-btn btn-danger">Confirm Deletion</button>
+        <a href="{% url 'booking_list' %}" class="mod-btn">Go Back</a>
+    </form>
+</div>
 {% endblock %}
