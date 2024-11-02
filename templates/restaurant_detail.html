@@ -14,7 +14,19 @@
             {{ restaurant.closing_time|time:"H:i" }}</p>
     </div>
 </div>
-
+<div class="text-center mt-4 btn-container-det">
+    {% if user.is_authenticated %}
+    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
+    {% else %}
+    <div class="alert alert-danger mt-3">
+        <strong>
+            To make a reservation: please  
+            <a href="{% url 'account_signup' %}" class="mod-btn btn">Sign Up</a> or
+            <a href="{% url 'account_login' %}" class="mod-btn btn">Login</a>
+        </strong>
+    </div>
+</div>
+{% endif %}
 <div class="image-gallery text-center">
     <div class="image-container">
         {% if "placeholder" in restaurant.featured_image.url %}
@@ -28,20 +40,12 @@
         <p>{{ restaurant.description|safe}}</p>
     </div>
 </div>
-
-<div class="text-center mt-4 btn-container-det">
-    {% if user.is_authenticated %}
-    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
-    {% else %}
-    <div class="alert alert-danger mt-3">
-        <strong>
-            To make a reservation: please
-            <a href="{% url 'account_signup' %}" class="btn btn-link">Sign Up</a> or
-            <a href="{% url 'account_login' %}" class="btn btn-link">Login</a>
-        </strong>
-    </div>
-    {% endif %}
-
+<div class="text-center">
     <a href="{% url 'restaurant_list' %}" class="mod-btn">Back to restaurants</a>
 </div>
+{% if user.is_authenticated %}
+<div class="text-center">
+    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
+</div>
+{% endif %}
 {% endblock %}

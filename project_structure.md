@@ -190,15 +190,61 @@ The review is linked with a restaurant,a booking and the User.
         - This is a simple form to submit a message intended for customer experience (customer service and  feedbacks).
         - **Important** to say is that the form is not linked to the database bacause it stores input temporarily.
         - The message is in a form of a Textare widget giving the user multiple lines where to right(complaints!!!) to nestbite administration.
-        - The form is processed and emailed to the site email very straightforward. 
-    
+        - The form is processed and emailed to the site email very straightforward.
+## Urls
+- These urlpatterns configures the primary url routes for nestbite(nest_bite project).
+    |Urls|Description|
+    |--|--|
+    |![Nestbite main urls image](/static/images/nest_structure_images/nesturl.png)| In these paths we have connection to : /accounts/,/admin/,/booking/,/myprofile/, the /''/ is including the restaurant because it focuses as the main entry point for the site. We can also see the connection to summernote enabling the customization.|
+    |![Restaurant urls image](/static/images/nest_structure_images/urlrest.png)|In the Restaurant urls we can see the /''/ that sets the index page as homepage for the site, we have the path to the restaurant_list  using class based view. Same for the restaurant_detail, in this case we have an identifier specifing which restaurant to see <int:pk> primary key expected as an integer.|
+    |![Booking urls image](/static/images/nest_structure_images/urlbook.png)|The empty path here define the main route for the /booking/ linked to the booking_list view. The /create/ is the path to the create_booking view get the restaurant id as integer. We can see the booking_detail that is set as the booking_id, followed bycancel_booking and update_details.|
+    |![Myprofile urls image](/static/images/nest_structure_images/urlprurl.png)|My profile url pattern is quite small, covers the profile viewing ,editing and concting page. The empty path is set as main entrance for the profile, followed by the /edit/ and the /contact/ paths. These routes are user related actions within the myprofile.|
+- Examples:  
+![Url showcase 1](/static/images/nest_structure_images/urlex.png)    
+![Url showcase 2](/static/images/nest_structure_images/urlex1.png)  
+![Url showcase 3](/static/images/nest_structure_images/urlex2.png)  
+![Url showcase 4](/static/images/nest_structure_images/urlex3.png)  
+![Url showcase 5](/static/images/nest_structure_images/urlex4.png)  
+- As we can see the urls follow a specific pattern depending on what we are trying to reach or achieve.
 
+## Templates
+|||
+|--|--|
+|![Templates organization picture](/static/images/nest_structure_images/templates.png)|As we can see from the image. My templates are organized inside the templates folder. The First templates created were the ones left outside of folders also for importance. This was to keep track of the organization that was idealized. We have first the base template that is the base that will be inherited from all the other templates. In this template we have the main items to form a webpage, such as the metadatas with the addition of navigation bar and footer. This made possible a fast deployment of the other templates keeping everything consistent and organized. The accounts templates also inherited this base template. The main base.html contains also a message display that will be exported to every template avoiding redundancy.|
 
-        
+- Main section export using the block content.  
+![Export showcase from base.html main section](/static/images/nest_structure_images/Mainexport.png)  
+- Message export example.  
+![Export showcase from base.html messages](/static/images/nest_structure_images/messageexport.png)
 
- 
+- All the other are constructed using content blocks filled with HTML and Bootstrap. 
+- This was the actual first time using Bootstrap in this exstensive way.
 
+- The booking folder contains temlates meant to structure the display of reservation related content. 
+    - booking_detail.
+    - booking_form.
+    - booking_list.
+    - cancel_booking
+    - update_booking_form.
+- The profile folder as for the booking one, contains templates devoted to user interaction structures.
+    - contact_us.
+    - profile.
+    - update_profile.
+- Account templates.
+    - These templates were already set and nothing that I created. 
+    - Some of these templates were modified mainly the /account/base.html, this was bacause I wanted even the furthest templates to inherit the same structure as the main base and also the same styles etc...
+    - I opted to leave the account templates inside their original folder, this has been chosen like this because I preferred keepin the created by me templates distant from what I didn't actually built.
+    - Social account templates as the others that I didn't mention were untouched.
 
+### Dynamic templates
+- The templates are structured in a way that dynamically changes elements based on the status of the User
+    - If the user is a first timer the template realizes that with the help of ({% if user.is_authenticated %}) the user can access only few elements.
+    - It can be certain items like the links in the navigation bar, or the buttons in the restaurant pages to start making bookings.  
+
+|Image| Description|
+|--|--|
+|![Registered user showcase](/static/images/nest_structure_images/registered.png)| This is displayed for registered user from the template logic|
+|![Non registered user showcase](/static/images/nest_structure_images/nonregistered.png)| This is the case the user is not registered/logged in|
 
 
     
