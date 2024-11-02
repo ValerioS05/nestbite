@@ -42,7 +42,7 @@ This Skeleton structure was essential in ensuring that the site was visually con
     - Related to Booking via Tables.
 - Methods used:
     - average_rating(): Used to calculate average of rating field from the Review model.
-    - __str__(): Returning a readable string.
+    - __str_ _(): Returning a readable string.
 - Meta:
     - ordering by name, created and capacity.
 #### The Table model
@@ -90,10 +90,112 @@ This Skeleton structure was essential in ensuring that the site was visually con
 #### The Review model
 - The Review model allows the User to reate their experience with a restaurant based on a specific booking(reviews are accessible only through bookings).
 The review is linked with a restaurant,a booking and the User.
+- Location: nestbite/booking/models.py
 - Review relationships:
     - ForeignKey to booking (set to Null if the booking is no longer available).
     - ForeignKey to restaurant.
     - ForeignKey to user.
+- Methods used:
+    - __str_ _():
+        - Represents the review showing its details.
+- To mention is that this model is not registered to the admin panel, is not essential to the admin to view directly from it. Also it could result redundant.
+    - An email is actually set up, receiving reviews and it is accessible from there.
+
+## Views 
+### Restaurant views.py
+- This view is basically divided in three main section:
+    - The displaying/rendering of the index page that serves as the home page.
+        - Parameters: 
+        - request - represents the incoming request from the User.
+    - The RestaurantList
+        - A view for displaying a list of restaurants with filtering and pagination added to it.
+        - Attributes: 
+            - template_name - Specify the name of the template used to render the list.
+            - context_object_name - Used to contain the name used in the template in this case (restaurants) containing the list of restaurant objects.
+            - paginated_by - Define the number of restaurants displayed per page in this case (3).
+        - Methods used:
+            - get_queryset(self):
+                - it calls the restaurant_filter function to define filtering based on the user input in this case capacity and working hours.
+            - restaurant_filter(request):
+                - This function handles the logic behind the filtering. Takes as parameter (request) obtaining the parameters for the queryset from the url.
+                - It initially gets the restaurant objects , followed by capacity and the opening time. The Time filtering was a bit challenging due to the fact that in the url the representation of the time is a string. Using the strptime() method the system parse the string into a datetime object. If no hours is present then the value is set to none.
+    - The restaurant_detail
+        - This view renders the details of the specified restaurant using the restaurant_detail.html template.
+        - Takes as parameter (request, pk). 
+            - pk to retrieve the restaurant. (raises a 404 if restaurant is not found.)
+
+### Booking views.py
+- The Booking view file is quite larger than the previous showcase.
+    - Divided between logic/utility and view functionality.
+        -  View functions:
+            - create_booking(request,restaurant_id)
+            Handles the creation of a new booking for the specified restaurant, it renders the booking form and redirection to the booking list when the form is succesfully submitted. If the form is not succesfully submitted the function rises errors rendered in the form itself.
+            - update_booking(request,booking_id)
+            Retrieving the existing booking specified , checks authorization and processes the form updating the details(if valid).
+            - booking_list(request)
+            Display the list of bookings for the current user rendering the booking_list.html template.
+            - booking_detail(request, booking_id)
+            Display the deatails of the specified booking and handles the reviews, checking user authorization and allowing them to submit the review if they didn't already.
+            - cancel_booking(request,booking_id)
+            The purpose of this function is deleting the specified booking (if user is authorized).
+            - delete_finished_booking(booking_id)
+            Delets bookings after is done. It is automatic so the system is not redundant and overpopulated with non pertinent bookings.
+            The bookings are deleted after 2 hours after the end_time.
+        - Logic/Utility Functions
+            - check_timings(booking,restaurant,form)
+            The purpose of this function is to validate the booking timings. (beeing within working hours and min/max stay of the customer.)
+            How it works: It compares the booking to the restaurant ensuring that the booking is starting 1 hour before closing time(for obvious reasons).
+            It also validates that the duration of the booking is between 1 and 3 hours. This decision was made because:
+                - 1 - The booking needs a minimum time even if hypotetically the Customer leaves that remaining time is "paid" for.
+                - 2 - The 3 Hours booking is a way to don't give the user the chance to book all the restaurant for the all day "paying" the same amount.
+                    Giving the case a User can do multiple bookings. Not much logic to it , it's just showcasing timeslots.
+            - overlapping_bookings(booking,form,current_booking)
+                - One of the most important function, this helps to keep check on overlapping bookings for the selected tables and specified timings.
+                A good thing that this function does is giving the chance to the user to explore different options if a overlap is found.
+                The logic here is to filter the booking objects to fint overlaps between the start time or end time of the current booking.
+            - handle_booking_form(request,form,restaurant,booking)
+                - As the function name, this handles the form submition for creating or updating. 
+                If the form is valid, it either updates or creates a new booking based on the booking parameter, calling the check_timings and overlap functions for validation. If the overall is good, it saves the booking to the database.
+### Myprofile views.py
+- Very smaller view file. It is in a separate app (myprofile) meant to User interaction not directly affecting the system reservation logic.
+    - profile_view(request)
+        The purpose of this view is to display the profile page (profile.html) with the actual user details.
+    - profile_edit(request)
+        As per name the view allows the logged user to edit the profile details (name, email) if the form is valid(if the form is not valid it renders the error messages).
+    - contact_us(request)
+        - Allows the user logged in to send a message to the nestbite email, quite simple. The form extracts the user details that will be sent with the mail(send_mail function).
+## Forms
+### Booking forms.py
+- Here we have forms related to the booking app.
+    - BookingForm:
+        - The purpose of this form is to allow the user to create booking for tables in a specified restaurant. As the name says the form is based on the booking model and its fields.
+        - There are some features in this form:
+            - The multiple choice field a list of tables selectable with checkboxes.
+            The __init_ _ method was initialized to get the tables for the selected restaurants by queryset.
+            This method does important actions like identify the restaurant id filtering the tables.
+            Create the list of tables displaying some pertinent details.
+            - Meta:
+            Specifing the booking as model for this form I included fields like , customer name , date, timings and a optional message.
+            - Widgets were used to customize the form, date picker for booking_date and time picker for both the start and end time.
+            Some validation was added over the timings for closing and opening hours of the specified restaurant.
+    - ReviewForm:
+        - Allows the user to leave a review, this form provides a rating from 1 to 5 and an optional message.
+        - Meta: Specifing the Review model, I included rating and message.
+        - In here widgets were used as well, RadioSelect for radio buttons displayed with stars and the actual "value" of the button. Also a textarea was user for the message.
+### Myprofile forms.py
+- In this file we have 2 forms as well. These two forms handles user interaction like profile update and contact form.
+    - ProfileForm:
+        - The profileForm gives the user the chance to update thier profile informations based on the built-in User model, that's the reason why the User is able to modify the username, first and last name plus the email. This form is a very basic form to edit basic informations trying to don't expose sensitive datas.
+    - ContactForm:
+        - This is a simple form to submit a message intended for customer experience (customer service and  feedbacks).
+        - **Important** to say is that the form is not linked to the database bacause it stores input temporarily.
+        - The message is in a form of a Textare widget giving the user multiple lines where to right(complaints!!!) to nestbite administration.
+        - The form is processed and emailed to the site email very straightforward. 
+    
+
+
+        
+
  
 
 
