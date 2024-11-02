@@ -9,7 +9,7 @@ function fadeAlerts() {
                 const alertMessage = new bootstrap.Alert(alertObj);
                 alertMessage.close();
             }, 300);
-        }, 4000 + (index * 1000)); // Add delay for each alert message in successiom
+        }, 7000 + (index * 2000)); // Add delay for each alert message in successiom
     });
 }
 

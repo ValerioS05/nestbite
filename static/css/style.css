@@ -72,6 +72,17 @@ ul {
     box-shadow: 0 0 10px white;
     color:white;
 }
+
+/*message-container*/
+
+.message-container {
+    position: fixed;
+    left: 5%;
+    top: 7%;
+    width: auto;
+    z-index: 100;
+}
+
 /*Logo and feature section (index.html)*/
 .logo {
     height: 100px;
