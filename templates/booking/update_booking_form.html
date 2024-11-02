@@ -6,11 +6,11 @@
 <h2 class="text-center">Update Booking</h2>
 
 {% if form.non_field_errors %}
-    <div class="alert alert-danger">
-        {% for error in form.non_field_errors %}
-            <p>{{ error }}</p>
-        {% endfor %}
-    </div>
+<div class="alert alert-danger">
+    {% for error in form.non_field_errors %}
+    <p>{{ error }}</p>
+    {% endfor %}
+</div>
 {% endif %}
 
 <div class="container mt-5 text-center">
@@ -43,19 +43,22 @@
 
         <div class="row mb-3 tab-selec">
             <div class="col-md-6">
-                <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
-                {{ form.tables }}
+                <label for="id_tables_0">Tables</label>
+                <div>
+                    {{ form.tables }}
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
                 {{ form.message }}
             </div>
         </div>
-        <div class="text-center mt-4 btn-container-det">
-            <button type="submit" class="mod-btn">Update Booking</button>
-            <a href="{% url 'booking_list' %}" class="mod-btn">Back to Booking List</a>
-        </div>
-    </form>
+</div>
+<div class="text-center mt-4 btn-container-det">
+    <button type="submit" class="mod-btn">Update Booking</button>
+    <a href="{% url 'booking_list' %}" class="mod-btn">Back to Booking List</a>
+</div>
+</form>
 </div>
 
 

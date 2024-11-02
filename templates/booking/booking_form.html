@@ -36,11 +36,12 @@
             <label for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label>
             {{ form.end_time }}
         </div>
-
         <div class="row mb-3 tab-selec">
             <div class="col-md-6">
-                <label for="{{ form.tables.id_for_label }}">{{ form.tables.label }}</label>
-                {{ form.tables }}
+                <label for="id_tables_0">Tables</label>
+                <div>
+                    {{ form.tables }}
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
