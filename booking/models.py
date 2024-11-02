@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.contrib.auth.models import User
@@ -73,7 +74,12 @@ class Booking(models.Model):
         doesn't already exist.
         """
         if not self.booking_reference:
-            self.booking_reference = Booking.generate_booking_reference()
+            unique = False
+            while not unique:
+                reference = Booking.generate_booking_reference()
+                if not Booking.objects.filter(booking_reference=reference).exists():
+                    self.booking_reference = reference
+                    unique = True
         super().save(*args, **kwargs)
 
     @property

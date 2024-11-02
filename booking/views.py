@@ -218,8 +218,8 @@ def create_booking(request, restaurant_id):
                                     for table in booking.tables.all())
             messages.success(
                 request,
-                f'Your booking for the following table(s) has been created '
-                f'successfully: {table_names}.'
+                f'Your booking is confirmed! See you soon.'
+
             )
             return redirect('booking_list')
     else:
@@ -264,7 +264,7 @@ def update_booking(request, booking_id):
                                     for table in booking_instance.tables.all())
             messages.success(
                 request,
-                f'Your booking has been updated successfully: {table_names}.'
+                f'Your booking has been updated successfully!.'
             )
             return redirect('booking_list')
     else:

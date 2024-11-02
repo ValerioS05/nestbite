@@ -21,9 +21,6 @@
         </div>
     </div>
 
-    {% if feedback_message %}
-    <div class="alert alert-info">{{ feedback_message }}</div>
-    {% else %}
     {% if existing_review %}
     <p>You have already submitted feedback for this booking. Thank you!</p>
     {% else %}
@@ -34,7 +31,6 @@
         {{ review_form.as_p }}
         <button type="submit" class="mod-btn btn mb-3">Submit Review</button>
     </form>
-    {% endif %}
     {% endif %}
     {% endif %}
 
