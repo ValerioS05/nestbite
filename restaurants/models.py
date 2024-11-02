@@ -74,8 +74,7 @@ class Table(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"""Table {self.table_number}
-        (Max: {self.capacity}) at {self.restaurant}"""
+        return f"""Table {self.table_number} at {self.restaurant}"""
 
     class Meta:
         """

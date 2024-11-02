@@ -10,7 +10,8 @@
         <p><strong>Address:</strong> {{ restaurant.address }}</p>
         <p><i class="fas fa-phone"></i> {{ restaurant.phone_number }}</p>
         <p><strong>Capacity:</strong>Capacity: {{ restaurant.capacity }}</p>
-        <p><i class="fas fa-clock"></i> {{ restaurant.opening_time }} - {{ restaurant.closing_time }}</p>
+        <p><i class="fas fa-clock"></i> {{ restaurant.opening_time|time:"H:i" }} -
+            {{ restaurant.closing_time|time:"H:i" }}</p>
     </div>
 </div>
 
@@ -24,6 +25,7 @@
         <div class="image-flash">
             <p class="owner">Owner: {{ restaurant.owner }}</p>
         </div>
+        <p>{{ restaurant.description|safe}}</p>
     </div>
 </div>
 

@@ -38,7 +38,7 @@
             <p class="mb-1">Address: {{ restaurant.address }}</p>
             <p class="mb-1"><i class="fas fa-phone"></i> {{ restaurant.phone_number }}</p>
             <p class="mb-1">Capacity: {{ restaurant.capacity }}</p>
-            <small><i class="fas fa-clock"></i> {{ restaurant.opening_time }} - {{ restaurant.closing_time }}</small>
+            <small><i class="fas fa-clock"></i> {{ restaurant.opening_time|time:"H:i" }} - {{ restaurant.closing_time|time:"H:i" }}</small>
             {% if restaurant.average_rating %}
             <small><i class="fas fa-star"></i> {{ restaurant.average_rating|floatformat:1 }}</small>
             {% endif %}

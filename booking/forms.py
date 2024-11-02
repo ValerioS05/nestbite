@@ -52,7 +52,7 @@ class BookingForm(forms.ModelForm):
 
             self.fields['tables'].choices = [
                 (table.id, f"""
-                    Table {table.table_number} (Max: {table.capacity})
+                    Table {table.table_number} (Cap: {table.capacity})
                     - £{table.price:.2f}""")
                 for table in self.fields['tables'].queryset
             ]
