@@ -35,7 +35,7 @@
         {% if "placeholder" in restaurant.featured_image.url %}
         <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
         {% else %}
-        <img class="card-img-top" src="{{ restaurant.featured_image.url }}" alt="{{ restaurant.name }}">
+        <img class="card-img-top" src="{{ restaurant.featured_image_url }}" alt="{{ restaurant.name }}">
         {% endif %}
         <div class="image-flash">
             <p class="owner">Owner: {{ restaurant.owner }}</p>

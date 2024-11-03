@@ -23,6 +23,12 @@ class Restaurant(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    @property
+    def featured_image_url(self):
+        """Replace the http to https"""
+        url = self.featured_image.url
+        return url.replace('http://', 'https://') if url.startswith('http://') else url
+
     def average_rating(self):
         return self.reviews.aggregate(average=Avg('rating'))['average'] or None
     
