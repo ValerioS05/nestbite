@@ -191,6 +191,10 @@ The review is linked with a restaurant,a booking and the User.
         - **Important** to say is that the form is not linked to the database bacause it stores input temporarily.
         - The message is in a form of a Textare widget giving the user multiple lines where to right(complaints!!!) to nestbite administration.
         - The form is processed and emailed to the site email very straightforward.
+
+|Example of rendered form Contact Us|Booking form|
+|--|--|
+|![Contact us form](/static/images/nest_structure_images/formcont.png)|![Booking form](/static/images/nest_structure_images/formbook.png)|  
 ## Urls
 - These urlpatterns configures the primary url routes for nestbite(nest_bite project).
     |Urls|Description|
@@ -211,16 +215,23 @@ The review is linked with a restaurant,a booking and the User.
 |||
 |--|--|
 |![Templates organization picture](/static/images/nest_structure_images/templates.png)|As we can see from the image. My templates are organized inside the templates folder. The First templates created were the ones left outside of folders also for importance. This was to keep track of the organization that was idealized. We have first the base template that is the base that will be inherited from all the other templates. In this template we have the main items to form a webpage, such as the metadatas with the addition of navigation bar and footer. This made possible a fast deployment of the other templates keeping everything consistent and organized. The accounts templates also inherited this base template. The main base.html contains also a message display that will be exported to every template avoiding redundancy.|
+|![Header source code](/static/images/nest_structure_images/navcode.png)|Reusing header from base.html  |
+|![Footer source code](/static/images/nest_structure_images/footcode.png) |Reusing footer from base.html|  
+|![Export showcase from base.html main section](/static/images/nest_structure_images/Mainexport.png)|Main section export using the block content.|
+|![Export showcase from base.html messages](/static/images/nest_structure_images/messageexport.png)|Messages export. |
 
-- Main section export using the block content.  
-![Export showcase from base.html main section](/static/images/nest_structure_images/Mainexport.png)  
-- Message export example.  
-![Export showcase from base.html messages](/static/images/nest_structure_images/messageexport.png)
-
-- All the other are constructed using content blocks filled with HTML and Bootstrap. 
+- The base templates also exports JS, Style sheets and other components used to create NestBite. 
+- All the templates are constructed using content blocks ({% block content/title/.. %}) filled with HTML and Bootstrap.
 - This was the actual first time using Bootstrap in this exstensive way.
+- The restaurant_detail:
+    - This template is at the same level of the base.html template(templates/restaurant_detail.html).
+        - It contains the structure to display the important fields of the restaurant.(name, timings, feature image, etc..)
+- The restaurant.html:
+    - Same as the previous template we will find it at the same level of the base.html.
+        - In here the main points of the template is giving the user the chance to interact with the filters and displaying simple boxes containing restaurant details(like a little summary).
 
-- The booking folder contains temlates meant to structure the display of reservation related content. 
+### In specific folder templates
+- The booking folder contains templates meant to structure the display of reservation related content. 
     - booking_detail.
         - Contains the structure used to display the details of the specifi booking
     - booking_form.
@@ -228,12 +239,16 @@ The review is linked with a restaurant,a booking and the User.
     - booking_list.
         - Contains the structure to contain the list of bookings created
     - cancel_booking
-        - 
+        - The cancel booking contains the form for the booking specified to be deleted. To mention is that the form is only used there to get the POST method.
     - update_booking_form.
+        - Used to contain the form to update the details of the booking specified.
 - The profile folder as for the booking one, contains templates devoted to user interaction structures.
     - contact_us.
+        - Contains as main element a textare where the user can write an send a message to NestBite.
     - profile.
+        - Here is a simple profile template contains elements to display User's details and a button redirecting to the update template.
     - update_profile.
+        - As the naming , it contains a form to let the user update his profile.
 - Account templates.
     - These templates were already set and nothing that I created. 
     - Some of these templates were modified mainly the /account/base.html, this was bacause I wanted even the furthest templates to inherit the same structure as the main base and also the same styles etc...
@@ -242,13 +257,61 @@ The review is linked with a restaurant,a booking and the User.
 
 ### Dynamic templates
 - The templates are structured in a way that dynamically changes elements based on the status of the User
-    - If the user is a first timer the template realizes that with the help of ({% if user.is_authenticated %}) the user can access only few elements.
-    - It can be certain items like the links in the navigation bar, or the buttons in the restaurant pages to start making bookings.  
+    - If the user is a first timer the template realizes that with the help of ({% if user.is_authenticated %}) the user can access limited elements.
+    - It can be certain items like the links in the navigation bar, or the buttons in the restaurant pages to start making bookings.
 
 |Image| Description|
 |--|--|
-|![Registered user showcase](/static/images/nest_structure_images/registered.png)| This is displayed for registered user from the template logic|
-|![Non registered user showcase](/static/images/nest_structure_images/nonregistered.png)| This is the case the user is not registered/logged in|
+|![Registered user showcase](/static/images/nest_structure_images/registered.png)| This is displayed for registered user from the template logic.|
+|![Non registered user showcase](/static/images/nest_structure_images/nonregistered.png)| This is the case the user is not registered/logged in.|
+|![Registered navbar image](/static/images/nest_structure_images/dynbar1.png)|In this case we have a logged in user navbar view.|
+|![Non registered navbar image](/static/images/nest_structure_images/dynbar.png)|And in here we have the non logged in navbar view. Where the user can access limited templates.|
+
+## Assets
+- NestBite relies on Static and Cloudinary for efficient asset management and media storage.
+- The static directory is beeing used for CSS , JS and images.
+- Cloudinary has been set up to store feature image of the restaurants.  
+
+|||
+|--|--|
+|![Static folder image](/static/images/nest_structure_images/static.png)|This is how the static folder is organized.|  
+
+### Static and Staticfiles
+- The static files are organized within the static folder, which contains all essential resources required for the interface.
+- NestBite is set up to use the `collectstatic` command which gathers all the static files into the staticfiles directory.
+    - Used for deployment.
+#### CSS
+- The CSS style sheet is contained in static/css/style.css inside the css folder
+    - In here we have two files:
+        - Style.css
+        - Account_templates.css
+        - The second style sheet has been created to differenciate my templates and the account templates. Even though the style is practically the same for consistency.
+#### Js
+- The js folder also contains 2 different files and its location is in static/js/myjsfiles.js
+    - This files contains small scripts relative to alerts and filters (clear buttons and filter.).
+#### Images
+- The images folder is structured in a way that is organized with lightweight images for the interface.
+- Interface images were left inside the folder but not categorized (feature index images, logo)
+    - Different folders for images were used to organize the images by their use.
+        - Favicon folder contains images related to the fav icon.
+        - Readme_images contains images related to the main part of the readme and so on for every different section of it.
+
+|||
+|--|--|
+|![Images folder in static](/static/images/nest_structure_images/staimages.png)|This is how the images folder is organized.|  
+
+### Cloudinary
+- To manage larger , higher quality images like the feature images for the restaurant_detail page for a better UX.  
+It was integrated also because of efficiency, a user with access to the admin panel can upload pictures without the need to modify the source code.
+    - Images are served directly from the cloud thanks to the app and the integration of Cloudinary.
+
+|||
+|--|--|
+|![Admin view of images upload](/static/images/nest_structure_images/adminimage.png)|In here we can see the field where the image upload was implemented. The Currently: is a generated reference from Cloudinary.|
+|![Admin view of placeholder image](/static/images/nest_structure_images/adminplacehold.png)|And here we can see how the placeholder is in place when a new restaurant is created without a feature picture.|  
+|![Restaurant model with cloudinary](/static/images/nest_structure_images/cloudrest.png)|Importing and use of Cloudinary in the restaurant model|
+|![Placeholder image for restaurant details](/static/images/nest_structure_images/placeimage.png)|Placeholder|
+|![Featured image of the restaurant details](/static/images/nest_structure_images/featimage.png)|Featured image|
 
 
-    
+[Back to main page](./README.md)
