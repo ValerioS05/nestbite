@@ -50,9 +50,9 @@ In here I checked the contrast in the pages if they would achieve good results o
 All the files have been passed through the Python Linter offere by Code Insitute.
 ![Python in Python linter](/static/images/6t010_images/linter.png)
 
-## Tests
+### Tests
 For this project for the testing side, in addition to manual testing we have some automated test.
-### Auto tests
+#### Auto tests
 The location of these tests is related to their app of origin.
 Tests about booking is in the booking app. 
 nestbite/booking/test_booking.py
@@ -111,9 +111,90 @@ As the title say NestBite is been manually tested from first to last page.
 |Restaurant fields|ok|The restaurant fields are loaded correctly depending on restaurant id|
 
 #### Booking form page
-|Name input|ok|Accepts cor|
-||||
-||||
-||||
-||||
-||||
+|Element tested|Test Result|Note|
+|--|--|--|
+|Name input|ok|Restriction to only characters works correctly displaying error message|
+|Date picker|ok|Display correct error if date doesn't meet requirements|
+|Start/End Time pickers|ok|Display correct error if timing is not met|
+|Tables Select|ok|Displayed correctly as intended form is not submitted if a table is not selected|
+|Textarea|ok|No issue with textarea|
+|Book now Btn|ok|Submit the details if succesfully compiled datas, else herror handling manages it|
+
+#### Booking list page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Date filter|ok|Works correctly as espected.|
+|Filter and Clear filter|ok|Both buttons do what they are supposed to do.|
+|View Details Btn|ok|When pressed redirect correctly to the booking details.|
+|Cancel Booking|ok|When pressed redirect correctly to the delete booking form.|
+|Update Btn|ok|Also works correctly redirecting to the update form.|
+
+#### Booking details page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Booking details|ok|The page display correctly the booking details|
+|Ratings in review|ok|Displayed correctly and the given value is correctly selected.|
+|Message |ok|Works as intended.|
+|Submit review btn|ok|Correctly submit the review.|
+|Update Booking btn|ok|Redirect correctly to the update form.|
+|Back btn|ok|Redirect correctly to the booking list page.|
+
+#### Update Booking page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Form fields|ok|All acts correctly with no issue.|
+|Update booking btn|ok|Correctly updates the booking.|
+|Back btn|ok|Correctly redirect to the booking list page.|
+
+#### Cancel Booking page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Page|ok|Display correctly minimal booking datas.|
+|Confirm Deletion btn|ok|Correctly eliminates the booking.|
+|Back btn|ok|Correctly redirect to booking list page.|
+
+#### Contact Us page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Form|ok|Displayed correctly the textarea.|
+|Send Message btn|ok|Correctly start the send email action.|
+
+#### Profile page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Page|ok|Displayed correctly the info of the current user.|
+|Edit btn|ok|Correctly redirect to edit form.|
+
+#### Edit profile page
+|Element tested|Test Result|Note|
+|--|--|--|
+|Form|ok|Displayed as intended the form.|
+|Save btn|ok|Works as expected saving the new details|
+|Back btn|ok|Redirect correctly.|
+#### Accounts template
+- For this pages , I many times create , delete , reset accounts, logged in and logged out. Everything works as intended also the logic is not beeing touched from these accounts.
+
+## Technologies Used
+- For this project many technologies were used
+    - [Django](https://docs.djangoproject.com/en/5.1/)
+        - Primary framework to build this app in python.
+    - [DjDatabase](https://pypi.org/project/dj-database-url/)
+    - [PsycoPg2](https://www.psycopg.org/docs/)
+        - These two are used for database configuration and interaction to PostgreSql and Heroku
+    - [Cloudinary](https://cloudinary.com/documentation)
+        - Used to integrate/manage assets like images(much more can be done).
+    - [Allauth](https://docs.allauth.org/en/latest/)
+        - For authentication like for logins emails and passwords.
+    - [Summernote](https://summernote.org/getting-started/)
+        - Editor.
+    - [Gunicorn](https://docs.gunicorn.org/en/stable/)
+        - Used to serve the application to production.
+    - [Whitenoise](https://whitenoise.readthedocs.io/en/latest/django.html)
+        - A middleware for static file management. 
+    - [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+        - Css framework used to style and layout.
+        - Bounded with [Popper.js](https://popper.js.org/docs/v2/)
+    - [Font Awesome](https://fontawesome.com/)
+        - Used to add icons.
+    - [Google Fonts](https://fonts.google.com/knowledge)
+        - Loads the fonts used on this project.
