@@ -10,24 +10,27 @@
         <p><strong>Address:</strong> {{ restaurant.address }}</p>
         <p><i class="fas fa-phone"></i> {{ restaurant.phone_number }}</p>
         <p><strong>Capacity:</strong>Capacity: {{ restaurant.capacity }}</p>
-        <p><i class="fas fa-clock"></i> {{ restaurant.opening_time|time:"H:i" }} -
-            {{ restaurant.closing_time|time:"H:i" }}</p>
+        <p>
+            <i class="fas fa-clock"></i> {{ restaurant.opening_time|time:"H:i" }} -
+            {{ restaurant.closing_time|time:"H:i" }}
+        </p>
     </div>
 </div>
 <div class="text-center mt-4 btn-container-det">
     {% if user.is_authenticated %}
-    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
+    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn mb-3">Make a Reservation</a>
     {% else %}
     <div class="alert alert-danger mt-3">
         <strong>
-            To make a reservation: please  
+            To make a reservation: please
             <a href="{% url 'account_signup' %}" class="mod-btn btn">Sign Up</a> or
             <a href="{% url 'account_login' %}" class="mod-btn btn">Login</a>
         </strong>
+    {% endif %}
     </div>
+
 </div>
-{% endif %}
-<div class="image-gallery text-center">
+<div class="image-gallery text-center mb-5">
     <div class="image-container">
         {% if "placeholder" in restaurant.featured_image.url %}
         <img class="card-img-top" src="{% static 'images/default.jpg' %}" alt="placeholder image">
@@ -36,16 +39,10 @@
         {% endif %}
         <div class="image-flash">
             <p class="owner">Owner: {{ restaurant.owner }}</p>
+            {{ restaurant.description|safe}}
         </div>
-        <p>{{ restaurant.description|safe}}</p>
     </div>
-</div>
-<div class="text-center">
-    <a href="{% url 'restaurant_list' %}" class="mod-btn">Back to restaurants</a>
-</div>
-{% if user.is_authenticated %}
-<div class="text-center">
-    <a href="{% url 'create_booking' restaurant.id %}" class="mod-btn">Make a Reservation</a>
-</div>
-{% endif %}
+    <div class="text-center mt-5">
+        <a href="{% url 'restaurant_list' %}" class="mod-btn">Back to restaurants</a>
+    </div>
 {% endblock %}

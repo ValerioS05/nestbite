@@ -1,4 +1,14 @@
 # NestBite structure
+  - [Wire frames / Skeleton](#wireframes--skeleton)
+  - [Models](#models)
+  - [Views](#views)
+  - [Forms](#forms)
+  - [Urls](#urls)
+  - [Templates](#templates)
+  - [Assets](#assets)
+  - **[Back to main Readme](./README.md)**
+
+
 ## Wireframes / Skeleton
 - As starting point for the NestBite's structure I will do a showdown of wireframes.  
 Created mostly before starting the project, and some were created after ideas came through.
@@ -314,4 +324,4 @@ It was integrated also because of efficiency, a user with access to the admin pa
 |![Featured image of the restaurant details](/static/images/nest_structure_images/featimage.png)|Featured image|
 
 
-[Back to main page](./README.md)
+## [Back to main page](./README.md)

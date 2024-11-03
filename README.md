@@ -22,6 +22,7 @@
 2. [User Stories / Agile workflow](#user-stories)
 3. [Features](#features)
 4. [UI/UX Design](#uiux)
+- Separate section for 5.
 5. [Project structure](./project_structure.md)
   - Wire frames / Skeleton
   - Models
@@ -30,12 +31,13 @@
   - Urls
   - Templates
   - Assets
+- Separate section for 6. to 10.
 6. Testing / Validation
 7. Deployment
-11. Technologies
-12. Languages
-13. Bugs and Fixes
-14. Credits
+8. Technologies
+9. Languages
+10. Bugs and Fixes
+11. Credits
 
 ## About NestBite
 - NestBite is a web based app built with `Django`, is simulate a restaurant table reservation system.  

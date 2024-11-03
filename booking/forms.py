@@ -68,16 +68,16 @@ class BookingForm(forms.ModelForm):
             self.fields['start_time'].widget = forms.TimeInput(
                 attrs={
                     'type': 'time',
-                    'min': opening_time,
-                    'max': (closing_time.hour - 1)
+                    'min': f"{opening_time.hour:02}:{opening_time.minute:02}",
+                    'max': f"{closing_time.hour:02}:{closing_time.minute:02}"
                 }
             )
 
             self.fields['end_time'].widget = forms.TimeInput(
                 attrs={
                     'type': 'time',
-                    'min': f"{(opening_time.hour + 1)}:00",
-                    'max': closing_time
+                    'min': f"{(opening_time.hour + 1):02}:00",
+                    'max': f"{closing_time.hour:02}:{closing_time.minute:02}"
                 }
             )
 
