@@ -7,4 +7,9 @@
 10. Bugs and Fixes
 
 
-## Testing / Validation
+## Validation / Testing 
+### Validation
+- For validation many tools were used.
+- W3C Markup/CSS Validators
+- JSHint 
+https://jshint.com/

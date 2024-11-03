@@ -7,9 +7,10 @@
   <!-- Filter Form -->
   <form method="GET" class="mb-4">
     <div class="input-group">
-      <input type="date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
-      <button type="submit" class="btn boo-btn">Filter by Date</button>
-      <a href="{% url 'booking_list' %}" class="btn boo-btn">Clear Filter</a>
+      <label for="filter_date">Choose Date</label>
+      <input type="date" id="filter_date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
+      <button type="submit" class="btn boo-btn">Filter</button>
+      <a href="{% url 'booking_list' %}" class="boo-btn btn pt-2">Clear Filter</a>
     </div>
   </form>
 

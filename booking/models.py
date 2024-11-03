@@ -77,7 +77,9 @@ class Booking(models.Model):
             unique = False
             while not unique:
                 reference = Booking.generate_booking_reference()
-                if not Booking.objects.filter(booking_reference=reference).exists():
+                if not Booking.objects.filter(
+                        booking_reference=reference
+                        ).exists():
                     self.booking_reference = reference
                     unique = True
         super().save(*args, **kwargs)

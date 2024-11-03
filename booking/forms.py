@@ -9,12 +9,13 @@ class BookingForm(forms.ModelForm):
 
     The form is based on the Booking model and allows users to select tables,
     provide customer details, and specify booking date and times.
-    The tables are filtered based on the selected restaurant, and the form automatically
+    The tables are filtered based on the selected restaurant, and the form
+    automatically
     sets the time input fields according to the restaurant opening and closing.
 
     Attributes:
-        tables (ModelMultipleChoiceField): A checkbox field that allows multiple table
-        selection, filtered by the specified restaurant.
+    tables (ModelMultipleChoiceField): A checkbox field that allows
+    multiple tableselection, filtered by the specified restaurant.
     """
     tables = forms.ModelMultipleChoiceField(
         queryset=Table.objects.none(),
@@ -35,11 +36,12 @@ class BookingForm(forms.ModelForm):
                     'placeholder': 'Leave a message (optional)',
                 }
             ),
-        }        
+        }
 
     def __init__(self, *args, **kwargs):
         """
-        Initializes the BookingForm and filters the available tables based on the restaurant.
+        Initializes the BookingForm and filters the available
+        tables based on the restaurant.
         Sets date and time picker for booking date and times.
         """
         restaurant_id = kwargs.pop('restaurant_id', None)
@@ -84,7 +86,8 @@ class BookingForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     """
-    This form is based on the Review model and allows users to provide a rating (1 to 5)
+    This form is based on the Review model and allows
+    users to provide a rating (1 to 5)
     and leave an optional message.
     """
     class Meta:

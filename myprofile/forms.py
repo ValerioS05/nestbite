@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 
 
 class ProfileForm(forms.ModelForm):
-    """ 
+    """
     Form based on default User model
-    and allows users to update their details. 
+    and allows users to update their details.
     """
     class Meta:
         model = User
@@ -15,7 +15,8 @@ class ProfileForm(forms.ModelForm):
             'username': '',
         }
 
-class ContactForm(forms.Form):
-    """ Simple CharField as widget(textarea) for the user to insert their message. """
-    message = forms.CharField(widget=forms.Textarea, label="Your Message")
 
+class ContactForm(forms.Form):
+    """ Simple CharField as widget(textarea)
+    for the user to insert their message. """
+    message = forms.CharField(widget=forms.Textarea, label="Your Message")

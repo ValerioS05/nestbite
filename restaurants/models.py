@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db.models import UniqueConstraint
 from cloudinary.models import CloudinaryField
 
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=150)
@@ -27,13 +28,15 @@ class Restaurant(models.Model):
     def featured_image_url(self):
         """Replace the http to https"""
         url = self.featured_image.url
-        return url.replace('http://', 'https://') if url.startswith('http://') else url
+        if url.startswith('http://'):
+            return url.replace('http://', 'https://')
+        return url
 
     def average_rating(self):
         return self.reviews.aggregate(average=Avg('rating'))['average'] or None
-    
+
     class Meta:
-        ordering = ['name','created','capacity']
+        ordering = ['name', 'created', 'capacity']
 
 
 class Table(models.Model):
@@ -52,7 +55,7 @@ class Table(models.Model):
             The table capacity is a positive integer.
             Adding the table does not exceed the restaurant's total capacity.
             The table number is unique within the restaurant.
-        
+
         Raises:
             ValidationError if any of the above conditions arent met.
         """
@@ -85,7 +88,8 @@ class Table(models.Model):
     class Meta:
         """
         Orders the Table objects by table_number and restaurant.
-        Add a unique constraint so that table numbers are unique within the restaurant.
+        Add a unique constraint so that table numbers
+        are unique within the restaurant.
         """
         ordering = ['table_number', 'restaurant']
         constraints = [

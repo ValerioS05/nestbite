@@ -18,7 +18,8 @@ def check_timings(booking, restaurant, form):
 
     Args:
         booking (Booking): The booking instance being validated.
-        restaurant (Restaurant): The restaurant instance for checking working hours.
+        restaurant (Restaurant): The restaurant instance
+        for checking working hours.
         form (BookingForm): The form containing the booking details.
 
     Return:
@@ -69,7 +70,7 @@ def overlapping_bookings(booking, form, current_booking=None):
     """
     Check for overlapping bookings for the selected tables during the specified
     time window (start_time to end_time).
-    Considering the possibility that the 
+    Considering the possibility that the
     current booking is an update to an existing booking (in this
     case, it excludes that booking from the overlap check).
 
@@ -80,9 +81,9 @@ def overlapping_bookings(booking, form, current_booking=None):
         updated. Defaults to None.
 
     Returns:
-        bool: True if there are overlapping bookings for the selected tables 
-        during the specified time, False otherwise. If an overlap is 
-        found, the function suggests alternative available tables 
+        bool: True if there are overlapping bookings for the selected tables
+        during the specified time, False otherwise. If an overlap is
+        found, the function suggests alternative available tables
         within a similar price range and capacity.
     """
     if not booking.id:
@@ -140,8 +141,8 @@ def handle_booking_form(request, form, restaurant, booking=None):
     Handle form submission/validation for creating/updating a booking.
     The function checks the validity of the form data, ensures that the booking
     is within restaurant hours and that there are no overlapping bookings
-    for the selected table(s). If the booking is valid, it saves the data to the
-    database.
+    for the selected table(s). If the booking is valid,
+    it saves the data to the database.
 
     Args:
         request (HttpRequest): The current HTTP request.
@@ -152,7 +153,7 @@ def handle_booking_form(request, form, restaurant, booking=None):
 
     Returns:
         tuple: A tuple containing a boolean indicating success, and either the
-        booking instance or the form with errors. This depends on the result 
+        booking instance or the form with errors. This depends on the result
         of the form submission, if the form is valid the function redirect
         to the right view. If unsuccesfull renders the form with errors.
     """
@@ -305,7 +306,8 @@ def booking_list(request):
     if user.is_staff:
         bookings = Booking.objects.filter(canceled=False)
     else:
-        bookings = Booking.objects.filter(customer_email=user.email, canceled=False)
+        bookings = Booking.objects.filter(
+            customer_email=user.email, canceled=False)
 
     if filter_date_str:
         filter_date = parse_date(filter_date_str)
@@ -373,7 +375,10 @@ def booking_detail(request, booking_id):
             messages.success(request, feedback_message)
             return redirect('booking_list')
     else:
-        review_form = ReviewForm() if is_owner and not existing_review else None
+        if is_owner and not existing_review:
+            review_form = ReviewForm()
+        else:
+            review_form = None
 
     return render(
         request, 'booking/booking_detail.html',
@@ -400,15 +405,18 @@ def cancel_booking(request, booking_id):
     """
     booking = get_object_or_404(Booking, id=booking_id)
 
-    if not (request.user.is_staff or booking.customer_email == request.user.email):
+    if not (request.user.is_staff or
+            booking.customer_email == request.user.email):
         messages.error(request, "You are not allowed to cancel this booking.")
         return redirect('booking_list')
     if request.method == 'POST':
         booking.delete()
-        messages.success(request, "Your booking has been successfully canceled.")
+        messages.success(
+                request, "Your booking has been successfully canceled.")
         return redirect('booking_list')
 
     return render(request, 'booking/cancel_booking.html', {'booking': booking})
+
 
 def delete_finished_booking(booking_id):
     """
@@ -416,7 +424,8 @@ def delete_finished_booking(booking_id):
     the booking end time.
 
     Args:
-        booking_id (int): The ID of the booking to be checked and possibly deleted.
+        booking_id (int): The ID of the booking to be checked
+        and possibly deleted.
 
     Returns:
         bool: True if the booking was deleted, False otherwise.
