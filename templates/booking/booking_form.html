@@ -8,6 +8,14 @@
         {% endfor %}
     </div>
 {% endif %}
+{% if form.customer_name.errors %}
+<div class="alert alert-danger text-center">
+    {% for error in form.customer_name.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
 <div class="container mt-5 text-center">
     <h2>Book a Table</h2>
     <form method="POST" id="bookingForm">

@@ -5,12 +5,14 @@
 {% block content %}
 <h1 class="text-center">Your Bookings</h1>
   <!-- Filter Form -->
-  <form method="GET" class="mb-4">
-    <div class="input-group">
-      <label for="filter_date">Choose Date</label>
+  <form method="GET" class="mb-4 text-center">
+    <div class="mb-3">
+      <label for="filter_date" class="form-label">Choose Date</label>
       <input type="date" id="filter_date" name="filter_date" class="form-control" value="{{ filter_date|default:'' }}">
-      <button type="submit" class="btn boo-btn">Filter</button>
-      <a href="{% url 'booking_list' %}" class="boo-btn btn pt-2">Clear Filter</a>
+    </div>
+    <div>
+      <button type="submit" class="btn boo-btn me-2">Filter</button>
+      <a href="{% url 'booking_list' %}" class="btn boo-btn">Clear Filter</a>
     </div>
   </form>
 
@@ -22,7 +24,7 @@
         Restaurant: {{ booking.tables.first.restaurant.name }}
         <br>
         <a href="{% url 'booking_detail' booking.id %}" class="btn btn-sm boo-btn">View Details</a>
-        <a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning btn-sm float-end mx-2">Update</a>
+        <a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning btn-sm float-end">Update</a>
         <a href="{% url 'cancel_booking' booking.id %}" class="boo-btn btn btn-danger btn-sm float-end">Cancel Booking</a>
     </li>
     {% empty %}
