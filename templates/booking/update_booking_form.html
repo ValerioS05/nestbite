@@ -12,7 +12,13 @@
     {% endfor %}
 </div>
 {% endif %}
-
+{% if form.customer_name.errors %}
+<div class="alert alert-danger text-center">
+    {% for error in form.customer_name.errors %}
+        <p>{{ error }}</p>
+    {% endfor %}
+{% endif %}
+</div>
 <div class="container mt-5 text-center">
     <form method="POST" id="updateBookingForm">
         {% csrf_token %}
@@ -52,11 +58,11 @@
                 <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
                 {{ form.message }}
             </div>
-        </div>
+        </div>    
+        <button type="submit" class="mod-btn">Update Booking</button>
     </form>
 </div>
 <div class="text-center mt-4 btn-container-det">
-    <button type="submit" class="mod-btn">Update Booking</button>
     <a href="{% url 'booking_list' %}" class="mod-btn">Back to Booking List</a>
 </div>
 

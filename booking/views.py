@@ -252,7 +252,12 @@ def update_booking(request, booking_id):
         messages.error(request, "You are not allowed to modify this booking.")
         return redirect('booking_list')
 
-    restaurant = booking.tables.first().restaurant
+    # Ensure that the booking has associated tables
+    if booking.tables.exists():
+        restaurant = booking.tables.first().restaurant
+    else:
+        messages.error(request, "This booking has no associated tables.")
+        return redirect('booking_list')
 
     if request.method == 'POST':
         form = BookingForm(request.POST, restaurant_id=restaurant.id)

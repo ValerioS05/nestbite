@@ -1,7 +1,8 @@
 from django import forms
 from .models import Booking, Review
 from restaurants.models import Table, Restaurant
-
+from django.forms import ValidationError
+import re
 
 class BookingForm(forms.ModelForm):
     """
@@ -82,6 +83,12 @@ class BookingForm(forms.ModelForm):
                     'max': f"{closing_time.hour:02}:{closing_time.minute:02}"
                 }
             )
+
+    def clean_customer_name(self):
+        customer_name = self.cleaned_data.get('customer_name')
+        if customer_name and not re.match("^[a-zA-Z0-9 ]+$", customer_name):
+            raise ValidationError("Name cannot contain symbols or special characters.")
+        return customer_name
 
 
 class ReviewForm(forms.ModelForm):
