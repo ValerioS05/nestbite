@@ -268,3 +268,24 @@ NestBite is hosted in:
 - Commit and deploy!
 
 
+## Bugs and Fixes
+|Bugs and Fixes|Note|
+|--|--|
+|![Image of fixed bug 1](/static/images/6t010_images/fix1.png)|In here when manual testing I was having problems with submitting the form. Changing the position made the button work correctly|
+|![Image of fixed bug 2](/static/images/6t010_images/fix2.png)|When I was using Lighthouse from dev tools the image was rendered with http instead of https(secure), many solutions tried and this is the solution that worked better.|
+|![Image of fixed bug 3](/static/images/6t010_images/fix3.png)|In here I was having issue during manual testing where the time was retrieved in different formats. I changed all the timings to same format.|
+|![Image of fixed bug 4](/static/images/6t010_images/fix4.png)|When using HTML validator some items were rendered with no opening or closing tags. Changing the position of the logic helped to keep everything in check.|
+|![Image of fixed bug 5](/static/images/6t010_images/fix5.png)|In here when validating my code for accessibility, the form with tables wasn't connecting to the label. I connected the label using the id for the actual table solving the issue.|
+
+### Other Bugs and fixes
+- One of the bugs that I encountered was:
+    - When I was deleting my bookings the booking was set as canceled but not deleted from the database.
+    - What I did was setting the canceled bookings(from admin panel.) to hidden and the deleted bookings(from User interaction) to be completly deleted from the database.
+    - For the same problem, the delete button on the booking list page wasn't redirecting to the delete form but deleting straight away. Changing the logic of the view helped solving this problem.
+- Some bugs of pagination and style like contrast or overlapping items were solved using Bootstrap classes and custom css.
+- One of the "bugs" that I found was the use of the filters. When I was using them the page wasn't acting as expected.
+    - For example updating one filter was clearing the other filter. Or clearing the filters was not updating the page as it was when no filters were applied.
+    - Js was used to help keep the page interactive and for better UX.
+- During the development of NestBite I many times reformatted the code to have more "recyclable functions. During the early stage not many functions were reusable, but dividing the logic in some smaller functions helped with the reuse of some of the code calling the function only when needed and keeping bigger functions free of some tasks.
+- One of the challenges that I had was setting up the email. Even if everything was set up correctly (as I thought at that moment.) the mail was not beeing sent from my forms.
+    - The "fix" was simply adding the Config Vars to Heroku (unfortunately slipped my mmind.) I found this problem trying to use NestBite from different devices. That's the reason why I was receving emails but other people not (They were out of the enviroment.).

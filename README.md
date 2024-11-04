@@ -281,18 +281,39 @@ The process of creating more specific user stories was to take one Epic and divi
 ### General Features
 - Responsive Design
     - **NestBite** is fully responsive and optimized for various devices and sizes of screens. Provides a smooth and accessible experience on you favourite device.
+        ||||
+        |--|--|--|
+        |![Responsive main page mobile](/static/images/readme_images/mainsec.png)| ![Responsive main page tablet](/static/images/readme_images/respons.png)|![Responsive main page large screen](/static/images/readme_images/respons2.png)|
+        | ![Responsive booking page mobile](/static/images/readme_images/respbook3.png)|![Responsive booking page tablet](/static/images/readme_images/respbook2.png)|![Responsive booking page larger screen](/static/images/readme_images/respbook.png)|
+        |![Responsive contact us form mobile](/static/images/readme_images/respons4.png)|![Responsive contact us form larger screens](/static/images/readme_images/respons5.png)||
+        |![Responsive booking details mobile](/static/images/readme_images/respdet2.png)|![Responsive booking detail Larger screen](/static/images/readme_images/respdet.png)|In here we have how the navbar gets on mobile devices/less large screens.![Responsive navbar non collapsed](/static/images/readme_images/responsenav.png)|
+
+    - **Email service**: When submitting message forms the form is sent directly to the nestbite mail address.
+        ||||
+        |--|--|--|
+        |Contact form![Mail Showcase 1](/static/images/readme_images/mail.png)|Emails received with subject![Mail showcase 2](/static/images/readme_images/mailreceived.png)|Review form with booking reference.![Mail showcase 3](/static/images/readme_images/mailreview.png)|
+
     - **Fast loading times**: Efficiently designed to quickly load pages facilitating smooth navigation through the site.
     - **Intuitive** navigation: Minimalist design and clear navigation options.
     The layout allows the User to easy find the section they need most, as making reservations, view bookings and contacting support.
     - **Interactive Visual Feedbacks**: Buttons and other elements provide clear clues making the UI more engaging.
-    - **Efficient booking system**: User can quickly reserve tables, filter restaurants and receive immediate feedbacks.
+    - **Efficient booking system**: User can quickly reserve one table or multiple tables, filter restaurants and receive immediate feedbacks.
     - **User friendly forms**: Forms provide real time feedbacks, preventing errors with the help of clear labels.
     - **Personalized experience**: Logged in users have access to `Your Bookings` page showing only personal bookings.
     - **Clear, Info messages**: The system provides messages for most of the interaction with the site (Login,Sign out, bookings, errors) acting as a real time guide.
     - **Security and privacy**: Personal data remain private.
     - **Role based access**: the site layout differ depending on the status of the users.
     - **Pagination and sorting**: For large lists the site/admin site is organized with paginations and sortings optimizing the overall.
-- See below for more details!
+- See below for more details about features!
+### Future features
+- Real time availability - User can literally see which tables are free and which not.
+- Booking History - Admin can access booking history for analysis.
+- Profile Customization - As a profile a User can upload picture and add more details for the profile.
+- Loyalty Rewards - If User booked with NestBite a certain times can get lower prices for next reservation.
+- Dynamic menus - User can actually select menus when booking a table.
+- Additional filters - Sort by rating or diet. Or for bookings with the reference number for example.
+- Booking reminder - Email is sent when booking is close to start.
+- Multi language support - Selection of language/s.
 ## UI/UX
 ### User Interface
 - The UI for this project came from a minimalist idea.  
@@ -333,7 +354,7 @@ The process of creating more specific user stories was to take one Epic and divi
         ![Logo](/static/images/readme_images/logordme.png)
     - I would like to say that under the UI aspect NestBite is quite balanced, with the help of a base template followed that smaller templates made the development much easier.  
     Also the use of Bootstrap was a great help on pagination,sizes and general structure. In this case it made possible that the css would be quite a small amount adding only few touches to colors and effects and some smaller details.
-    - A `different CSS` file was created for the templates obtained at the setup of `Allauth (Accounts templates)`, the base was kept the same so the new templates would follow the same patterns.
+    - A `different CSS` file was created for the templates obtained at the setup of `Allauth (Accounts templates)`, the base was kept the same so the new templates would follow the same patterns.  
         ![Different template and stylesheet](/static/images/readme_images/difftemp.png)
     - I opted for the use of Icons instead of plain text to keep the user out of too much reading, the icons that I used for the project are:
         |Description|Image|
@@ -362,7 +383,7 @@ The process of creating more specific user stories was to take one Epic and divi
 The site can be navigated with a keyboard giving different possibilities to the User.
 - What makes NestBite stand out is the fact that the user is never left hanging clueless.
 The design is straight forward:
-    - Good naming on redirections buttons/links
+    - Good naming on redirections buttons/links  
         ![Naming on navbar](/static/images/readme_images/naming.png)
     - Naming on url paths consistent with the actual page.
     - Headings consistent with the active page.
