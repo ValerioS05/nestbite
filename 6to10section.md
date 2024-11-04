@@ -1,9 +1,9 @@
 # Build / Test / Deployment 
 - In this section we will speak about the following points.
 6. Testing / Validation
-7. Deployment
-8. Technologies
-9. Languages
+7. Technologies
+8. Languages
+9. Deployment
 10. Bugs and Fixes
 
 
@@ -198,3 +198,73 @@ As the title say NestBite is been manually tested from first to last page.
         - Used to add icons.
     - [Google Fonts](https://fonts.google.com/knowledge)
         - Loads the fonts used on this project.
+    - [GitPod](https://www.gitpod.io/docs/introduction/getting-started)
+        - Used for development enviroment for my workspace.
+## Languages used
+- [Python](https://www.python.org/doc/)
+    - The code itself is written in python handling the core functionalities.
+- [Html](https://developer.mozilla.org/en-US/docs/Web/HTML)
+    - Html templates and structures.
+- [Css](https://developer.mozilla.org/en-US/docs/Web/CSS)
+    - To style and visually organize the content of this project. (With the help of Bootstrap)
+- [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+    - To handle some of the front-end functionalities. 
+- [Sql](https://developer.mozilla.org/en-US/docs/Glossary/SQL)
+    - Not directly written, but was used to interact with the database.
+## Deployment.
+NestBite is hosted in:
+- Heroku
+- GitHub
+- Postgres database
+- Built with Gitpod
+
+### Deployment on Gitpod
+
+- Go to the [Github](https://github.com/) page.
+- Access the Repository
+- Select Settings
+- On the left side you need to get into Pages
+- You will see Build and deployment.
+- Under the Branch select main
+- Click save
+- When correctly executed, the page will indicate the succesful deployment and the link related to the repository.
+
+### Deployment on Heroku
+- Ensure that all your dependencies are listed in the requirements.txt file by running the command: pip3 freeze > requirements.txt in your Python terminal. This will add all your requirements to the requirements.txt file.
+- Visit the [Heroku](https://www.heroku.com/) website, sign up by clicking the button in the top right corner, then log in/sign up.
+- Click on New in the top right corner and select Create new app.
+- Choose a unique name for your app related to your project, set your region to for example "Europe"(you can choose the region that you are in), and click Create app.
+- Go to the Settings tab, then click Reveal Config Vars under Config Vars.
+    - In here you will set up all your keys and values for example secret keys and and password.(This will keep your vars safe.)
+- Scroll down to the Buildpacks section, click Add buildpack, and select Python. (My build pack is heroku/python)
+- Scroll back up and go to the Deploy tab. Under Deployment method, select GitHub, search for your GitHub repository by name, and select the correct one.
+- Scroll down to Automatic deploy, choose the main branch so that any changes pushed to GitHub will automatically update the Heroku app.
+- Scroll down to Manual deploy and click Deploy Branch. Once the deployment is complete, click on View to open a new tab and display your deployed app.
+- `Important` to mention is that the actual deployed version needs to have the debug setting set to False. This will keep any important detail safe.
+
+### PostgresSql from Code Institute
+- In here I followed the form implemented in the course by Code institute to create my database and receive its link.
+- Initially I created a env.py (make sure is added to the .gitignore file to keep your details safe).
+- Import in the env.py file the `os` system.
+- I set the database Url using os.environ.setdefault("database_url", "mydatabase_url")
+- Installed DjDatabase , Psycopg2 and added them to the requirements.txt.
+- Import os and dj_database_url in the settings.py of your app, connect the settings to the env.py importing it.
+    -     if os.path.isfile('env.py'): import env.
+- Connect the Environment variable to the DATABASE_URL that is in the env.py.
+    #### Connect Database to Heroku
+    - Go to Settings in your Heroku and click on Reveal config vars.
+    - Add a new Config Var with key of DATABASE_URL and as a value the PostgreSql (you can also find the url in your previously set env.py file.).
+    - Press add when is set up.
+    - `To note` is that sometimes you can have already an url set up by heroku to PostgreSql. You can remove it and replace it with your own.
+    - To remove it press on Resources and delete the Add-on ,once done return to settings and follow the steps above.
+### Cloudinary
+- Install Cloudinary from your terminal and add it to your requirements.
+- SignUp/Log in  to Cloudinary.
+- In the dashboard copy the url (CLOUDINARY_URL)
+- As we did for the database you need to add the url to the env.py file(check PostgreSql section above.)
+- Add cloduinary and cloudinary_storage(storage needs to be directly under the django.contrib.staticfiles) to your INSTALLED_APPS in the settings
+- Import ClodinaryField from cloudinary.models and is ready to use.
+- Remember to migrate the new added field (`python manage.py makemigrations  -->  python3 manage.py migrate`).
+- Commit and deploy!
+
+

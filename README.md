@@ -33,9 +33,9 @@
   - Assets
 - Separate section for 6. to 10.
 6. Testing / Validation
-7. Deployment
-8. Technologies
-9. Languages
+7. Technologies
+8. Languages
+9. Deployment
 10. Bugs and Fixes
 11. Credits
 
