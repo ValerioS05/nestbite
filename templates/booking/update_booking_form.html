@@ -4,7 +4,7 @@
 
 {% block content %}
 <h2 class="text-center">Update Booking</h2>
-
+<!-- Messages -->
 {% if form.non_field_errors %}
 <div class="alert alert-danger">
     {% for error in form.non_field_errors %}
@@ -19,6 +19,7 @@
     {% endfor %}
 {% endif %}
 </div>
+<!-- Form -->
 <div class="container mt-5 text-center">
     <form method="POST" id="updateBookingForm">
         {% csrf_token %}
@@ -58,10 +59,11 @@
                 <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>
                 {{ form.message }}
             </div>
-        </div>    
+        </div>  
         <button type="submit" class="mod-btn">Update Booking</button>
     </form>
 </div>
+<!-- Submit button up / back down -->
 <div class="text-center mt-4 btn-container-det">
     <a href="{% url 'booking_list' %}" class="mod-btn">Back to Booking List</a>
 </div>

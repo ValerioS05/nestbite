@@ -5,7 +5,7 @@
 {% block content %}
 <div class="text-center">
     <h1>Booking Details</h1>
-
+<!-- Booking Details -->
     <div class="card mb-3 text-center">
         <div class="card-body">
             <p><strong>Booking Reference:</strong> {{ booking.booking_reference }}</p>
@@ -23,7 +23,7 @@
             <p><strong>Policy:</strong> You can cancel your booking 2 hours in advance.</p>
         </div>
     </div>
-
+<!-- Review section -->
     {% if existing_review %}
     <p>You have already submitted feedback for this booking. Thank you!</p>
     {% else %}
@@ -36,7 +36,7 @@
     </form>
     {% endif %}
     {% endif %}
-
+<!-- Buttons -->
     <a href="{% url 'update_booking' booking.id %}" class="boo-btn btn btn-warning">Update Booking</a>
     <a href="{% url 'booking_list' %}" class="boo-btn btn">Back to Booking List</a>
 </div>
