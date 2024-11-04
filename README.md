@@ -1,6 +1,37 @@
 # NestBite Readme
+**NestBite** is a web based app built with Django, designed primarily as a booking system for restaurant tables.<br>Its user friendly and intuitive design make it easy to interact and explore.<br>To learn more about NestBite have a look at the README!  
 
-**NestBite** is a web based app built with Django, designed primarily as a booking system for restaurant tables.<br>Its user friendly and intuitive design make it easy to interact and explore.<br>To learn more about NestBite have a look at the README!
+
+## Readme content
+- This Readme is organized by sections for a total of 11. 
+    - Sections :
+        - From 1 to 4 and 11 - Everything about this sections is in this page.
+        - For section 5  and section from 6 to 10:
+            - Please follow the links provided below.  
+
+ **Happy exploring!**
+1. [About NestBite](#about-nestbite)
+2. [User Stories / Agile workflow](#user-stories)
+3. [Features](#features)
+4. [UI/UX Design](#uiux)
+- Separate section for 5.
+5. [Project structure](./project_structure.md)
+    - [Wire frames / Skeleton](./project_structure.md#wireframes--skeleton)
+    - [Models](./project_structure.md#models)
+    - [Views](./project_structure.md#views)
+    - [Forms](./project_structure.md#forms)
+    - [Urls](./project_structure.md#urls)
+    - [Templates](./project_structure.md#templates)
+    - [Assets](./project_structure.md#assets)  
+
+- Separate section for 6. to 10.  
+    - [Go to 6-10 section ](./6to10section.md)
+    6. [Testing / Validation](./6to10section.md#tests)
+    7. [Technologies](./6to10section.md#technologies-used)
+    8. [Languages](./6to10section.md#languages-used)
+    9. [Deployment](./6to10section.md#deployment)
+    10. [Bugs and Fixes](./6to10section.md#bugs-and-fixes)
+11. [Credits](#credits)  
 
 
 ## Devices Mockups
@@ -17,27 +48,7 @@
 
 [NestBite Homepage](https://nestbite-5dd11ab0ac7f.herokuapp.com/)
 
-## Readme content
-1. [About NestBite](#about-nestbite)
-2. [User Stories / Agile workflow](#user-stories)
-3. [Features](#features)
-4. [UI/UX Design](#uiux)
-- Separate section for 5.
-5. [Project structure](./project_structure.md)
-  - Wire frames / Skeleton
-  - Models
-  - Views
-  - Forms
-  - Urls
-  - Templates
-  - Assets
-- Separate section for 6. to 10.
-6. Testing / Validation
-7. Technologies
-8. Languages
-9. Deployment
-10. Bugs and Fixes
-11. Credits
+
 
 ## About NestBite
 - NestBite is a web based app built with `Django`, is simulate a restaurant table reservation system.  
@@ -436,19 +447,28 @@ The design is straight forward:
             |Restaurant sort|![Sorting restaurant by name](/static/images/readme_images/restfilt.png)|
             |Booking sort|![Sorting booking by date](/static/images/readme_images/bookfilt.png)|
             |Email sort|![Sorting email by verification](/static/images/readme_images/emailfilt.png)|
-            |User sort|![Sorting users by status](/static/images/readme_images/userfilt.png)|
+            |User sort|![Sorting users by status](/static/images/readme_images/userfilt.png)|  
 
 
+## Credits
+- Favicon created with Favicon.io
+- Fonts from Google Fonts
+- Images taken from Unsplash.
+- Logo from Free logo design.
+- Wireframes from [Wireframe.cc](https://wireframe.cc/)
+- Icons from fontawesome.
+- ERD diagrams from [Drowio.com](https://www.drawio.com/)
+- Starting Template offered by Code Institute.
+    - (Some of the settings code were taken from the course, like the mail settings and featured image settings.)
 
+Featured images  
+Image by <a href="https://pixabay.com/users/eelffica-52436/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=190817">Eelffica</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=190817">Pixabay</a>
 
+Image by <a href="https://pixabay.com/users/gioelefazzeri-16466931/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5356682">Gioele Fazzeri</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=5356682">Pixabay</a>
 
+Image by <a href="https://pixabay.com/users/divily-110719/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2931846">Stefan</a> from <a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=2931846">Pixabay</a>
 
-
-
-
-
-
-
+## [Back to top](#nestbite-readme)
 
 
 

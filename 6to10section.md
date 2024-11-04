@@ -1,6 +1,6 @@
 # Build / Test / Deployment 
 - In this section we will speak about the following points.
-6. [Testing / Validation](#tests)
+6. [Validation](#validation) / [Testing](#tests)
 7. [Technologies](#technologies-used)
 8. [Languages](#languages-used)
 9. [Deployment](#deployment)
@@ -11,7 +11,7 @@
 ## Validation / Testing 
 ### Validation
 For validation many tools were used:
-- [W3C Markup](https://validator.w3.org/)/[CSS Validators](https://jigsaw.w3.org/css-validator/)
+- [W3C Markup](https://validator.w3.org/) / [CSS Validators](https://jigsaw.w3.org/css-validator/)
 - [JSHint](https://jshint.com/)
 - [Python Linter CI](https://pep8ci.herokuapp.com/#)
 - [Lighthouse tool (Dev Tools)](https://developer.chrome.com/docs/lighthouse/overview/)
