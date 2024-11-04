@@ -196,6 +196,7 @@ The review is linked with a restaurant,a booking and the User.
 - In this file we have 2 forms as well. These two forms handles user interaction like profile update and contact form.
     - ProfileForm:
         - The profileForm gives the user the chance to update thier profile informations based on the built-in User model, that's the reason why the User is able to modify the username, first and last name plus the email. This form is a very basic form to edit basic informations trying to don't expose sensitive datas.
+        - One more thing to mention is that when the user updates his email that is different from the primary mail. The user is still verificated and no harm is due because the user when is logged in , will be logged by username. Same goes for name and last name, all these fields can be updated as the user like.(No restrictions on any field except for the mail that is restricted to the email format @ / .com for example.) The only important thing to notice is that the Username field affects the User model. Changing this the User is still verified, it will also change the Bookings name under the new user name in both admin panel and booking list. (And in any case if any kind of error. The user can contact to the nestbite email to request support. Were the admin has the power to change and solve the issue. NestBite email is provided in the homepage, no validation needed.)
     - ContactForm:
         - This is a simple form to submit a message intended for customer experience (customer service and  feedbacks).
         - **Important** to say is that the form is not linked to the database bacause it stores input temporarily.
@@ -324,4 +325,5 @@ It was integrated also because of efficiency, a user with access to the admin pa
 |![Featured image of the restaurant details](/static/images/nest_structure_images/featimage.png)|Featured image|
 
 
-## [Back to main page](./README.md)
+## [Back to main page](./README.md)  
+**Readme by Valerio Solinas**
