@@ -179,6 +179,7 @@ The review is linked with a restaurant,a booking and the User.
 - Here we have forms related to the booking app.
     - BookingForm:
         - The purpose of this form is to allow the user to create booking for tables in a specified restaurant. As the name says the form is based on the booking model and its fields.
+        - An admin/staff member can modify bookings from other users(obviously that wouldn't be smart to do it without the request of the user.).
         - There are some features in this form:
             - The multiple choice field a list of tables selectable with checkboxes.
             The __init_ _ method was initialized to get the tables for the selected restaurants by queryset.
@@ -190,6 +191,7 @@ The review is linked with a restaurant,a booking and the User.
             Some validation was added over the timings for closing and opening hours of the specified restaurant.
     - ReviewForm:
         - Allows the user to leave a review, this form provides a rating from 1 to 5 and an optional message.
+        - This form is locked if the user is not the same as the one that made the booking.
         - Meta: Specifing the Review model, I included rating and message.
         - In here widgets were used as well, RadioSelect for radio buttons displayed with stars and the actual "value" of the button. Also a textarea was user for the message.
 ### Myprofile forms.py
