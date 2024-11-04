@@ -1,10 +1,11 @@
 # Build / Test / Deployment 
 - In this section we will speak about the following points.
-6. Testing / Validation
-7. Technologies
-8. Languages
-9. Deployment
-10. Bugs and Fixes
+6. [Testing / Validation](#tests)
+7. [Technologies](#technologies-used)
+8. [Languages](#languages-used)
+9. [Deployment](#deployment)
+10. [Bugs and Fixes](#bugs-and-fixes)
+
 
 
 ## Validation / Testing 
@@ -289,3 +290,6 @@ NestBite is hosted in:
 - During the development of NestBite I many times reformatted the code to have more "recyclable functions. During the early stage not many functions were reusable, but dividing the logic in some smaller functions helped with the reuse of some of the code calling the function only when needed and keeping bigger functions free of some tasks.
 - One of the challenges that I had was setting up the email. Even if everything was set up correctly (as I thought at that moment.) the mail was not beeing sent from my forms.
     - The "fix" was simply adding the Config Vars to Heroku (unfortunately slipped my mmind.) I found this problem trying to use NestBite from different devices. That's the reason why I was receving emails but other people not (They were out of the enviroment.).
+
+
+## [Back to main page](./README.md)
